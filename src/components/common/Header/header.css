@@ -1,0 +1,131 @@
+.balance {
+    right: 0;
+    float: right;
+    font-family: "SF Display Bold";
+    
+    margin-top: 16px;
+    padding-top: 1px;
+    font-size: 16px		       
+}
+
+.address-btn {
+    text-align: center;
+
+    margin-top: 13px;
+    margin-right: 10px;    
+}
+
+.address-btn button {
+    font-family: "SF Display Regular";
+    border-width: 2px;
+
+    /* width: 104px; */
+    /* height: 28px; */
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 0;
+    padding-top: 2px;
+    padding-left: 5px;
+    
+}
+
+.header .eth2phone-logo {
+    font-family: "SF Display Black";
+    color: black;
+    text-align: center;
+
+    width: 55px;
+    height: 29px;
+    font-size: 30px;
+    margin-top: 9px;
+    letter-spacing: 0;	        
+}
+
+.header .eth2phone-logo span {
+    display: inline; 
+    font-family: 'SF Display Regular';
+    font-size: 14px; 
+    color: #999999;
+    vertical-align: text-top;
+    margin-left: 5px;
+}
+
+
+.header-row {
+    display: block;
+    margin: auto;
+    background-color: white;
+    align-items: center;
+    height: 44px;
+    margin-bottom: 10px;    
+}
+
+
+.address-btn button .fa {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+
+/* FOR DESKTOP */
+@media only screen and (min-width: 768px) {
+    .header-big .balance {
+	right: 0;
+	margin-top: 26px;
+	padding-top: 3px;
+	/* padding-top: 1px; */
+	font-size: 24px;
+    }
+
+    .header-big .address-btn {
+	margin-top: 26px;
+	margin-right: 38px;
+    }
+
+    .header-big .address-btn button {
+ 	/* width: 104px; */
+	/* height: 28px; */
+	border-radius: 10px;
+	font-size: 24px;
+	padding: 3px;
+	padding-left: 20px;
+	padding-right: 0px;
+	/* padding-top: 2px; */
+	/* padding-left: 5px; */
+    }
+
+    .header-big .address-btn button .fa {
+	margin-left: 10px;
+	margin-right: 10px;
+    }
+    
+    
+    .header-big .eth2phone-logo {
+	width: 55px;
+	height: 69px;
+	font-size: 48px;
+	margin-top: 19px;
+	letter-spacing: 0;
+    }
+
+    .header:not(.header-big) {
+	width: 760px;
+    }
+
+    
+}
+
+
+/* FOR MOBILE */
+@media only screen and (max-width: 767px) {
+
+    .address-btn {
+    }
+
+    .address-btn button {
+    }
+
+
+}
+
+
