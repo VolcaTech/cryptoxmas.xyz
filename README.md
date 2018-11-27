@@ -1,4 +1,4 @@
-# 🎁 Christmas Cards and Gifts on Ethereum 🎺
+# 🎁 Christmas Cards & Gifts on Ethereum 🎺
 
 ## Send NFT Christmas Cards & Gifts via links
 
