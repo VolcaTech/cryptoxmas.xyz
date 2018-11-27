@@ -5,7 +5,7 @@
 
 With non-fungible Ethereum Christmas Cards you can send messages & gifts to your friends or people in need. 
 
-### Share Christmas Cards & Gifts with anyone
+### Send to people without Ethereum Wallets
 
 Using the eth2.io technology you can generate a simple URL, sendable to anyone — just like a text message. 
 The receiver simply opens the link, gets forwarded to install a wallet and receive the Christmas Card (ERC721 token) and (optionally) ETH. The Christmas Card and ETH are securely hold in an escrow smart contract, until the receiver claims them. If nobody claims the crypto, you can just claim it back yourself.
