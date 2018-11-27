@@ -31,7 +31,7 @@ const checkSignature = async (transitAddress, to, v, r, s) => {
     let isCorrect = false;
     try {
 	log.debug(to, v, r, s);
-	isCorrect = await contractInstance.verifyTransferSignature(transitAddress, to, v, r, s);
+	isCorrect = await contractInstance.verifySignature(transitAddress, to, v, r, s);
 	log.debug("is correct signature:", isCorrect);
     } catch (err)  {
 	log.error(err);

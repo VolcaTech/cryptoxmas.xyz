@@ -114,14 +114,14 @@ export const buyGift = ({amount, tokenId}) => {
 }
 
 
-export const withdrawLinkTransfer = ({transitPrivateKey}) => {
+export const claimGift = ({transitPrivateKey}) => {
     return async (dispatch, getState) => {
 	
 	const state = getState();
 	const networkId = state.web3Data.networkId;
 	const receiverAddress = state.web3Data.address;
     
-	const result = await eth2gift.withdrawLinkTransfer({
+	const result = await eth2gift.claimGift({
             transitPrivateKey,
             receiverAddress
 	});

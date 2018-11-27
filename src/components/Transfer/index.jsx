@@ -9,13 +9,11 @@ import DepositingScreen from './DepositingTransfer';
 import ReceivingScreen from './ReceivingScreen';
 import CancellingScreen from './CancellingScreen';
 import CancelledTransferScreen from './CancelledTransferScreen';
-import WithHistory from './../HistoryScreen/WithHistory';
-import HistoryScreen from './../HistoryScreen';
 import TxErrorScreen from './TxErrorScreen';
 import { Row, Col } from 'react-bootstrap';
 
 
-export class TransferScreen extends Component {
+export class TransferComponent extends Component {
     
     render() {
         const { transfer, currentStep, urlError } = this.props;
@@ -64,17 +62,14 @@ export class TransferScreen extends Component {
         }
     }    
 }
-
-const TransferScreenWithHistory = (props) => (
-    <WithHistory {...props}>
+const TransferScreen = (props) => (
       <Row>
 	<Col sm={4} smOffset={4}>		  
-	  <TransferScreen {...props}/>
+	  <TransferComponent {...props}/>
 	</Col>
-      </Row>
-	  
-    </WithHistory>
+      </Row>	 
 );
+
 
 const mapStateToProps = (state, props) => {
     const transferId = props.match.params.transferId;
@@ -91,6 +86,6 @@ const mapStateToProps = (state, props) => {
 }
 
 
-export default connect(mapStateToProps)(TransferScreenWithHistory);
+export default connect(mapStateToProps)(TransferScreen);
 
 

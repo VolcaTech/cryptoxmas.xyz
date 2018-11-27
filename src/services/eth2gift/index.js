@@ -35,6 +35,7 @@ const _getAddressFromPrivateKey = (privateKey) => {
 
 
 export const claimGift = async ({transitPrivateKey, receiverAddress}) => {
+    console.log({transitPrivateKey})
     const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
     const transferId = _generateTransferIdForLink(transitAddress);
     
