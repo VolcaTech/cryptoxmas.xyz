@@ -1,0 +1,49 @@
+{
+  "name": "quid-proxy-server",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server",
+    "watch": "nodemon server"
+  },
+  "description": "",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dobrokhvalov/quid-proxy-server.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Quid",
+    "Smart",
+    "Contracts"
+  ],
+  "author": "Dobrokhvalov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dobrokhvalov/quid-proxy-server/issues"
+  },
+  "homepage": "https://github.com/Dobrokhvalov/quid-proxy-server#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "authy": "^1.2.0",
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "co": "^4.6.0",
+    "ethereumjs-testrpc": "^4.1.1",
+    "ethers": "^4.0.12",
+    "express": "^4.15.4",
+    "express-async-handler": "^1.1.3",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.11.9",
+    "morgan": "^1.8.2",
+    "nconf": "^0.8.4",
+    "newrelic": "^4.1.1",
+    "underscore": "^1.8.3",
+    "web3": "^0.20.1",
+    "web3-utils": "^1.0.0-beta.34",
+    "winston": "^2.3.1"
+  }
+}
