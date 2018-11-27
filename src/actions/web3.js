@@ -1,6 +1,6 @@
 import web3Service from "../services/web3Service";
-import escrowContract from "../services/eth2phone/escrowContract";
-import verificationUrlGetter from "../services/eth2phone/serverUrl";
+import escrowContract from "../services/eth2gift/escrowContract";
+import verificationUrlGetter from "../services/eth2gift/serverUrl";
 import { detectNetwork } from '../utils';
 import * as actionTypes from './types';
 
@@ -27,9 +27,9 @@ export const updateBalance = () => {
     }
 }
 
-const _setupContract = async (web3, networkId) => {
+const _setupContract = (web3, networkId) => {
     try { 
-	await escrowContract.setup(web3);
+	escrowContract.setup(web3);
 	verificationUrlGetter.setNetwork(networkId);
     } catch(err) {
 	console.log("Error while setuping contract");
@@ -51,7 +51,7 @@ export const setupWeb3 = () => {
 		networkId
 	    } = web3Details;
 
-	    await _setupContract(web3, networkId);
+	    _setupContract(web3, networkId);
 
 	    dispatch(updateWeb3Details(web3Details));
 
@@ -88,7 +88,7 @@ export const setupWeb3ChangeListener = () => {
 		    	balance = await web3.eth.getBalancePromise(address);
 		    }
 
-		    await _setupContract(web3, networkId);
+		    _setupContract(web3, networkId);
 		    
 		    dispatch(updateWeb3Details({
 		    	balance,

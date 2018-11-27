@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
-import { parse, format, asYouType } from 'libphonenumber-js';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import { buyGift } from '../../actions/transfer';
 import NumberInput from './../common/NumberInput';
-import PhoneInput from './../common/PhoneInput';
 import ButtonPrimary from './../common/ButtonPrimary';
-import PhoneOrLink from './../common/PhoneLinkButton';
-import CheckBox from './../common/CheckBox';
+//import CheckBox from './../common/CheckBox';
 import { Error, ButtonLoader } from './../common/Spinner';
-import WithHistory from './../HistoryScreen/WithHistory';
-import E2PCarousel from './../common/E2PCarousel';
 import web3Service from './../../services/web3Service';
 
 
@@ -86,7 +81,7 @@ const styles = {
 }
 
 
-class Tab extends Component {
+class SendScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -103,8 +98,9 @@ class Tab extends Component {
         };
     }
 
-    async _sendTransfer(phone, phoneCode) {
+    async _buyGift() {
         try {
+	    console.log("on buy Gift")	    
             const transfer = await this.props.buyGift({
                 amount: this.state.amount,
 		tokenId: this.state.tokenId
@@ -122,6 +118,7 @@ class Tab extends Component {
     _onSubmit() {
         //format balance
         let balance;
+	console.log("onSubmit")
         const web3 = web3Service.getWeb3();
         if (this.props.balanceUnformatted) {
             balance = web3.fromWei(this.props.balanceUnformatted, 'ether').toNumber();
@@ -146,17 +143,17 @@ class Tab extends Component {
         };
 
         // check if checkbox is submitted
-        if (this.state.checked === false) {
-            this.setState({ buttonDisabled: true, checkboxTextColor: '#e64437' })
-            return;
-        }
+        // if (this.state.checked === false) {
+        //     this.setState({ buttonDisabled: true, checkboxTextColor: '#e64437' })
+        //     return;
+        // }
 
         // disabling button
         this.setState({ fetching: true });
 
         // sending transfer
         setTimeout(() => {  // let ui update
-            this._sendTransfer()
+            this._buyGift()
         }, 100);
     };
 
@@ -203,7 +200,6 @@ class Tab extends Component {
 				 </span>
                                     </div>}
                             </div>
-                            <CheckBox onSubmit={() => this.state.checked === false ? this.setState({ checked: true, buttonDisabled: false, checkboxTextColor: '#000' }) : this.setState({ checked: false, buttonDisabled: false, checkboxTextColor: '#000' })} textColor={this.state.checkboxTextColor} />
                         </div>
                     </div>
                 </Col>
@@ -225,4 +221,4 @@ class Tab extends Component {
 export default connect(state => ({
     networkId: state.web3Data.networkId,
     balanceUnformatted: state.web3Data.balance
-}), { buyGift })(Tab);
+}), { buyGift })(SendScreen);

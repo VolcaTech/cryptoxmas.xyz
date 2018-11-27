@@ -4,9 +4,10 @@ import { getDepositingTransfers,
 	 getCancellingTransfers,
 	 getTransfersForActiveAddress
        } from './../data/selectors';
-import * as e2pService from '../services/eth2phone';
+import * as eth2gift from '../services/eth2gift';
 import * as actionTypes from './types';
 import { updateBalance } from './web3';
+
 
 const createTransfer = (payload) => {
     return {
@@ -78,10 +79,14 @@ export const buyGift = ({amount, tokenId}) => {
 	const state = getState();
 	const networkId = state.web3Data.networkId;	
 	const senderAddress = state.web3Data.address;
+
+	console.log("here");
 	
-	const { txHash, transitPrivateKey, transferId, transitAddress } = await e2pService.sendLinkTransfer({
-												  amountToPay: amount,
-												  senderAddress});
+	const { txHash, transitPrivateKey, transferId, transitAddress } = await eth2gift.buyGift({
+	    tokenId, 
+	    amountToPay: amount,
+	    senderAddress
+	});
 	const id = `${transferId}-out`;
 
 	const transfer = {
@@ -116,7 +121,7 @@ export const withdrawLinkTransfer = ({transitPrivateKey}) => {
 	const networkId = state.web3Data.networkId;
 	const receiverAddress = state.web3Data.address;
     
-	const result = await e2pService.withdrawLinkTransfer({
+	const result = await eth2gift.withdrawLinkTransfer({
             transitPrivateKey,
             receiverAddress
 	});
@@ -159,7 +164,7 @@ export const cancelTransfer = (transfer) => {
 	    contractVersion = 1;
 	}
 	
-	const txHash = await e2pService.cancelTransfer(transfer.transitAddress, contractVersion);
+	const txHash = await eth2gift.cancelTransfer(transfer.transitAddress, contractVersion);
 
 	dispatch(updateTransfer({
 	    status: "cancelling",

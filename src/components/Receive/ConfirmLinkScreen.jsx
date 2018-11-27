@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withdrawLinkTransfer } from './../../actions/transfer';
 import { Row, Col, Grid } from 'react-bootstrap';
-import * as e2pService from '../../services/eth2phone';
+
 import CodeInput from './../common/CodeInput';
 import NumberInput from './../common/NumberInput';
-import PhoneInput from './../common/PhoneInput';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { getQueryParams, getNetworkNameById } from '../../utils';
-import ConfirmSmsForm from './ConfirmSmsForm';
 import { parse, format, formatNumber, asYouType, isValidNumber } from 'libphonenumber-js';
-// import { isValidPhoneNumber } from 'react-phone-number-input';
 const qs = require('querystring');
 import web3Service from "../../services/web3Service";
 import ConfirmTransfer from './ConfirmTransfer';

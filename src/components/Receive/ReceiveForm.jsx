@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
-import * as e2pService from '../../services/eth2phone';
+import * as eth2gift from '../../services/eth2gift';
 import CodeInput from './../common/CodeInput';
 import NumberInput from './../common/NumberInput';
 import PhoneInput from './../common/PhoneInput';
@@ -63,12 +63,13 @@ class ReceiveScreen extends Component {
         try {
             this._checkNetwork();
 
-            result = await e2pService.fetchTransferDetailsFromServer({
-                phone: this.phoneParams.phone,
-                phoneCode: this.phoneParams.phoneCode,
-                secretCode: this.state.secretCode,
-		transitPrivateKey: this.state.transitPrivateKey
-            });
+
+            // result = await e2pService.fetchTransferDetailsFromServer({
+            //     phone: this.phoneParams.phone,
+            //     phoneCode: this.phoneParams.phoneCode,
+            //     secretCode: this.state.secretCode,
+	    // 	transitPrivateKey: this.state.transitPrivateKey
+            // });
 
 	    console.log({result});
 

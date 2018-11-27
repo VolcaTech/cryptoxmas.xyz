@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ConfirmSmsForm from './ConfirmSmsForm';
 import { SpinnerOrError, Loader } from './../common/Spinner';
 import { TransferScreen } from '../Transfer';
-import ConfirmPhoneScreen from './ConfirmPhoneScreen';
 import ConfirmLinkScreen from './ConfirmLinkScreen';
 
 class ConfirmTransfer extends Component {
@@ -27,9 +25,7 @@ class ConfirmTransfer extends Component {
 	
         return (
 	    <div>
-	      { this.props.transitPrivateKey ?
-		  <ConfirmLinkScreen {...this.props}/>  : 
-		  <ConfirmPhoneScreen {...this.props}/>  }	      
+	      <ConfirmLinkScreen {...this.props}/> 
 	    </div>
         );
     }
