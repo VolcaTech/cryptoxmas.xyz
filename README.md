@@ -1,26 +1,14 @@
-# 🎁 Christmas Cards & Gifts on Ethereum 🎺
-
-## Send NFT Christmas Cards & Gifts via links
-
-Eth2 allows to send ether to anyone even without Ethereum wallet. The receiver will get the special link and be verified using phone number. The only requirement for you as a sender to have the Web3 compatible Ethereum wallet with sufficient balance and the phone number of the person you are willing to send ether to. You will need to share a special message with the receiver with the link containing all the instructions, following which he or she will download the wallet (or use existing one) and receive assets to it.
+# 🎁 Crypto Christmas [WIP] 🎺
 
 
-## Save the Christmas for people in need
+## Send Christmas Cards & Gifts with anyone
 
+Using the eth2.io technology you can generate a simple URL, sendable to anyone — just like a text message. 
+The receiver simply opens the link, gets forwarded to install a wallet and receive the Christmas Card (ERC721 token) and (optionally) ETH. The Christmas Card and ETH are securely hold in an escrow smart contract, until the receiver claims them. If nobody claims the crypto, you can just claim it back yourself.
 
+## Donate tokens to people in need
 
-
-
-
-
-
-## How it works
-
-
-
-
-
-
+You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christmas for the people most in need.
 
 ## Based on the eth.io technology
 * [Sending demo](https://www.youtube.com/watch?v=FeqQyFrmptA)
@@ -42,13 +30,10 @@ Eth2 allows to send ether to anyone even without Ethereum wallet. The receiver w
 4. Receiver decrypts the transit private key with the secret code provided by sender and gets the transit private key. Receiver signs address of his choice with the transit private key. Receiver sends signed address to verification server.
 5. Verification server tries to withdraw ether from Escrow Smart Contract to signed address. If signature is correct, the transaction is executed and receiver gets the ether.
 
-## Running on Ropsten or Mainnet
-Works best with [Trust Wallet](http://trustwalletapp.com) on mobile. You can also use a Desktop Browser with installed Metamask or any Web3 compatible browsers. Go to https://eth2.io to use the App.
-
-
 ## Code structure
 
 **This is WIP** We are working hard on saving Christmas, join us!
 
 ## License
-MIT Liscense 
+
+MIT License
