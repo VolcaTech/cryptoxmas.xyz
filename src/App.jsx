@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
-import SendTab from './components/SendTab/SendTab';
+import SendScreen from './components/SendScreen/SendScreen';
 import ReceiveForm from './components/Receive/ReceiveForm';
 import TransferComponent from './components/Transfer';
 import NoWalletHeader from './components/common/NoWalletHeader';
@@ -66,7 +66,7 @@ class App extends Component {
                             );
                         }} />
 
-                        <Route component={SendTab} />
+                        <Route component={SendScreen} />
                     </Switch>
 
                 </div>

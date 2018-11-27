@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
+const qs = require('querystring');
 
 import { buyGift } from '../../actions/transfer';
 import NumberInput from './../common/NumberInput';
 import ButtonPrimary from './../common/ButtonPrimary';
-//import CheckBox from './../common/CheckBox';
 import { Error, ButtonLoader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
 
@@ -84,6 +84,10 @@ const styles = {
 class SendScreen extends Component {
     constructor(props) {
         super(props);
+
+        const queryParams = qs.parse(props.location.search.substring(1));
+        const tokenId = queryParams.tokenId;
+	
         this.state = {
             amount: 0,
             errorMessage: "",
@@ -94,7 +98,7 @@ class SendScreen extends Component {
             numberInputError: false,
             phoneError: false,
             phoneOrLinkActive: false,
-	    tokenId: 1
+	    tokenId
         };
     }
 

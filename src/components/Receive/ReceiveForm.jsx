@@ -47,8 +47,6 @@ class ReceiveScreen extends Component {
         super(props);
 
         const queryParams = qs.parse(props.location.search.substring(1));
-
-        // parse phone params
         const transitPrivateKey = queryParams.pk;
         const amount = queryParams.a;
         this.networkId = queryParams.chainId || queryParams.n || "1";

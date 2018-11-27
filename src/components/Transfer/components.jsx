@@ -56,13 +56,8 @@ export const getEtherscanLink = ({ txHash, networkId }) => {
 
 export const ShareButton = ({ transfer }) => {
     let shareLink;
-    let shareText = `Hi, I've sent you ${transfer.amount} eth.`;
-    if (transfer.receiverPhone) {
-        const phoneNumberWithoutPlus = (transfer.receiverPhone || "").substring(1); // remove '+' from number
-        shareLink = `${ETH2PHONE_HOST}/#/r?p=${phoneNumberWithoutPlus}&c=${transfer.secretCode}`;
-    } else if (transfer.transitPrivateKey) {
-        shareLink = `${ETH2PHONE_HOST}/#/r?pk=${transfer.transitPrivateKey}`;
-    }
+
+    shareLink = `${ETH2PHONE_HOST}/#/r?pk=${transfer.transitPrivateKey}`;
     
     if (transfer.networkId != "1") {
         shareLink += `&n=${transfer.networkId}`;
@@ -76,14 +71,11 @@ export const ShareButton = ({ transfer }) => {
 	shareLink += `&w=${currentWalletId}`;
     }
     
-    shareText += `\nTo receive follow the link: ${shareLink}`;
-
-
     return (
         <div style={styles.shareLinkContainer}>
             <ButtonPrimary buttonColor='#2bc64f' handleClick={() => {
                 // copy share link to clipboard
-                copy(shareText);
+                copy(shareLink);
                 alert("The link is copied to your clipboard. Share the link with receiver");
             }}>
                 <span>Copy & Share Link</span>
