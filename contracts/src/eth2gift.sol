@@ -15,7 +15,12 @@ contract eth2giftEscrow is Stoppable {
   // verifier's address
   address public verifier;
 
+  // verifier's address
+  address public SELLER;
+
   address public NFT_ADDRESS;
+
+  enum Statuses { Empty, Deposited, Claimed, Cancelled }
 
   /*
    * EVENTS
@@ -58,6 +63,7 @@ contract eth2giftEscrow is Stoppable {
     address sender;
     uint amount; // in wei
     uint256 tokenId;
+    Statuses status;
   }
 
   // Mappings of transitAddress => Transfer Struct
@@ -70,18 +76,34 @@ contract eth2giftEscrow is Stoppable {
    * @param _commissionFee uint Verifier's fixed commission for each transfer
    */
   constructor(uint _commissionFee,
-	      address _verifier,
-	      string _name,
-	      string _symbol) public {
+	                  address _tokenAddress
+	      //address _verifier,
+	      ) public {
     commissionFee = _commissionFee;
-    verifier = _verifier;
-    NFT_ADDRESS = new MintableNFT(_name, _symbol);
+    //verifier = _verifier;
+    verifier = msg.sender;
+    SELLER = msg.sender;
+    NFT_ADDRESS = _tokenAddress;
   }
 
 
   modifier onlyVerifier() {
     require(msg.sender == verifier);
     _;
+  }
+
+
+  function canBuyGiftLink(uint _tokenId, address _transitAddress) public returns (bool) {
+    require(msg.value > commissionFee);
+
+    // can not override existing gift
+    require(gifts[_transitAddress].status == Statuses.Empty);
+
+    // check that nft wasn't sold before
+    MintableNFT nft = MintableNFT(NFT_ADDRESS);
+    require(nft.ownerOf(_tokenId) == SELLER);
+
+    return true;
   }
 
   /**
@@ -97,12 +119,9 @@ contract eth2giftEscrow is Stoppable {
   function buyGiftLink(uint _tokenId, address _transitAddress)
           payable public
             whenNotPaused
-            whenNotStopped
-    onlyOwner returns (bool) {
-    require(msg.value > commissionFee);
+    whenNotStopped returns (bool) {
 
-    // can not override existing gift
-    require(gifts[_transitAddress].tokenId == 0);
+    require(canBuyGiftLink(_tokenId, _transitAddress));
 
     uint amount = msg.value.sub(commissionFee); //amount = msg.value - comission
 
@@ -110,7 +129,8 @@ contract eth2giftEscrow is Stoppable {
     gifts[_transitAddress] = Gift(
 				  msg.sender,
 				  amount,
-				                          _tokenId
+				  _tokenId,
+				                          Statuses.Deposited
 				  );
 
     // accrue verifier's commission
@@ -118,7 +138,7 @@ contract eth2giftEscrow is Stoppable {
 
     // send nft
     MintableNFT nft = MintableNFT(NFT_ADDRESS);
-    nft.mint(address(this), _tokenId);
+    nft.transferFrom(SELLER, address(this), _tokenId);
 
     // log buy event
     emit LogBuy(
@@ -194,19 +214,28 @@ contract eth2giftEscrow is Stoppable {
    * @param _transitAddress transit address assigned to transfer
    * @return Transfer details (sender, amount, tokenId)
    */
-  function getTransfer(address _transitAddress)
+  function getGift(address _transitAddress)
                 public
-                constant
+                view
+
     returns (
 	     address sender, // transfer sender
 	     uint amount,
-	     uint256 tokenId) // in wei
+	     uint256 tokenId,
+	     Statuses status,
+	          string tokenURI
+	     ) // in wei
   {
     Gift memory gift = gifts[_transitAddress];
+
+    MintableNFT nft = MintableNFT(NFT_ADDRESS);
+
     return (
 	    gift.sender,
 	    gift.amount,
-	       gift.tokenId
+	    gift.tokenId,
+	    gift.status,
+	    nft.tokenURI(gift.tokenId)
 	    );
   }
 
@@ -223,14 +252,14 @@ contract eth2giftEscrow is Stoppable {
     // only sender can cancel transfer;
     require(msg.sender == gift.sender);
 
-    delete gifts[_transitAddress];
+    gift.status = Statuses.Cancelled;
 
     // transfer ether to recipient's address
     gift.sender.transfer(gift.amount);
 
     // send nft
     ERC721 nft = ERC721(NFT_ADDRESS);
-    nft.transferFrom(address(this), gift.sender, gift.tokenId);
+    nft.transferFrom(address(this), msg.sender, gift.tokenId);
 
     // log cancel event
     emit LogCancel(msg.sender, _transitAddress, gift.tokenId);
@@ -262,6 +291,38 @@ contract eth2giftEscrow is Stoppable {
 
 
   /**
+   * @dev Verify that address is signed with correct verification private key.
+   * @param _transitAddress transit address assigned to transfer
+   * @param _recipient address Signed address.
+   * @param _v ECDSA signature parameter v.
+   * @param _r ECDSA signature parameters r.
+   * @param _s ECDSA signature parameters s.
+   * @return True if signature is correct.
+   */
+  function canWithdraw(
+		       address _transitAddress,
+		       address _recipient,
+		       uint8 _v,
+		       bytes32 _r,
+		       bytes32 _s)
+    public constant returns(bool success)
+  {
+
+    Gift memory gift = gifts[_transitAddress];
+
+    // verifying signature
+    require(verifySignature(_transitAddress,
+			    _recipient, _v, _r, _s ));
+
+    // wasn't withdrawn before
+    require(gift.status == Statuses.Deposited);
+
+    return true;
+  }
+
+
+
+  /**
    * @dev Withdraw transfer to recipient's address if it is correctly signed
    * with private key for verification public key assigned to transfer.
    * 
@@ -286,14 +347,11 @@ contract eth2giftEscrow is Stoppable {
   {
     Gift memory gift = gifts[_transitAddress];
 
-    // wasn't withdrawn before
-    require(gift.tokenId != 0);
-
     // verifying signature
-    require(verifySignature(_transitAddress,
-			    _recipient, _v, _r, _s ));
+    require(canWithdraw(_transitAddress,
+			_recipient, _v, _r, _s ));
 
-    delete gifts[_transitAddress];
+    gift.status = Statuses.Claimed;
 
     // send nft
     ERC721 nft = ERC721(NFT_ADDRESS);

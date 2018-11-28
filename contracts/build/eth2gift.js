@@ -1,80 +1,59 @@
 module.exports = [
     {
 	"constant": false,
-	"inputs": [],
-	"name": "stop",
-	"outputs": [],
+	"inputs": [
+	    {
+		"name": "_tokenId",
+		"type": "uint256"
+	    },
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    }
+	],
+	"name": "buyGiftLink",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "bool"
+	    }
+	],
+	"payable": true,
+	"stateMutability": "payable",
+	"type": "function"
+    },
+    {
+	"constant": false,
+	"inputs": [
+	    {
+		"name": "_tokenId",
+		"type": "uint256"
+	    },
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    }
+	],
+	"name": "canBuyGiftLink",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "bool"
+	    }
+	],
 	"payable": false,
 	"stateMutability": "nonpayable",
 	"type": "function"
     },
     {
-	"constant": true,
-	"inputs": [],
-	"name": "commissionToWithdraw",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "uint256"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
-	"type": "function"
-    },
-    {
-	"constant": true,
-	"inputs": [],
-	"name": "verifier",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "address"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
-	"type": "function"
-    },
-    {
-	"constant": true,
+	"constant": false,
 	"inputs": [
 	    {
 		"name": "_transitAddress",
 		"type": "address"
-	    },
-	    {
-		"name": "_recipient",
-		"type": "address"
-	    },
-	    {
-		"name": "_v",
-		"type": "uint8"
-	    },
-	    {
-		"name": "_r",
-		"type": "bytes32"
-	    },
-	    {
-		"name": "_s",
-		"type": "bytes32"
 	    }
 	],
-	"name": "verifySignature",
-	"outputs": [
-	    {
-		"name": "success",
-		"type": "bool"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "pure",
-	"type": "function"
-    },
-    {
-	"constant": false,
-	"inputs": [],
-	"name": "withdrawCommission",
+	"name": "cancelTransfer",
 	"outputs": [
 	    {
 		"name": "success",
@@ -83,43 +62,6 @@ module.exports = [
 	],
 	"payable": false,
 	"stateMutability": "nonpayable",
-	"type": "function"
-    },
-    {
-	"constant": false,
-	"inputs": [],
-	"name": "unpause",
-	"outputs": [],
-	"payable": false,
-	"stateMutability": "nonpayable",
-	"type": "function"
-    },
-    {
-	"constant": true,
-	"inputs": [],
-	"name": "paused",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "bool"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
-	"type": "function"
-    },
-    {
-	"constant": true,
-	"inputs": [],
-	"name": "commissionFee",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "uint256"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
 	"type": "function"
     },
     {
@@ -142,23 +84,46 @@ module.exports = [
 	"type": "function"
     },
     {
-	"constant": true,
-	"inputs": [],
-	"name": "stopped",
+	"constant": false,
+	"inputs": [
+	    {
+		"name": "_newVerifier",
+		"type": "address"
+	    }
+	],
+	"name": "changeVerifier",
 	"outputs": [
 	    {
-		"name": "",
+		"name": "success",
 		"type": "bool"
 	    }
 	],
 	"payable": false,
-	"stateMutability": "view",
+	"stateMutability": "nonpayable",
 	"type": "function"
     },
     {
 	"constant": false,
 	"inputs": [],
 	"name": "pause",
+	"outputs": [],
+	"payable": false,
+	"stateMutability": "nonpayable",
+	"type": "function"
+    },
+    {
+	"constant": false,
+	"inputs": [],
+	"name": "stop",
+	"outputs": [],
+	"payable": false,
+	"stateMutability": "nonpayable",
+	"type": "function"
+    },
+    {
+	"constant": false,
+	"inputs": [],
+	"name": "unpause",
 	"outputs": [],
 	"payable": false,
 	"stateMutability": "nonpayable",
@@ -200,51 +165,9 @@ module.exports = [
 	"type": "function"
     },
     {
-	"constant": true,
+	"constant": false,
 	"inputs": [],
-	"name": "owner",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "address"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
-	"type": "function"
-    },
-    {
-	"constant": false,
-	"inputs": [
-	    {
-		"name": "_tokenId",
-		"type": "uint256"
-	    },
-	    {
-		"name": "_transitAddress",
-		"type": "address"
-	    }
-	],
-	"name": "buyGiftLink",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "bool"
-	    }
-	],
-	"payable": true,
-	"stateMutability": "payable",
-	"type": "function"
-    },
-    {
-	"constant": false,
-	"inputs": [
-	    {
-		"name": "_transitAddress",
-		"type": "address"
-	    }
-	],
-	"name": "cancelTransfer",
+	"name": "withdrawCommission",
 	"outputs": [
 	    {
 		"name": "success",
@@ -253,66 +176,6 @@ module.exports = [
 	],
 	"payable": false,
 	"stateMutability": "nonpayable",
-	"type": "function"
-    },
-    {
-	"constant": true,
-	"inputs": [],
-	"name": "NFT_ADDRESS",
-	"outputs": [
-	    {
-		"name": "",
-		"type": "address"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
-	"type": "function"
-    },
-    {
-	"constant": false,
-	"inputs": [
-	    {
-		"name": "_newVerifier",
-		"type": "address"
-	    }
-	],
-	"name": "changeVerifier",
-	"outputs": [
-	    {
-		"name": "success",
-		"type": "bool"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "nonpayable",
-	"type": "function"
-    },
-    {
-	"constant": true,
-	"inputs": [
-	    {
-		"name": "_transitAddress",
-		"type": "address"
-	    }
-	],
-	"name": "getTransfer",
-	"outputs": [
-	    {
-		"name": "sender",
-		"type": "address"
-	    },
-	    {
-		"name": "amount",
-		"type": "uint256"
-	    },
-	    {
-		"name": "tokenId",
-		"type": "uint256"
-	    }
-	],
-	"payable": false,
-	"stateMutability": "view",
 	"type": "function"
     },
     {
@@ -322,16 +185,8 @@ module.exports = [
 		"type": "uint256"
 	    },
 	    {
-		"name": "_verifier",
+		"name": "_tokenAddress",
 		"type": "address"
-	    },
-	    {
-		"name": "_name",
-		"type": "string"
-	    },
-	    {
-		"name": "_symbol",
-		"type": "string"
 	    }
 	],
 	"payable": false,
@@ -492,7 +347,222 @@ module.exports = [
 	"inputs": [],
 	"name": "Unpause",
 	"type": "event"
+    },
+    {
+	"constant": true,
+	"inputs": [
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "_recipient",
+		"type": "address"
+	    },
+	    {
+		"name": "_v",
+		"type": "uint8"
+	    },
+	    {
+		"name": "_r",
+		"type": "bytes32"
+	    },
+	    {
+		"name": "_s",
+		"type": "bytes32"
+	    }
+	],
+	"name": "canWithdraw",
+	"outputs": [
+	    {
+		"name": "success",
+		"type": "bool"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "commissionFee",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "uint256"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "commissionToWithdraw",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "uint256"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    }
+	],
+	"name": "getGift",
+	"outputs": [
+	    {
+		"name": "sender",
+		"type": "address"
+	    },
+	    {
+		"name": "amount",
+		"type": "uint256"
+	    },
+	    {
+		"name": "tokenId",
+		"type": "uint256"
+	    },
+	    {
+		"name": "status",
+		"type": "uint8"
+	    },
+	    {
+		"name": "tokenURI",
+		"type": "string"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "NFT_ADDRESS",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "address"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "owner",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "address"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "paused",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "bool"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "SELLER",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "address"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "stopped",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "bool"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [],
+	"name": "verifier",
+	"outputs": [
+	    {
+		"name": "",
+		"type": "address"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "_recipient",
+		"type": "address"
+	    },
+	    {
+		"name": "_v",
+		"type": "uint8"
+	    },
+	    {
+		"name": "_r",
+		"type": "bytes32"
+	    },
+	    {
+		"name": "_s",
+		"type": "bytes32"
+	    }
+	],
+	"name": "verifySignature",
+	"outputs": [
+	    {
+		"name": "success",
+		"type": "bool"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "pure",
+	"type": "function"
     }
-];
-
-
+]

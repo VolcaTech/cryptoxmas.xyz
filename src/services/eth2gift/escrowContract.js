@@ -4,8 +4,8 @@ const contract = require('truffle-contract');
 import web3Service from "../web3Service";
 import NFTService from './NFTService';
 
-const CONTRACT_ADDRESS =  '0x23aa42992ebf24e9ba8596e1578344ddbc9fc523'; 
-
+const CONTRACT_ADDRESS =  '0x43fa0e43eb9fbdc779380920921f2794cb4de914'; 
+const SELLER_ADDRESS = '0xF695e673d7D159CBFc119b53D8928cEca4Efe99e';
 
 
 const EscrowContractService = () => {
@@ -47,7 +47,7 @@ const EscrowContractService = () => {
  
 
     function getGiftsForSale() {
-	return nftService.tokensOf(CONTRACT_ADDRESS);
+	return nftService.tokensOf(SELLER_ADDRESS);
     }
     
     // function getWithdrawalEvents(address, fromBlock){
