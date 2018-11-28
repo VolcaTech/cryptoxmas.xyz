@@ -2,11 +2,14 @@ import Promise from "bluebird";
 import eth2giftABI from '../../../contracts/build/eth2gift';
 const contract = require('truffle-contract');
 import web3Service from "../web3Service";
+import NFTService from './NFTService';
 
-const CONTRACT_ADDRESS =  '0xa15c6e8df890c864c3185898e805fbd32721368c'; 
+const CONTRACT_ADDRESS =  '0x23aa42992ebf24e9ba8596e1578344ddbc9fc523'; 
+
+
 
 const EscrowContractService = () => {
-    var web3, contract;    
+    var web3, contract, nftService;    
 
 
     // function _parseTransfer(result) {
@@ -16,12 +19,16 @@ const EscrowContractService = () => {
     // 	    amount: web3.fromWei(result[3], "ether").toString()
     // 	};
     // }
+
     
     function setup(_web3) {
 	web3 = _web3;
 	contract = web3.eth.contract(eth2giftABI).at(CONTRACT_ADDRESS);
 	Promise.promisifyAll(contract, { suffix: "Promise" });
-	console.log(" eth2phone escrow contract is set up!");
+
+	nftService = new NFTService(web3);
+	
+	console.log(" eth2gift escrow contract is set up!");
     }
     
     function buyGift(tokenId, transitAddress, amount){	
@@ -34,10 +41,14 @@ const EscrowContractService = () => {
 					   });
     }
     
-    function cancel(transitAddress, contractVersion = 2){	
+    function cancel(transitAddress){	
 	return contract.cancelTransferPromise(transitAddress, {from: web3.eth.accounts[0], gas: 100000});
     }
  
+
+    function getGiftsForSale() {
+	return nftService.tokensOf(CONTRACT_ADDRESS);
+    }
     
     // function getWithdrawalEvents(address, fromBlock){
     // 	return new Promise((resolve, reject) => {
@@ -56,6 +67,7 @@ const EscrowContractService = () => {
 	setup,
 	//getWithdrawalEvents,
 	//getAmountWithCommission,
+	getGiftsForSale, 
 	cancel,
 	getContractAddress: () => CONTRACT_ADDRESS
     };
