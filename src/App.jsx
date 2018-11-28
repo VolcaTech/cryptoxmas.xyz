@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RetinaImage from 'react-retina-image';
 import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
 import SendScreen from './components/SendScreen/SendScreen';
@@ -11,6 +12,7 @@ import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-route
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
 import HomeScreen from './components/HomeScreen/HomeScreen.jsx';
+import Footer from './components/common/poweredByVolca'
 
 
 class App extends Component {
@@ -26,11 +28,15 @@ class App extends Component {
     _renderStaticRouter() {
         return (
             <Router>
-                <div style={{width: innerWidth, height: innerHeight, backgroundColor: '#474D5B'}}>
+                <div style={{width: innerWidth, height: innerHeight, backgroundImage:"url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", backgroundColor: '#474D5B' }}>
+                {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
                     <Header />
                     <Switch>
                         <Route component={NoWalletScreen} />			
                     </Switch>
+                    <div style={{width: '100%', margin: 'auto', position: 'fixed', bottom: 0, marginBottom: 30, textAlign: 'center'}}>
+                    <Footer/>
+                    </div>
                 </div>
             </Router>
         );
