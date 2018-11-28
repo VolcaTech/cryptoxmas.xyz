@@ -81,8 +81,9 @@ export const buyGift = ({amount, tokenId}) => {
 	const senderAddress = state.web3Data.address;
 
 	console.log("here");
-	
+	const TOKEN_ADDRESS = '0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276'; // #TODO remove hard-code here
 	const { txHash, transitPrivateKey, transferId, transitAddress } = await eth2gift.buyGift({
+	    tokenAddress: TOKEN_ADDRESS,
 	    tokenId, 
 	    amountToPay: amount,
 	    senderAddress

@@ -4,41 +4,32 @@ const contract = require('truffle-contract');
 import web3Service from "../web3Service";
 import NFTService from './NFTService';
 
-const CONTRACT_ADDRESS =  '0x43fa0e43eb9fbdc779380920921f2794cb4de914'; 
+const CONTRACT_ADDRESS =  '0x219ab684599fe2de90b7687f46fb9f8078ceb0ef'; 
 const SELLER_ADDRESS = '0xF695e673d7D159CBFc119b53D8928cEca4Efe99e';
 
 
 const EscrowContractService = () => {
     var web3, contract, nftService;    
-
-
-    // function _parseTransfer(result) {
-    // 	return {
-    // 	    transitAddress: result[0].toString(),
-    // 	    from: result[2].toString('hex'),
-    // 	    amount: web3.fromWei(result[3], "ether").toString()
-    // 	};
-    // }
-
+    
     
     function setup(_web3) {
 	web3 = _web3;
 	contract = web3.eth.contract(eth2giftABI).at(CONTRACT_ADDRESS);
 	Promise.promisifyAll(contract, { suffix: "Promise" });
-
-	nftService = new NFTService(web3);
-	
+	nftService = new NFTService(web3);	
 	console.log(" eth2gift escrow contract is set up!");
     }
     
-    function buyGift(tokenId, transitAddress, amount){	
-        const weiAmount = web3.toWei(amount, "ether");
-	return contract.buyGiftLinkPromise(web3.toHex(tokenId),
-					   web3.toHex(transitAddress), {
-					       from: web3.eth.accounts[0],
-					       value: weiAmount,
-					       //gas: 110000
-					   });
+    function buyGift(tokenAddress, tokenId, transitAddress, amount){	
+        const weiAmount = web3.toWei(amount, "ether");	
+	return contract.buyGiftLinkPromise(
+	    web3.toHex(tokenAddress),
+	    web3.toHex(tokenId),
+	    web3.toHex(transitAddress), {
+		from: web3.eth.accounts[0],
+		value: weiAmount,
+		//gas: 110000
+	    });
     }
     
     function cancel(transitAddress){	
@@ -49,24 +40,32 @@ const EscrowContractService = () => {
     function getGiftsForSale() {
 	return nftService.tokensOf(SELLER_ADDRESS);
     }
+
+    async function getGift(transitAddress) {
+
+	function _parse(g) {
+    	    return {
+    		transitAddress,
+		sender: g[0],
+		amount: web3.fromWei(g[1], "ether").toString(),
+		tokenAddress: g[2],
+		tokenId: g[3].toString(),
+		status: g[4].toString(),
+    		tokenURI: g[5].toString()    		
+    	    };
+	}
+	const result = await contract.getGiftPromise(transitAddress);
+	const parsed = _parse(result);
+	return parsed;
+    }
     
-    // function getWithdrawalEvents(address, fromBlock){
-    // 	return new Promise((resolve, reject) => {
-    // 	    const eventsGetter = contract.LogWithdraw({'sender': address}, { fromBlock, toBlock: 'latest', address: contractInstance.address });
-    // 	    eventsGetter.get((error, response) => {
-    // 		if (error) { return reject(error); }
-    // 		resolve(response);
-    // 	    });
-    // 	});
-    // };
     
 
     // api
     return {
 	buyGift,
 	setup,
-	//getWithdrawalEvents,
-	//getAmountWithCommission,
+	getGift,
 	getGiftsForSale, 
 	cancel,
 	getContractAddress: () => CONTRACT_ADDRESS

@@ -27,11 +27,11 @@ const getByTransitAddress = async (transitAddress) => {
 }
 
 
-const checkSignature = async (transitAddress, to, v, r, s) => {
+const checkCanWithdraw = async (transitAddress, to, v, r, s) => {
     let isCorrect = false;
     try {
 	log.debug(to, v, r, s);
-	isCorrect = await contractInstance.verifySignature(transitAddress, to, v, r, s);
+	isCorrect = await contractInstance.canWithdraw(transitAddress, to, v, r, s);
 	log.debug("is correct signature:", isCorrect);
     } catch (err)  {
 	log.error(err);
@@ -75,8 +75,8 @@ const withdraw = async (transitAddress, to, v, r, s) => {
 
 
 module.exports = {
-    checkSignature,
+    checkCanWithdraw,
     withdraw,
-    checkTransferStatusBeforeWithdraw,
+    //checkTransferStatusBeforeWithdraw,
     contractInstance
 }

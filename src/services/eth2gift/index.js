@@ -11,14 +11,14 @@ const _generateTransferIdForLink = (address) => {
     return `link-${address}`;
 }
 
-export const buyGift = async ({tokenId, amountToPay, senderAddress}) => {
+export const buyGift = async ({tokenAddress, tokenId, amountToPay, senderAddress}) => {
     const wallet = Wallet.generate();
     const transitAddress = wallet.getChecksumAddressString();
     const transitPrivateKey = wallet.getPrivateKeyString().substring(2);
     const transferId = _generateTransferIdForLink(transitAddress);
     
     // 3. send deposit to smart contract
-    const txHash = await escrowContract.buyGift(tokenId, transitAddress, amountToPay);
+    const txHash = await escrowContract.buyGift(tokenAddress, tokenId, transitAddress, amountToPay);
     return { txHash, transitPrivateKey, transferId, transitAddress };
 }
 

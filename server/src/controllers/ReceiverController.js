@@ -31,10 +31,9 @@ const claimGift = async (req, res) => {
 	throw new Error('Please provide valid signature (s)');
     };
 
-    const transferBc = await EscrowContractService.checkTransferStatusBeforeWithdraw(transitAddress);
 
     // check that signature is valid
-    const signatureValid = await EscrowContractService.checkSignature(transitAddress,
+    const signatureValid = await EscrowContractService.checkCanWithdraw(transitAddress,
 								      receiverAddress, v, r, s);
     if (!signatureValid) {
 	throw new Error('Signature is not valid');

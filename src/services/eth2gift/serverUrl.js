@@ -8,8 +8,8 @@ const ServerUrlGetter = () => {
 	    serverUrl = 'http://ropsten.eth2phone.com:3006';
 	    break;
 	case '3':
-	    //serverUrl = 'https://ropsten.eth2phone.com';
-	    serverUrl = 'http://ropsten.eth2phone.com:3006';
+	    serverUrl = 'http://localhost:3006';
+	    //serverUrl = 'http://ropsten.eth2phone.com:3006';
 	    break;	    
 	default:
 	    serverUrl = null;
