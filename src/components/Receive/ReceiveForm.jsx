@@ -48,59 +48,33 @@ class ReceiveScreen extends Component {
 
         const queryParams = qs.parse(props.location.search.substring(1));
         const transitPrivateKey = queryParams.pk;
-        const amount = queryParams.a;
         this.networkId = queryParams.chainId || queryParams.n || "1";
 	
         this.state = {
             errorMessage: "",
-            fetching: false,
-            transfer: null,
+            fetching: true,
+            gift: null,
             transitPrivateKey,
-            amount
+	    claiming: false
         };
     }
 
+    async componentDidMount() {
+	try { 
+	    const gift = await eth2gift.getGift(this.state.transitPrivateKey);
+	    this.setState({
+		fetching: false,
+		gift
+	    });
+	} catch(err) {
+	    console.log(err);
+	    this.setState({
+		errorMessage: "Error occured while getting gift from blockchain!"
+		
+	    });
+	}
+    }
     
-    // async componentDidMount() {
-    //     if (this.state.transitPrivateKey) {
-    //         await this._fetchTransferFromServer();
-    //     } else {
-    // 	    alert("No secret code or transit private key provided in url!");
-    //         this.setState({ fetching: false });
-    // 	}
-    // }
-
-    // async _fetchTransferFromServer() {
-    //     let result;
-    //     try {
-    //         this._checkNetwork();
-	    
-    //         // result = await e2pService.fetchTransferDetailsFromServer({
-    //         //     phone: this.phoneParams.phone,
-    //         //     phoneCode: this.phoneParams.phoneCode,
-    //         //     secretCode: this.state.secretCode,
-    // 	    // 	transitPrivateKey: this.state.transitPrivateKey
-    //         // });
-
-    // 	    console.log({result});
-	    
-    //         if (!result.success) { throw new Error(result.errorMessage || "Server error"); };
-    //         //result.transfer.txHash = getTxHashForStatus(result.transfer);
-    //         result.transfer.networkId = this.props.networkId;
-	    
-    //         this.setState({
-    //             fetching: false,
-    //             transfer: result.transfer,
-    //             transferStatus: result.transfer.status
-    //         });
-
-            
-    //     } catch (err) {
-    //         this.setState({ fetching: false, errorMessage: err.message, transfer: null });
-    //     }
-    //     this.setState({ fetching: false });
-    // }
-
     
     _checkNetwork() {
         if (this.networkId && this.networkId != this.props.networkId) {
@@ -115,8 +89,8 @@ class ReceiveScreen extends Component {
     async _withdrawWithPK() {
         let result;
         try {
-            const transitPrivateKey = this.state.transitPrivateKey;
-            const result = await this.props.claimGift({transitPrivateKey});
+            const { transitPrivateKey, gift } = this.state;
+            const result = await this.props.claimGift({transitPrivateKey, gift});
             this.props.history.push(`/transfers/${result.id}`);
         } catch (err) {
 	    console.log(err);
@@ -135,19 +109,26 @@ class ReceiveScreen extends Component {
     
     _renderForm() {
 
-	const transfer = {
-	    amount: 0.333	    
+	if (this.state.fetching) {
+	    return (<Loader text="Getting gift"/>);
+	}
+
+
+	// if gift was already claimed
+	console.log(this.state.gift);
+	if (this.state.gift.status !== "1") {
+	    return (<div>Gift was already claimed</div>);
 	}
 	
         return (
 	    <div style={{ flexDirection: 'column', alignItems: 'center' }}>
               <div style={{ height: 250 }}>
                 <div style={styles.titleContainer}>
-                  <span style={styles.title}>Claim Ether</span>
+                  <span style={styles.title}>Claim Token</span>
                 </div>
 
                 <div style={styles.amountContainer}>
-                  <span style={styles.amountNumber}>{transfer.amount} </span><span style={styles.amountSymbol}>ETH</span>
+                  <span style={styles.amountNumber}>{this.state.gift.amount} </span><span style={styles.amountSymbol}>ETH</span>
                 </div>
 
                 <div style={styles.button}>

@@ -4,7 +4,7 @@ const contract = require('truffle-contract');
 import web3Service from "../web3Service";
 import NFTService from './NFTService';
 
-const CONTRACT_ADDRESS =  '0x219ab684599fe2de90b7687f46fb9f8078ceb0ef'; 
+const CONTRACT_ADDRESS =  '0xa1d89cb2dc2283325dde52defd2056e099916103'; 
 const SELLER_ADDRESS = '0xF695e673d7D159CBFc119b53D8928cEca4Efe99e';
 
 

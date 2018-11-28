@@ -24,6 +24,12 @@ export const buyGift = async ({tokenAddress, tokenId, amountToPay, senderAddress
 
 
 export const cancelTransfer = ((transitAddress, contractVersion) => escrowContract.cancel(transitAddress, contractVersion));
+export const getGift = (transitPrivateKey) => { 
+    const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
+    return escrowContract.getGift(transitAddress);
+}
+
+
 //export const getAmountWithCommission = ((amount) => escrowContract.getAmountWithCommission(amount));
 //export const getWithdrawalEvents = ((address, fromBlock) => escrowContract.getWithdrawalEvents(address, fromBlock));
 
@@ -37,7 +43,6 @@ const _getAddressFromPrivateKey = (privateKey) => {
 export const getGiftsForSale = () => escrowContract.getGiftsForSale();
 
 export const claimGift = async ({transitPrivateKey, receiverAddress}) => {
-    console.log({transitPrivateKey})
     const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
     const transferId = _generateTransferIdForLink(transitAddress);
     

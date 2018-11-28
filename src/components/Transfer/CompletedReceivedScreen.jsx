@@ -45,7 +45,7 @@ const CompletedReceivedScreen = ({transfer}) => {
 	dappStoreUrl = wallets[currentWalletId].dappStoreUrl;
     }
 	
-    
+    const gift = transfer.gift || {};
     
     return (
 	<div>
@@ -59,7 +59,7 @@ const CompletedReceivedScreen = ({transfer}) => {
 	    <div style={styles.titleContainer}>
 	      
 	      <div className="title center">
-		You claimed <span className="text-blue">{transfer.amount}</span>
+		You claimed <span className="text-blue">{gift.amount}</span>
 		<span className="text-gray"> ETH</span>
 	      </div> 
 	    </div>

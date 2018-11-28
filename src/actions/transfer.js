@@ -115,7 +115,7 @@ export const buyGift = ({amount, tokenId}) => {
 }
 
 
-export const claimGift = ({transitPrivateKey}) => {
+export const claimGift = ({transitPrivateKey, gift}) => {
     return async (dispatch, getState) => {
 	
 	const state = getState();
@@ -133,15 +133,14 @@ export const claimGift = ({transitPrivateKey}) => {
 	const amount = result.amount;
 	const transfer = {
             id,
-            verificationType: 'none',                
+            verificationType: 'none',           
 	    txHash,
 	    transferId: result.transferId,
 	    status: 'receiving',
 	    networkId,
 	    receiverAddress,
 	    timestamp: Date.now(),
-	    amount,	    
-	    fee: 0,
+	    gift,
 	    direction: 'in'
 	};
 	dispatch(createTransfer(transfer));
