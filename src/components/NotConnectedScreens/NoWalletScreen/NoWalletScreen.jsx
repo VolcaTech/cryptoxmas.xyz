@@ -86,17 +86,7 @@ class NoWalletScreen extends Component {
               <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
               <div style={{ ...styles.title, marginTop: 10 }}>You need wallet to<br />send or receive ether</div>
               <a href={deepLink} style={styles.button} target="_blank"> Use {this.state.selectedWallet.name} </a>
-              {
-		  this.state.showCarousel === true?
-		      <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet}/> :
-   	   	      <div style={styles.anotherWallet} onClick={() => this.setState({ showCarousel: true })}>Have another wallet?</div>		      
-  	      }
-			  
-   	      {
-	        this.state.showInstruction === true ?
-   	          <Instructions wallet={this.state.selectedWallet} /> :
-		  <RetinaImage style={{ display: 'block', margin: 'auto', marginTop: 40 }} src="https://eth2.io/images/q.png" onClick={() => this.setState({ showInstruction: true })} />
-  	      }
+
 		    
             </div>
         );	
@@ -110,8 +100,6 @@ class NoWalletScreen extends Component {
             <div>
               <div><img src={walletIcon} style={styles.largeWalletIcon} /></div>
               <div style={{ ...styles.title, marginTop: 10 }}>How to use<br />{this.state.selectedWallet.name}</div>
-   	      <Instructions wallet={this.state.selectedWallet} />	      
-	      <WalletSlider selectWallet={this._selectWallet.bind(this)} selectedWallet={this.state.selectedWallet}/> 			  
             </div>
         );	
     }

@@ -5,7 +5,7 @@ import web3Service from './services/web3Service';
 import SendScreen from './components/SendScreen/SendScreen';
 import ReceiveForm from './components/Receive/ReceiveForm';
 import TransferComponent from './components/Transfer';
-import NoWalletHeader from './components/common/NoWalletHeader';
+import Header from './components/common/Header/Header';
 import { Loader } from './components/common/Spinner';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
@@ -17,7 +17,7 @@ class App extends Component {
     _renderWrongNetwork() {
         return (
             <div>
-                <NoWalletHeader />
+                <Header />
                 <UnsupportedNetwork />
             </div>
         );
@@ -26,8 +26,8 @@ class App extends Component {
     _renderStaticRouter() {
         return (
             <Router>
-                <div>
-                    <NoWalletHeader />
+                <div style={{width: innerWidth, height: innerHeight, backgroundColor: '#474D5B'}}>
+                    <Header />
                     <Switch>
                         <Route component={NoWalletScreen} />			
                     </Switch>
