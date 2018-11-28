@@ -41,21 +41,30 @@ const EscrowContractService = () => {
 	return nftService.tokensOf(SELLER_ADDRESS);
     }
 
+    
+    
     async function getGift(transitAddress) {
+	
+	async function _parse(g) {
 
-	function _parse(g) {
+	    const tokenURI = g[5].toString();
+	    const tokenId = g[3].toString();
+	    const { image, name, description } = await nftService.getMetadata(tokenURI, tokenId);
+	    
     	    return {
     		transitAddress,
 		sender: g[0],
 		amount: web3.fromWei(g[1], "ether").toString(),
 		tokenAddress: g[2],
-		tokenId: g[3].toString(),
+		tokenId,
 		status: g[4].toString(),
-    		tokenURI: g[5].toString()    		
+    		image,
+		name,
+		description
     	    };
 	}
 	const result = await contract.getGiftPromise(transitAddress);
-	const parsed = _parse(result);
+	const parsed = await _parse(result);
 	return parsed;
     }
     

@@ -92,16 +92,19 @@ class HomeScreen extends Component {
     }
 
     async componentDidMount() {
-	const tokens = await eth2gift.getGiftsForSale();	
+	const tokens = await eth2gift.getGiftsForSale();
+	console.log({tokens})
 	this.setState({ fetching: false, tokens });
     }
 
-    _renderToken(tokenId) {
+    _renderToken(token) {
+	const { tokenId, metadata } = token;
+	
 	return (
 	    <div key={tokenId}>
 	      <a href={`/#/send/${tokenId}`}>
-		<div>Token #{tokenId}</div>
-		<img className="img-responsive" src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thebostoncalendar.com%2Fsystem%2Fevents%2Fphotos%2F000%2F004%2F859%2Foriginal%2Fsanta.jpg%3F1443855983&f=1"/>
+		<div>{metadata.name}</div>
+		<img className="img-responsive" src={metadata.image}/>
 	      </a>
 	    </div>
 	);
