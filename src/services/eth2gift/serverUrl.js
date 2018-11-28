@@ -5,11 +5,11 @@ const ServerUrlGetter = () => {
     function setNetwork(networkId) {
 	switch (networkId) {
 	case '1':
-	    serverUrl = 'https://mainnet.eth2phone.com';
+	    serverUrl = 'http://ropsten.eth2phone.com:3006';
 	    break;
 	case '3':
 	    //serverUrl = 'https://ropsten.eth2phone.com';
-	    serverUrl = 'http://localhost:3006';
+	    serverUrl = 'http://ropsten.eth2phone.com:3006';
 	    break;	    
 	default:
 	    serverUrl = null;
