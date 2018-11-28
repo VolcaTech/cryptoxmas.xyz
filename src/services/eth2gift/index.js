@@ -34,6 +34,8 @@ const _getAddressFromPrivateKey = (privateKey) => {
 }
 
 
+export const getGiftsForSale = () => escrowContract.getGiftsForSale();
+
 export const claimGift = async ({transitPrivateKey, receiverAddress}) => {
     console.log({transitPrivateKey})
     const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);

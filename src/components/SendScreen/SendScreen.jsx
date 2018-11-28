@@ -85,8 +85,8 @@ class SendScreen extends Component {
     constructor(props) {
         super(props);
 
-        const queryParams = qs.parse(props.location.search.substring(1));
-        const tokenId = queryParams.tokenId;
+
+        const tokenId = props.match.params.tokenId;
 	
         this.state = {
             amount: 0,

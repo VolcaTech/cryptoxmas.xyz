@@ -10,6 +10,7 @@ import { Loader } from './components/common/Spinner';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
+import HomeScreen from './components/HomeScreen/HomeScreen.jsx';
 
 
 class App extends Component {
@@ -54,7 +55,7 @@ class App extends Component {
 
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Redirect from='/send' to='/' />
+                        <Route exact path='/send/:tokenId' component={SendScreen}/>
 
                         <Route path="/receive" component={ReceiveForm} />
                         <Route path='/r' render={(props) => {
@@ -66,7 +67,7 @@ class App extends Component {
                             );
                         }} />
 
-                        <Route component={SendScreen} />
+                        <Route component={HomeScreen} />
                     </Switch>
 
                 </div>
