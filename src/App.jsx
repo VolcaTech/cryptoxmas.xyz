@@ -27,18 +27,21 @@ class App extends Component {
 
     _renderStaticRouter() {
         return (
+            <div style={{ backgroundColor: '#474D5B' }}>
+            <Header />
             <Router>
-                <div style={{width: innerWidth, height: innerHeight, backgroundImage:"url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", backgroundColor: '#474D5B' }}>
-                {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
+                <div style={{ width: innerWidth, height: innerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)" }}>
+                    {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
                     <Header />
                     <Switch>
-                        <Route component={NoWalletScreen} />			
+                        <Route component={NoWalletScreen} />
                     </Switch>
-                    <div style={{width: '100%', margin: 'auto', position: 'fixed', bottom: 0, marginBottom: 30, textAlign: 'center'}}>
-                    <Footer/>
+                    <div style={{ width: '100%', margin: 'auto', position: 'fixed', bottom: 0, textAlign: 'center' }}>
+                        <Footer />
                     </div>
                 </div>
             </Router>
+            </div>
         );
     }
 
@@ -52,34 +55,35 @@ class App extends Component {
         }
 
         if (this.props.networkId != "3"
-	    // && this.props.networkId != "1"
-	   ) {
+            // && this.props.networkId != "1"
+        ) {
             return this._renderWrongNetwork();
         }
 
         return (
-            <Router>
-                <div>
+            <div style={{ backgroundColor: '#474D5B' }}>
+                <Header />
+                <Router>
+                    <div style={{ width: 414, margin: 'auto', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: outerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", }}>
+                        <Switch>
+                            <Route exact path="/transfers/:transferId" component={TransferComponent} />
+                            <Route exact path='/send/:tokenId' component={SendScreen} />
 
-                    <Switch>
-                        <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Route exact path='/send/:tokenId' component={SendScreen}/>
+                            <Route path="/receive" component={ReceiveForm} />
+                            <Route path='/r' render={(props) => {
+                                return (
+                                    <Redirect to={{
+                                        pathname: '/receive',
+                                        search: props.location.search
+                                    }} />
+                                );
+                            }} />
 
-                        <Route path="/receive" component={ReceiveForm} />
-                        <Route path='/r' render={(props) => {
-                            return (
-                                <Redirect to={{
-                                    pathname: '/receive',
-                                    search: props.location.search
-                                }} />
-                            );
-                        }} />
-
-                        <Route component={HomeScreen} />
-                    </Switch>
-
-                </div>
-            </Router>
+                            <Route component={HomeScreen} />
+                        </Switch>
+                    </div>
+                </Router>
+            </div>
 
         );
     }
