@@ -21,7 +21,7 @@ All proceeds, excluding gas cost for the NFT token creation, is donated via the 
 
 ## Not happy with your present? 
 
-All Crypto Christmas NFT Cards, with or without Ether, can be traded on opensea.io
+All Crypto Christmas NFT Cards, with or without Ether, can be traded on [opensea.io](https://opensea.io/)
 
 ## Non-custodian escrow via eth2.io
 
@@ -31,7 +31,6 @@ All Crypto Christmas NFT Cards, with or without Ether, can be traded on opensea.
 - The sender buys Christmas Card by sending ETH covering the tx fee and donation fee to an escrow contract.
 
 ![Send](/public/eth2phone_send.png)
-
 
 
 ### Receiving flow
