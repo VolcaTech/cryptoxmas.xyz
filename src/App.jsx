@@ -58,7 +58,7 @@ class App extends Component {
         }
 
         return (
-            <div style={{ backgroundColor: '#474D5B' }}>
+            <div style={{ backgroundColor: '#474D5B', }}>
                 <Header />
                 <Router>
                     <div style={{ width: 414, margin: 'auto', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: outerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", }}>
