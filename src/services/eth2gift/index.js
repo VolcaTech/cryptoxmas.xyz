@@ -24,6 +24,7 @@ export const buyGift = async ({tokenAddress, tokenId, amountToPay, senderAddress
 
 
 export const cancelTransfer = ((transitAddress, contractVersion) => escrowContract.cancel(transitAddress, contractVersion));
+export const getTokenMetadata = ((tokenId) => escrowContract.getTokenMetadata(tokenId));
 export const getGift = (transitPrivateKey) => { 
     const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
     return escrowContract.getGift(transitAddress);

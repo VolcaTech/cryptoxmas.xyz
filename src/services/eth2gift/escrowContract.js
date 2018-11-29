@@ -40,6 +40,10 @@ const EscrowContractService = () => {
     function getGiftsForSale() {
 	return nftService.tokensOf(SELLER_ADDRESS);
     }
+    
+    function getTokenMetadata(tokenId) {
+	return nftService.getMetadata(tokenId);
+    }
 
     
     
@@ -49,7 +53,7 @@ const EscrowContractService = () => {
 
 	    const tokenURI = g[5].toString();
 	    const tokenId = g[3].toString();
-	    const { image, name, description } = await nftService.getMetadata(tokenURI, tokenId);
+	    const { image, name, description } = await nftService.getMetadata(tokenId, tokenURI);
 	    
     	    return {
     		transitAddress,
@@ -77,7 +81,8 @@ const EscrowContractService = () => {
 	getGift,
 	getGiftsForSale, 
 	cancel,
-	getContractAddress: () => CONTRACT_ADDRESS
+	getContractAddress: () => CONTRACT_ADDRESS,
+	getTokenMetadata
     };
     
 }

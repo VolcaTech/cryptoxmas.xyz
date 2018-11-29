@@ -80,7 +80,6 @@ class NoWalletScreen extends Component {
 
 
     _renderWithDeepLink(deepLink) {
-	const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;	
 	return (
             <div style={{width: 354, margin: 'auto', marginTop: 50, textAlign: 'left'}}>
               <div style={{ marginBottom: 45, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>Your friend<br />sent you a gift</div>
@@ -107,11 +106,11 @@ class NoWalletScreen extends Component {
     
     _renderForDesktop() {
 	return(
-            <div>
+            <div style={{color: 'white'}}>
               <div style={styles.title}>You need wallet to<br />send or receive ether</div>
               <div style={{ ...styles.instructionsText, textAlign: 'center' }}> On desktop we recommend Metamask </div>
               <div style={styles.instructionsContainer}>
-                <div style={{ ...styles.instructionsText, fontFamily: 'SF Display Bold' }}>How to:</div>
+                <div style={{ ...styles.instructionsText, fontFamily: 'Inter UI Bold' }}>How to:</div>
                 <div style={styles.instructionsText}> 1. Install Metamask Chrome Extension</div>
                 <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
                 <div style={styles.instructionsText}> 3. Receive Ether (link will be reload automatically) </div>

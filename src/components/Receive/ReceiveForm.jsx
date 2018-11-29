@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Grid } from 'react-bootstrap';
+import RetinaImage from 'react-retina-image';
 import * as eth2gift from '../../services/eth2gift';
 import ButtonPrimary from './../common/ButtonPrimary';
-import { SpinnerOrError, Loader } from './../common/Spinner';
+import { SpinnerOrError, Loader, ButtonLoader } from './../common/Spinner';
 import { getNetworkNameById } from '../../utils';
 const qs = require('querystring');
 import web3Service from "../../services/web3Service";
@@ -35,8 +36,8 @@ const styles = {
         marginBottom: 21
     },
     button: {
-        width: '78%',
-        margin: 'auto'
+        margin: 'auto',
+	marginTop: 40
     },
     green: '#2bc64f'
 }
@@ -70,7 +71,6 @@ class ReceiveScreen extends Component {
 	    console.log(err);
 	    this.setState({
 		errorMessage: "Error occured while getting gift from blockchain!"
-		
 	    });
 	}
     }
@@ -101,7 +101,7 @@ class ReceiveScreen extends Component {
  
     _onSubmit() {
         // // disabling button
-        this.setState({ fetching: true });
+        this.setState({ claiming: true });
 
         // // sending request for sms-code
         this._withdrawWithPK();
@@ -112,39 +112,27 @@ class ReceiveScreen extends Component {
 	if (this.state.fetching) {
 	    return (<Loader text="Getting gift"/>);
 	}
-
-
+	
+	
 	// if gift was already claimed
-	console.log(this.state.gift);
 	if (this.state.gift.status !== "1") {
 	    return (<div>Gift was already claimed</div>);
 	}
-	
-        return (
-	    <div style={{ flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ height: 250 }}>
-                <div style={styles.titleContainer}>
-                  <span style={styles.title}>Claim Token</span>
-                </div>
-
-                <div style={styles.amountContainer}>
-                  <span style={styles.amountNumber}>{this.state.gift.amount} </span><span style={styles.amountSymbol}>ETH</span>
-                </div>
-
+	return ( 
+		<div style={{width: 354, margin: 'auto', marginTop: 50, textAlign: 'left'}}>
+		<div style={{ marginBottom: 45, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>Your friend<br />sent you a gift</div>
+		<RetinaImage className="img-responsive" style={{ margin: 'auto'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/letter.png" />
                 <div style={styles.button}>
                   <ButtonPrimary
-                     handleClick={this._onSubmit.bind(this)}
-                     disabled={this.state.fetching}
-                     buttonColor={styles.green}>
-                    Confirm
-		  </ButtonPrimary>
+            handleClick={this._onSubmit.bind(this)}
+            disabled={this.state.fetching}
+            buttonColor={styles.green}>
+	    {this.state.claiming ? <ButtonLoader /> : "Claim"}
+	    </ButtonPrimary>
+                <SpinnerOrError fetching={false} error={this.state.errorMessage} />		
                 </div>
-
-                <SpinnerOrError fetching={this.state.fetching} error={this.state.errorMessage} />
-
-              </div>
-	    </div>
-        );
+            </div>
+	);
     }
     
     render() {

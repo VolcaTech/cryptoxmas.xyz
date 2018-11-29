@@ -12,7 +12,18 @@ import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-route
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
 import HomeScreen from './components/HomeScreen/HomeScreen.jsx';
-import Footer from './components/common/poweredByVolca'
+import Footer from './components/common/poweredByVolca';
+
+const styles = {
+    background: {
+	// width: 414,
+	margin: 'auto',
+	backgroundPosition: 'center',
+	backgroundRepeat: 'no-repeat',
+	height: outerHeight,
+	backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)"
+    }
+}
 
 
 class App extends Component {
@@ -27,18 +38,18 @@ class App extends Component {
 
     _renderStaticRouter() {
         return (
+            <div style={{ backgroundColor: '#474D5B' }}>
+            <Header />
             <Router>
-                <div style={{width: innerWidth, height: innerHeight, backgroundImage:"url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", backgroundColor: '#474D5B' }}>
-                {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
-                    <Header />
+                <div style={styles.background}>
+                    {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
                     <Switch>
-                        <Route component={NoWalletScreen} />			
+                        <Route component={NoWalletScreen} />
                     </Switch>
-                    <div style={{width: '100%', margin: 'auto', position: 'fixed', bottom: 0, marginBottom: 30, textAlign: 'center'}}>
-                    <Footer/>
-                    </div>
+                        <Footer />
                 </div>
             </Router>
+            </div>
         );
     }
 
@@ -52,34 +63,35 @@ class App extends Component {
         }
 
         if (this.props.networkId != "3"
-	    // && this.props.networkId != "1"
-	   ) {
+            // && this.props.networkId != "1"
+        ) {
             return this._renderWrongNetwork();
         }
 
         return (
-            <Router>
-                <div>
+            <div style={{ backgroundColor: '#474D5B' }}>
+                <Header />
+                <Router>
+                    <div style={styles.background}>
+                        <Switch>
+                            <Route exact path="/transfers/:transferId" component={TransferComponent} />
+                            <Route exact path='/send/:tokenId' component={SendScreen} />
 
-                    <Switch>
-                        <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Route exact path='/send/:tokenId' component={SendScreen}/>
+                            <Route path="/receive" component={ReceiveForm} />
+                            <Route path='/r' render={(props) => {
+                                return (
+                                    <Redirect to={{
+                                        pathname: '/receive',
+                                        search: props.location.search
+                                    }} />
+                                );
+                            }} />
 
-                        <Route path="/receive" component={ReceiveForm} />
-                        <Route path='/r' render={(props) => {
-                            return (
-                                <Redirect to={{
-                                    pathname: '/receive',
-                                    search: props.location.search
-                                }} />
-                            );
-                        }} />
-
-                        <Route component={HomeScreen} />
-                    </Switch>
-
-                </div>
-            </Router>
+                            <Route component={HomeScreen} />
+                        </Switch>
+                    </div>
+                </Router>
+            </div>
 
         );
     }

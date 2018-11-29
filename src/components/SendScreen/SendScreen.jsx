@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
 const qs = require('querystring');
-
+import Footer from './../common/poweredByVolca';
+import TokenImage from './../common/TokenImage';
 import { buyGift } from '../../actions/transfer';
 import NumberInput from './../common/NumberInput';
 import ButtonPrimary from './../common/ButtonPrimary';
 import { Error, ButtonLoader } from './../common/Spinner';
 import web3Service from './../../services/web3Service';
+import * as eth2gift from '../../services/eth2gift';
 
 
 const styles = {
@@ -60,12 +62,13 @@ const styles = {
         marginTop: 10
     },
     betaText: {
-        fontSize: 13,
-        fontFamily: 'SF Display Regular',
-        opacity: 0.4,
+        fontSize: 14,
+        fontFamily: 'Inter UI Regular',
+        color: '#8B8B8B'
     },
     betaContainer: {
-        paddingTop: 8,
+        paddingTop: 15,
+        marginBottom: 50,
         height: 28,
         textAlign: 'center',
     },
@@ -89,7 +92,7 @@ class SendScreen extends Component {
         const tokenId = props.match.params.tokenId;
 	
         this.state = {
-            amount: 0,
+            amount: 0.05,
             errorMessage: "",
             fetching: false,
             buttonDisabled: false,
@@ -98,16 +101,32 @@ class SendScreen extends Component {
             numberInputError: false,
             phoneError: false,
             phoneOrLinkActive: false,
-	    tokenId
+            tokenId,
+	    token: {}
         };
     }
 
+    async componentDidMount() {
+	try { 
+	    const token = await eth2gift.getTokenMetadata(this.state.tokenId);
+	    this.setState({
+		fetching: false,
+		token
+	    });
+	} catch(err) {
+	    console.log(err);
+	    this.setState({
+		errorMessage: "Error occured while getting token from blockchain!"
+	    });
+	}	
+    }
+    
     async _buyGift() {
         try {
-	    console.log("on buy Gift")	    
+            console.log("on buy Gift")
             const transfer = await this.props.buyGift({
                 amount: this.state.amount,
-		tokenId: this.state.tokenId
+                tokenId: this.state.tokenId
             });
             this.props.history.push(`/transfers/${transfer.id}`);
         } catch (err) {
@@ -117,12 +136,12 @@ class SendScreen extends Component {
         }
 
     }
-    
+
 
     _onSubmit() {
         //format balance
         let balance;
-	console.log("onSubmit")
+        console.log("onSubmit")
         const web3 = web3Service.getWeb3();
         if (this.props.balanceUnformatted) {
             balance = web3.fromWei(this.props.balanceUnformatted, 'ether').toNumber();
@@ -163,34 +182,19 @@ class SendScreen extends Component {
 
 
     _renderForm() {
-        const { sendMode } = this.props;
-        let phoneInputStyle;
         return (
             <Row>
-                <Col sm={4} smOffset={4}>
-
-                    <div>                      
-                        <div style={styles.container}>
-                         
-                            <div style={styles.numberInput}>
-                                <NumberInput
-                                    onChange={({ target }) => (this.setState({ amount: target.value, numberInputError: false, errorMessage: "" })
-                                    )}
-                                    disabled={false}
-                                    fontColor='#000000'
-                                    backgroundColor='#fff'
-                                    style={{ touchInput: 'manipulation' }}
-                                    placeholder="ETH amount"
-                                    error={this.state.numberInputError}
-                                />
-                            </div>
-
-                            <div style={styles.sendButton}>
+                <div style={{ width: 354, margin: 'auto', marginTop: 50, textAlign: 'left' }}>
+                    <div style={{ marginBottom: 25, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>
+                    Pack your gift</div>
+                    <div style={{ marginBottom: 40, fontFamily: 'Inter UI Medium', fontSize: 24, color: 'white', textAlign: 'left' }}>Buy a Nifty and create your gift link!</div>
+                </div>
+		<TokenImage price={this.state.amount} url={this.state.token.image || ""} />
+                <div style={styles.sendButton}>
                                 <ButtonPrimary
                                     handleClick={ this._onSubmit.bind(this) }
-                                    buttonColor={this.state.fetching ? styles.blueOpacity : styles.blue}
-                                    disabled={this.state.buttonDisabled}>
-                                    {this.state.fetching ? <ButtonLoader /> : "Send"}
+                                    >
+                                    {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
 
                                 </ButtonPrimary>
 
@@ -199,14 +203,11 @@ class SendScreen extends Component {
                                     error={this.state.errorMessage} />) :
                                     <div style={styles.betaContainer}>
                                         <span style={styles.betaText}>
-                                            *In beta you can send
-				 <span style={styles.betaBold}> 1 ETH</span> max
-				 </span>
+                                        You will get a simple link, sendable<br/>via any messenger
+            	 </span>
                                     </div>}
                             </div>
-                        </div>
-                    </div>
-                </Col>
+                    <Footer/>
             </Row>
 
         );
