@@ -12,7 +12,18 @@ import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-route
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
 import HomeScreen from './components/HomeScreen/HomeScreen.jsx';
-import Footer from './components/common/poweredByVolca'
+import Footer from './components/common/poweredByVolca';
+
+const styles = {
+    background: {
+	// width: 414,
+	margin: 'auto',
+	backgroundPosition: 'center',
+	backgroundRepeat: 'no-repeat',
+	height: outerHeight,
+	backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)"
+    }
+}
 
 
 class App extends Component {
@@ -30,7 +41,7 @@ class App extends Component {
             <div style={{ backgroundColor: '#474D5B' }}>
             <Header />
             <Router>
-                <div style={{ width: 414, margin: 'auto', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: outerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)" }}>
+                <div style={styles.background}>
                     {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
                     <Switch>
                         <Route component={NoWalletScreen} />
@@ -61,7 +72,7 @@ class App extends Component {
             <div style={{ backgroundColor: '#474D5B' }}>
                 <Header />
                 <Router>
-                    <div style={{ width: 414, margin: 'auto', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: outerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", }}>
+                    <div style={styles.background}>
                         <Switch>
                             <Route exact path="/transfers/:transferId" component={TransferComponent} />
                             <Route exact path='/send/:tokenId' component={SendScreen} />

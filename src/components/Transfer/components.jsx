@@ -1,7 +1,7 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
 import ButtonPrimary from './../common/ButtonPrimary';
-const ETH2PHONE_HOST =  'http://localhost:3000';
+const ETH2PHONE_HOST =  'https://cryptoxmas.xyz';
 const shareIcon = require('../../../public/images/share_icon.png');
 import { getCurrentWalletId } from '../../utils';
 import web3Service from './../../services/web3Service';
