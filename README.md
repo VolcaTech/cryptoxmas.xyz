@@ -19,8 +19,11 @@ You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christ
 ### Send
 
 
-cryptoxmas.xyz/public/images/Xmas.png
-      
+
+
+![_config.yml]({{ site.baseurl }}/public/images/Xmas.png
+
+! [Xmas](/public/Xmas.png)      
 
 ![Send](/public/Xmas.png)
 
