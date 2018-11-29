@@ -1,22 +1,35 @@
-# 🎁 Crypto Christmas [WIP] 🎺
+# 🎁 Crypto Christmas 🎺
 
 
-## Christmas Cards & Gifts on Ethereum
+## Send Christmas Cards & Support Venezuelans
 
-With non-fungible Ethereum Christmas Cards you can send messages & gifts to your friends or people in need. 
+Send Christmas Cards, and a Ether Christmas Gift to your friends via a simple shareable link. Using the [eth2.io](https://eth2.io/) technology, your friend only needs to click the link, and does not need to have an Ethereum wallet in advance.  
 
 ![Send](/public/Xmas.png)
 
-### Send to people without Ethereum Wallets
+## Donations managed decentralized with Giveth
 
-Using the eth2.io technology you can generate a simple URL, sendable to anyone — just like a text message. 
-The receiver simply opens the link, gets forwarded to install a wallet and receive the Christmas Card (ERC721 token) and (optionally) ETH. The Christmas Card and ETH are securely hold in an escrow smart contract, until the receiver claims them. If nobody claims the crypto, you can just claim it back yourself.
+All proceeds, excluding gas cost for the NFT token creation, is donated via the decentralized charity platform [giveth.io](https://giveth.io/) to a transparent and traceable charity campaign distributing food to Venezuelans in need.  
 
-### Donate tokens to people in need
+## Donate tokens to people in need
 
 You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christmas for the people most in need.
 
 ## How it works
+
+1) Head to cryptoxmas.xyz
+2) Pick and buy a NFT you like
+3) A fee is transferred to the Giveth Venezuela campaign
+4) Share the link with the friend you want to surprise
+
+
+
+## Not happy with your present? 
+
+All Crypto Christmas NFT Cards, with or without Ether, can be traded on opensea.io
+
+## Non-custodian escrow via eth2.io
+
 
 ### Send
 
@@ -32,7 +45,6 @@ You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christ
 
 - The receiver claims Christmas Card and optional eth. The escrow contract transfers the Christmas Card from the website's address to the receiver’s address
 
-### View eth2.io demos
 * [Sending demo](https://www.youtube.com/watch?v=FeqQyFrmptA)
 * [Receiving demo](https://www.youtube.com/watch?v=qp3kkXKIHP8)
 
