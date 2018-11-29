@@ -92,7 +92,7 @@ class SendScreen extends Component {
         const tokenId = props.match.params.tokenId;
 
         this.state = {
-            amount: 0,
+            amount: 0.05,
             errorMessage: "",
             fetching: false,
             buttonDisabled: false,

@@ -30,15 +30,12 @@ class App extends Component {
             <div style={{ backgroundColor: '#474D5B' }}>
             <Header />
             <Router>
-                <div style={{ width: innerWidth, height: innerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)" }}>
+                <div style={{ width: 414, margin: 'auto', backgroundPosition: 'right', backgroundRepeat: 'no-repeat', height: outerHeight, backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)" }}>
                     {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
-                    <Header />
                     <Switch>
                         <Route component={NoWalletScreen} />
                     </Switch>
-                    <div style={{ width: '100%', margin: 'auto', position: 'fixed', bottom: 0, textAlign: 'center' }}>
                         <Footer />
-                    </div>
                 </div>
             </Router>
             </div>
