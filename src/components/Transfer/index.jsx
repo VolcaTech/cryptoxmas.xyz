@@ -5,8 +5,7 @@ import { getAllTransfers } from '../../data/selectors';
 import CompletedSentScreen from './CompletedSentScreen';
 import DepositedScreen from './DepositedScreen';
 import CompletedReceivedScreen from './CompletedReceivedScreen';
-import DepositingScreen from './DepositingTransfer';
-import ReceivingScreen from './ReceivingScreen';
+import PendingTxScreen from './PendingTxScreen';
 import CancellingScreen from './CancellingScreen';
 import CancelledTransferScreen from './CancelledTransferScreen';
 import TxErrorScreen from './TxErrorScreen';
@@ -28,12 +27,9 @@ export class TransferComponent extends Component {
 	
         switch (transfer.status) {
         case 'depositing':
+        case 'receiving':	    
             return (
-                <DepositingScreen transfer={transfer} />
-            );
-        case 'receiving':
-            return (
-                <ReceivingScreen transfer={transfer} />
+                <PendingTxScreen transfer={transfer} />
             );
         case 'deposited':
             return (

@@ -5,7 +5,7 @@ import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-route
 import { ShareButton } from './components';
 import { Row, Col } from 'react-bootstrap';
 import RetinaImage from 'react-retina-image';
-import Footer from './../common/poweredByVolca'
+import Footer from './../common/poweredByVolca';
 
 
 const styles = {
@@ -39,7 +39,7 @@ const styles = {
 
 
 
-const DepoisitingScreen = ({ transfer }) => {
+const PendingTxScreen = ({ transfer }) => {
 
     const etherscanLink = getEtherscanLink({ txHash: transfer.txHash, networkId: transfer.networkId });
 
@@ -52,7 +52,7 @@ const DepoisitingScreen = ({ transfer }) => {
                     <div style={{ marginBottom: 40, fontFamily: 'Inter UI Medium', fontSize: 24, color: 'white', textAlign: 'left' }}>Transaction is processing</div>
                     <div style={{ marginBottom: 50, fontFamily: 'Inter UI Regular', fontSize: 18, color: '#8B8B8B', textAlign: 'left' }}>
                         It may take a few minutes. You can<br />check the status later here
-            <div style={{ marginTop: 8 }}>Details on <a href={etherscanLink} style={{ textDecoration: 'underline', color: '#8B8B8B', }}> Etherscan</a>
+            <div style={{ marginTop: 8 }}>Details on <a target="_blank" href={etherscanLink} style={{ textDecoration: 'underline', color: '#8B8B8B', }}> Etherscan</a>
                         </div>
                     </div>
                 </div>
@@ -67,4 +67,4 @@ const DepoisitingScreen = ({ transfer }) => {
 }
 
 
-export default DepoisitingScreen;
+export default PendingTxScreen;
