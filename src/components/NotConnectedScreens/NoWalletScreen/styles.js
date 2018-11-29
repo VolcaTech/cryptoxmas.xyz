@@ -6,7 +6,7 @@ export default {
         margin: 'auto',
         fontSize: 24,
         lineHeight: 1,
-        fontFamily: 'SF Display Black',
+        fontFamily: 'Inter UI Bold',
         textAlign: 'center',
         marginBottom: 25,
         marginTop: 50
@@ -70,7 +70,7 @@ export default {
         marginBottom: 20
     },
     instructionsText: {
-        fontFamily: "SF Display Regular",
+        fontFamily: "Inter UI Regular",
         fontSize: 14,
         marginBottom: 5
     },

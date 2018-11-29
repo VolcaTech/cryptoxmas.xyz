@@ -107,11 +107,11 @@ class NoWalletScreen extends Component {
     
     _renderForDesktop() {
 	return(
-            <div>
+            <div style={{color: 'white'}}>
               <div style={styles.title}>You need wallet to<br />send or receive ether</div>
               <div style={{ ...styles.instructionsText, textAlign: 'center' }}> On desktop we recommend Metamask </div>
               <div style={styles.instructionsContainer}>
-                <div style={{ ...styles.instructionsText, fontFamily: 'SF Display Bold' }}>How to:</div>
+                <div style={{ ...styles.instructionsText, fontFamily: 'Inter UI Medium' }}>How to:</div>
                 <div style={styles.instructionsText}> 1. Install Metamask Chrome Extension</div>
                 <div style={styles.instructionsText}> 2. Create new or import existing wallet </div>
                 <div style={styles.instructionsText}> 3. Receive Ether (link will be reload automatically) </div>
