@@ -5,6 +5,8 @@
 
 With non-fungible Ethereum Christmas Cards you can send messages & gifts to your friends or people in need. 
 
+![Send](/public/Xmas.png)
+
 ### Send to people without Ethereum Wallets
 
 Using the eth2.io technology you can generate a simple URL, sendable to anyone — just like a text message. 
@@ -21,11 +23,9 @@ You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christ
 
 
 
-![_config.yml]({{ site.baseurl }}/public/images/Xmas.png
+   
 
-! [Xmas](/public/Xmas.png)      
 
-![Send](/public/Xmas.png)
 
 ![Send](/public/eth2phone_send.png)
 
