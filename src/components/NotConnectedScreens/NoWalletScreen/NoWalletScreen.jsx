@@ -80,7 +80,6 @@ class NoWalletScreen extends Component {
 
 
     _renderWithDeepLink(deepLink) {
-	const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${this.state.selectedWallet.id}.png`;	
 	return (
             <div style={{width: 354, margin: 'auto', marginTop: 50, textAlign: 'left'}}>
               <div style={{ marginBottom: 45, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>Your friend<br />sent you a gift</div>

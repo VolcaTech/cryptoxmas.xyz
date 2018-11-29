@@ -42,7 +42,7 @@ export default class NFTService {
 	let defaultMeta = {
 	    description: "",
 	    name: `NFT #${id}`,
-	    image: "https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fcarollawson.co.uk%2Fwp-content%2Fuploads%2F2016%2F09%2FSanta-Needs-You.jpg&f=1"
+	    image: "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/santa_zombie.png"
 	};
 	
 	// fetch token URI if it wasn't fetched
