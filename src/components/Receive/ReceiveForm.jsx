@@ -112,10 +112,9 @@ class ReceiveScreen extends Component {
 	if (this.state.fetching) {
 	    return (<Loader text="Getting gift"/>);
 	}
-
-
+	
+	
 	// if gift was already claimed
-	console.log(this.state.gift);
 	if (this.state.gift.status !== "1") {
 	    return (<div>Gift was already claimed</div>);
 	}

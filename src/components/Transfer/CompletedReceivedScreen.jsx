@@ -5,24 +5,38 @@ import ButtonPrimary from './../../components/common/ButtonPrimary';
 import wallets from '../NotConnectedScreens/NoWalletScreen/wallets';
 import { getCurrentWalletId } from '../../utils';
 import web3Service from './../../services/web3Service';
+import TokenImage from './../common/TokenImage';
 
 
 const styles = {
     titleContainer: {
-	marginTop: 65,
-	marginBottom: 12
+	width: 354,
+	margin: 'auto',
+	marginTop: 50,
+	textAlign: 'left'
     },
-    buttonContainer: {
-	width: '70%',
-	margin: 'auto',	
-	marginTop: 70
-    },    
-    helpContainer: {
-	marginTop: 27
+    title: {
+	marginBottom: 45,
+	fontFamily: 'Inter UI Medium',
+	fontSize: 30,
+	color: '#4CD964',
+	textAlign: 'left'
     },
-    stepsBar: {
-	marginTop: 60
-    }    
+    textContainer: {
+	marginTop: 20
+    },
+    text: {
+	color: '#fff',
+	fontFamily: 'Inter UI Medium',
+	fontSize: 24,
+	lineHeight:'29px'
+    },
+    amount: {
+	color: '#4CD964',
+    },
+    imageContainer: {
+	marginTop: 40
+    }
 }
 
 
@@ -44,35 +58,22 @@ const CompletedReceivedScreen = ({transfer}) => {
     }
 	
     const gift = transfer.gift || {};
+    console.log({gift})
     
     return (
 	<div>
-	  <div style={styles.stepsBar}>
-            <TransferStepsBar
-	       status={transfer.status}
-	       direction={transfer.direction}
-	       isError={transfer.isError}/>
-	  </div>
-	  <div className="text-center">
-	    <div style={styles.titleContainer}>
-	      
-	      <div className="title center">
-		You claimed <span className="text-blue">{gift.amount}</span>
-		<span className="text-gray"> ETH</span>
-	      </div> 
+	  <div style={styles.titleContainer}>
+	    <div style={styles.title}>Hooray!</div>
+	    <div style={styles.textContainer}>
+	      <div style={styles.text}>
+		You received {gift.name}<br/>
+		and <span style={styles.amount}>{gift.amount}</span> ETH
+	      </div>
+	      <div style={styles.imageContainer}>
+		<TokenImage url={gift.image} />
+	      </div>
 	    </div>
-	    
-	    <div style={styles.helpContainer}>
-	      <div className="text">Transaction details on <a href={etherscanLink} className="link">Etherscan</a> 
-	      </div>	      
 	    </div>
-	    <div style={styles.buttonContainer}>
-	      <a href={dappStoreUrl} className="send-button no-underline">
-		<ButtonPrimary buttonColor="#0099ff" className="landing-send">How to spend</ButtonPrimary>		
-	      </a>
-	    </div>
-	    
-	  </div>
 	</div>
     );
 }
