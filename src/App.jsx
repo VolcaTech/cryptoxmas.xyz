@@ -19,7 +19,7 @@ const styles = {
 	// width: 414,
 	margin: 'auto',
 	backgroundPosition: 'center',
-	backgroundRepeat: 'repeat',
+	backgroundRepeat: 'no-repeat',
 	height: outerHeight,
 	backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)"
     }
