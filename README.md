@@ -22,11 +22,6 @@ You can attach an Etheruem or ERC20 donation to a Charity DAO, saving the christ
 
 
 
-
-   
-
-
-
 ![Send](/public/eth2phone_send.png)
 
 - The sender buys Christmas Card by sending ETH covering the tx fee to an escrow contract. Any additional ETH can be gifted to the receiver or donated to charity.
