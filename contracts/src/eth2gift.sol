@@ -15,29 +15,47 @@ contract eth2giftEscrow is Stoppable {
   // verifier's address
   address public verifier;
 
-  address public NFT_ADDRESS;
+  // verifier's address
+  enum Statuses { Empty, Deposited, Claimed, Cancelled }
+
+
+  mapping (address => address) sellers;
+
+  struct Gift {
+    address sender;
+    uint amount; // in wei
+    address tokenAddress;
+    uint256 tokenId;
+    Statuses status;
+  }
+
+  // Mappings of transitAddress => Transfer Struct
+  mapping (address => Gift) gifts;
 
   /*
    * EVENTS
    */
   event LogBuy(
-	       address indexed sender,
 	       address indexed transitAddress,
-	       uint indexed  tokenId,
+	       address indexed sender,
+	       address indexed tokenAddress,
+	       uint tokenId,
 	       uint amount,
 	         uint commission
 	       );
 
   event LogCancel(
-		  address indexed sender,
 		  address indexed transitAddress,
-		    uint indexed tokenId
+		  address indexed sender,
+		  address indexed tokenAddress,
+		    uint tokenId
 		  );
 
   event LogWithdraw(
-		    address indexed sender,
 		    address indexed transitAddress,
-		    uint indexed tokenId,
+		    address indexed sender,
+		    address indexed tokenAddress,
+		    uint tokenId,
 		    address recipient,
 		        uint amount
 		    );
@@ -54,15 +72,6 @@ contract eth2giftEscrow is Stoppable {
 			    address newVerifier
 			  );
 
-  struct Gift {
-    address sender;
-    uint amount; // in wei
-    uint256 tokenId;
-  }
-
-  // Mappings of transitAddress => Transfer Struct
-  mapping (address => Gift) gifts;
-
 
   /**
    * @dev Contructor that sets msg.sender as owner (verifier) in Ownable
@@ -70,12 +79,12 @@ contract eth2giftEscrow is Stoppable {
    * @param _commissionFee uint Verifier's fixed commission for each transfer
    */
   constructor(uint _commissionFee,
-	      address _verifier,
-	      string _name,
-	      string _symbol) public {
+	                  address _tokenAddress
+	      //address _verifier,
+	      ) public {
     commissionFee = _commissionFee;
-    verifier = _verifier;
-    NFT_ADDRESS = new MintableNFT(_name, _symbol);
+    //verifier = _verifier;
+    verifier = msg.sender;
   }
 
 
@@ -84,25 +93,30 @@ contract eth2giftEscrow is Stoppable {
     _;
   }
 
-  /**
-   * @dev Deposit ether to smart-contract and create transfer.
-   * Transit address is assigned to transfer by sender. 
-   * Recipient should sign withrawal address with the transit private key 
-   * 
-   * @param _tokenId address assigned to transfer.
-   * @param _transitAddress transit address assigned to transfer.
+  function addSeller(address _sellerAddress, address _tokenAddress) {
+    sellers[_tokenAddress] = _sellerAddress;
+  }
 
-   * @return True if success.
-   */
-  function buyGiftLink(uint _tokenId, address _transitAddress)
-          payable public
-            whenNotPaused
-            whenNotStopped
-    onlyOwner returns (bool) {
+  function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress) public returns (bool) {
     require(msg.value > commissionFee);
 
     // can not override existing gift
-    require(gifts[_transitAddress].tokenId == 0);
+    require(gifts[_transitAddress].status == Statuses.Empty);
+
+    // check that nft wasn't sold before
+    MintableNFT nft = MintableNFT(_tokenAddress);
+    require(nft.ownerOf(_tokenId) == sellers[_tokenAddress]);
+
+    return true;
+  }
+
+
+  function buyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress)
+          payable public
+            whenNotPaused
+    whenNotStopped returns (bool) {
+
+    require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress));
 
     uint amount = msg.value.sub(commissionFee); //amount = msg.value - comission
 
@@ -110,20 +124,23 @@ contract eth2giftEscrow is Stoppable {
     gifts[_transitAddress] = Gift(
 				  msg.sender,
 				  amount,
-				                          _tokenId
+				  _tokenAddress,
+				  _tokenId,
+				                          Statuses.Deposited
 				  );
 
     // accrue verifier's commission
     commissionToWithdraw = commissionToWithdraw.add(commissionFee);
 
     // send nft
-    MintableNFT nft = MintableNFT(NFT_ADDRESS);
-    nft.mint(address(this), _tokenId);
+    MintableNFT nft = MintableNFT(_tokenAddress);
+    nft.transferFrom(sellers[_tokenAddress], address(this), _tokenId);
 
     // log buy event
     emit LogBuy(
-		msg.sender,
 		_transitAddress,
+		msg.sender,
+		_tokenAddress,
 		_tokenId,
 		amount,
 		commissionFee);
@@ -194,19 +211,30 @@ contract eth2giftEscrow is Stoppable {
    * @param _transitAddress transit address assigned to transfer
    * @return Transfer details (sender, amount, tokenId)
    */
-  function getTransfer(address _transitAddress)
+  function getGift(address _transitAddress)
                 public
-                constant
+                view
+
     returns (
 	     address sender, // transfer sender
 	     uint amount,
-	     uint256 tokenId) // in wei
+	     address tokenAddress,
+	     uint256 tokenId,
+	     Statuses status,
+	          string tokenURI
+	     ) // in wei
   {
     Gift memory gift = gifts[_transitAddress];
+
+    MintableNFT nft = MintableNFT(gift.tokenAddress);
+
     return (
 	    gift.sender,
 	    gift.amount,
-	       gift.tokenId
+	    gift.tokenAddress,
+	    gift.tokenId,
+	    gift.status,
+	    nft.tokenURI(gift.tokenId)
 	    );
   }
 
@@ -223,17 +251,17 @@ contract eth2giftEscrow is Stoppable {
     // only sender can cancel transfer;
     require(msg.sender == gift.sender);
 
-    delete gifts[_transitAddress];
+    gift.status = Statuses.Cancelled;
 
     // transfer ether to recipient's address
     gift.sender.transfer(gift.amount);
 
     // send nft
-    ERC721 nft = ERC721(NFT_ADDRESS);
-    nft.transferFrom(address(this), gift.sender, gift.tokenId);
+    ERC721 nft = ERC721(gift.tokenAddress);
+    nft.transferFrom(address(this), msg.sender, gift.tokenId);
 
     // log cancel event
-    emit LogCancel(msg.sender, _transitAddress, gift.tokenId);
+    emit LogCancel(_transitAddress, msg.sender, gift.tokenAddress, gift.tokenId);
 
     return true;
   }
@@ -262,6 +290,38 @@ contract eth2giftEscrow is Stoppable {
 
 
   /**
+   * @dev Verify that address is signed with correct verification private key.
+   * @param _transitAddress transit address assigned to transfer
+   * @param _recipient address Signed address.
+   * @param _v ECDSA signature parameter v.
+   * @param _r ECDSA signature parameters r.
+   * @param _s ECDSA signature parameters s.
+   * @return True if signature is correct.
+   */
+  function canWithdraw(
+		       address _transitAddress,
+		       address _recipient,
+		       uint8 _v,
+		       bytes32 _r,
+		       bytes32 _s)
+    public constant returns(bool success)
+  {
+
+    Gift memory gift = gifts[_transitAddress];
+
+    // verifying signature
+    require(verifySignature(_transitAddress,
+			    _recipient, _v, _r, _s ));
+
+    // wasn't withdrawn before
+    require(gift.status == Statuses.Deposited);
+
+    return true;
+  }
+
+
+
+  /**
    * @dev Withdraw transfer to recipient's address if it is correctly signed
    * with private key for verification public key assigned to transfer.
    * 
@@ -286,24 +346,21 @@ contract eth2giftEscrow is Stoppable {
   {
     Gift memory gift = gifts[_transitAddress];
 
-    // wasn't withdrawn before
-    require(gift.tokenId != 0);
-
     // verifying signature
-    require(verifySignature(_transitAddress,
-			    _recipient, _v, _r, _s ));
+    require(canWithdraw(_transitAddress,
+			_recipient, _v, _r, _s ));
 
-    delete gifts[_transitAddress];
+    gift.status = Statuses.Claimed;
 
     // send nft
-    ERC721 nft = ERC721(NFT_ADDRESS);
+    ERC721 nft = ERC721(gift.tokenAddress);
     nft.transferFrom(address(this), _recipient, gift.tokenId);
 
     // transfer ether to recipient's address
     _recipient.transfer(gift.amount);
 
     // log withdraw event
-    emit LogWithdraw(gift.sender, _transitAddress, gift.tokenId, _recipient, gift.amount);
+    emit LogWithdraw(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _recipient, gift.amount);
 
     return true;
   }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-import { parse, format, asYouType } from 'libphonenumber-js';
 import ButtonPrimary from './../../components/common/ButtonPrimary';
 
 const styles = {
@@ -27,8 +26,6 @@ const styles = {
 const CompletedSentScreen = ({transfer}) => {
 
     const etherscanLink = getEtherscanLink({txHash: transfer.txHash, networkId: transfer.networkId});    
-    const formattedPhone = format(transfer.receiverPhone, 'International');
-    
     
     return (
 	<div>
@@ -43,7 +40,7 @@ const CompletedSentScreen = ({transfer}) => {
 	      <div className="title">
 		Receiver claimed <span className="text-blue">{transfer.amount}</span>
 		<span className="text-gray"> ETH</span><br/>
-		with {transfer.verificationType === 'none' ?  'special link' : formattedPhone }
+		with special link 
 	      </div>	      
 	    </div>
 

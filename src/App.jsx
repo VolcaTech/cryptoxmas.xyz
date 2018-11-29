@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RetinaImage from 'react-retina-image';
 import Web3StatusBar from './components/common/Web3StatusBar';
 import web3Service from './services/web3Service';
-import SendTab from './components/SendTab/SendTab';
+import SendScreen from './components/SendScreen/SendScreen';
 import ReceiveForm from './components/Receive/ReceiveForm';
 import TransferComponent from './components/Transfer';
-import Header from './components/common/Header';
-import NoWalletHeader from './components/common/NoWalletHeader';
+import Header from './components/common/Header/Header';
 import { Loader } from './components/common/Spinner';
-import ButtonPrimary from './components/common/ButtonPrimary';
-import HistoryScreen from './components/HistoryScreen';
-import PrivacyPolicy from './components/privacy';
-import escrowContract from './services/eth2phone/escrowContract';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import NoWalletScreen from './components/NotConnectedScreens/NoWalletScreen/NoWalletScreen';
 import UnsupportedNetwork from './components/NotConnectedScreens/UnsupportedNetwork';
+import HomeScreen from './components/HomeScreen/HomeScreen.jsx';
+import Footer from './components/common/poweredByVolca'
 
 
 class App extends Component {
     _renderWrongNetwork() {
         return (
             <div>
-                <NoWalletHeader />
+                <Header />
                 <UnsupportedNetwork />
             </div>
         );
@@ -30,11 +28,15 @@ class App extends Component {
     _renderStaticRouter() {
         return (
             <Router>
-                <div>
-                    <NoWalletHeader />
+                <div style={{width: innerWidth, height: innerHeight, backgroundImage:"url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)", backgroundColor: '#474D5B' }}>
+                {/* <RetinaImage className="img-responsive" style={{ display: 'inline'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png" /> */}
+                    <Header />
                     <Switch>
                         <Route component={NoWalletScreen} />			
                     </Switch>
+                    <div style={{width: '100%', margin: 'auto', position: 'fixed', bottom: 0, marginBottom: 30, textAlign: 'center'}}>
+                    <Footer/>
+                    </div>
                 </div>
             </Router>
         );
@@ -49,7 +51,9 @@ class App extends Component {
             return this._renderStaticRouter();
         }
 
-        if (this.props.networkId != "3" && this.props.networkId != "1") {
+        if (this.props.networkId != "3"
+	    // && this.props.networkId != "1"
+	   ) {
             return this._renderWrongNetwork();
         }
 
@@ -59,7 +63,7 @@ class App extends Component {
 
                     <Switch>
                         <Route exact path="/transfers/:transferId" component={TransferComponent} />
-                        <Redirect from='/send' to='/' />
+                        <Route exact path='/send/:tokenId' component={SendScreen}/>
 
                         <Route path="/receive" component={ReceiveForm} />
                         <Route path='/r' render={(props) => {
@@ -71,7 +75,7 @@ class App extends Component {
                             );
                         }} />
 
-                        <Route component={SendTab} />
+                        <Route component={HomeScreen} />
                     </Switch>
 
                 </div>

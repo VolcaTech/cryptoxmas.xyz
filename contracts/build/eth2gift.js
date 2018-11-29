@@ -1,4 +1,4 @@
-module.exports = [
+module.exports =[
     {
 	"constant": false,
 	"inputs": [],
@@ -30,6 +30,45 @@ module.exports = [
 	    {
 		"name": "",
 		"type": "address"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
+	"constant": true,
+	"inputs": [
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    }
+	],
+	"name": "getGift",
+	"outputs": [
+	    {
+		"name": "sender",
+		"type": "address"
+	    },
+	    {
+		"name": "amount",
+		"type": "uint256"
+	    },
+	    {
+		"name": "tokenAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "tokenId",
+		"type": "uint256"
+	    },
+	    {
+		"name": "status",
+		"type": "uint8"
+	    },
+	    {
+		"name": "tokenURI",
+		"type": "string"
 	    }
 	],
 	"payable": false,
@@ -214,8 +253,47 @@ module.exports = [
 	"type": "function"
     },
     {
+	"constant": true,
+	"inputs": [
+	    {
+		"name": "_transitAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "_recipient",
+		"type": "address"
+	    },
+	    {
+		"name": "_v",
+		"type": "uint8"
+	    },
+	    {
+		"name": "_r",
+		"type": "bytes32"
+	    },
+	    {
+		"name": "_s",
+		"type": "bytes32"
+	    }
+	],
+	"name": "canWithdraw",
+	"outputs": [
+	    {
+		"name": "success",
+		"type": "bool"
+	    }
+	],
+	"payable": false,
+	"stateMutability": "view",
+	"type": "function"
+    },
+    {
 	"constant": false,
 	"inputs": [
+	    {
+		"name": "_tokenAddress",
+		"type": "address"
+	    },
 	    {
 		"name": "_tokenId",
 		"type": "uint256"
@@ -256,17 +334,21 @@ module.exports = [
 	"type": "function"
     },
     {
-	"constant": true,
-	"inputs": [],
-	"name": "NFT_ADDRESS",
-	"outputs": [
+	"constant": false,
+	"inputs": [
 	    {
-		"name": "",
+		"name": "_sellerAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "_tokenAddress",
 		"type": "address"
 	    }
 	],
+	"name": "addSeller",
+	"outputs": [],
 	"payable": false,
-	"stateMutability": "view",
+	"stateMutability": "nonpayable",
 	"type": "function"
     },
     {
@@ -289,30 +371,30 @@ module.exports = [
 	"type": "function"
     },
     {
-	"constant": true,
+	"constant": false,
 	"inputs": [
+	    {
+		"name": "_tokenAddress",
+		"type": "address"
+	    },
+	    {
+		"name": "_tokenId",
+		"type": "uint256"
+	    },
 	    {
 		"name": "_transitAddress",
 		"type": "address"
 	    }
 	],
-	"name": "getTransfer",
+	"name": "canBuyGiftLink",
 	"outputs": [
 	    {
-		"name": "sender",
-		"type": "address"
-	    },
-	    {
-		"name": "amount",
-		"type": "uint256"
-	    },
-	    {
-		"name": "tokenId",
-		"type": "uint256"
+		"name": "",
+		"type": "bool"
 	    }
 	],
 	"payable": false,
-	"stateMutability": "view",
+	"stateMutability": "nonpayable",
 	"type": "function"
     },
     {
@@ -322,16 +404,8 @@ module.exports = [
 		"type": "uint256"
 	    },
 	    {
-		"name": "_verifier",
+		"name": "_tokenAddress",
 		"type": "address"
-	    },
-	    {
-		"name": "_name",
-		"type": "string"
-	    },
-	    {
-		"name": "_symbol",
-		"type": "string"
 	    }
 	],
 	"payable": false,
@@ -348,16 +422,21 @@ module.exports = [
 	"inputs": [
 	    {
 		"indexed": true,
-		"name": "sender",
-		"type": "address"
-	    },
-	    {
-		"indexed": true,
 		"name": "transitAddress",
 		"type": "address"
 	    },
 	    {
 		"indexed": true,
+		"name": "sender",
+		"type": "address"
+	    },
+	    {
+		"indexed": true,
+		"name": "tokenAddress",
+		"type": "address"
+	    },
+	    {
+		"indexed": false,
 		"name": "tokenId",
 		"type": "uint256"
 	    },
@@ -380,16 +459,21 @@ module.exports = [
 	"inputs": [
 	    {
 		"indexed": true,
-		"name": "sender",
-		"type": "address"
-	    },
-	    {
-		"indexed": true,
 		"name": "transitAddress",
 		"type": "address"
 	    },
 	    {
 		"indexed": true,
+		"name": "sender",
+		"type": "address"
+	    },
+	    {
+		"indexed": true,
+		"name": "tokenAddress",
+		"type": "address"
+	    },
+	    {
+		"indexed": false,
 		"name": "tokenId",
 		"type": "uint256"
 	    }
@@ -402,16 +486,21 @@ module.exports = [
 	"inputs": [
 	    {
 		"indexed": true,
-		"name": "sender",
-		"type": "address"
-	    },
-	    {
-		"indexed": true,
 		"name": "transitAddress",
 		"type": "address"
 	    },
 	    {
 		"indexed": true,
+		"name": "sender",
+		"type": "address"
+	    },
+	    {
+		"indexed": true,
+		"name": "tokenAddress",
+		"type": "address"
+	    },
+	    {
+		"indexed": false,
 		"name": "tokenId",
 		"type": "uint256"
 	    },
@@ -493,6 +582,4 @@ module.exports = [
 	"name": "Unpause",
 	"type": "event"
     }
-];
-
-
+]
