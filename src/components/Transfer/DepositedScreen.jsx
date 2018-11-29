@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-import { parse, format, asYouType } from 'libphonenumber-js';
 import { ShareButton } from './components';
 
 
@@ -41,7 +40,6 @@ const styles = {
 const DepositedScreen = ({transfer}) => {
 
     const etherscanLink = getEtherscanLink({txHash: transfer.txHash, networkId: transfer.networkId});    
-    const formattedPhone = format(transfer.receiverPhone, 'International');
     
     
     return (

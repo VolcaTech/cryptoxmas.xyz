@@ -1,7 +1,6 @@
 import React, { CAomponent } from 'react';
 import { getEtherscanLink } from './components';
 import TransferStepsBar from './../common/TransferStepsBar';
-import { parse, format, asYouType } from 'libphonenumber-js';
 import ButtonPrimary from './../../components/common/ButtonPrimary';
 import wallets from '../NotConnectedScreens/NoWalletScreen/wallets';
 import { getCurrentWalletId } from '../../utils';
@@ -30,7 +29,6 @@ const styles = {
 const CompletedReceivedScreen = ({transfer}) => {
 
     const etherscanLink = getEtherscanLink({txHash: transfer.txHash, networkId: transfer.networkId});    
-    const formattedPhone = format(transfer.receiverPhone, 'International');
     
     let dappStoreUrl = "https://dapps.trustwalletapp.com/";
     // get current wallet id
