@@ -106,7 +106,7 @@ class HomeScreen extends Component {
                 <div style={{ display: 'block', width: 170, height: 170, float: position, backgroundColor: 'white', backgroundImage: "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/nft_border.png)", backgroundPosition: 'center', backgroundRepeat: 'no-repeat', borderRadius: 5, boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', marginBottom: 30 }} key={tokenId}>
                     <span style={{ float: 'right', margin: '8px 8px 0px 0px', color: '#4CD964', fontFamily: 'Inter UI Bold', fontSize: 14 }}>0.05 ETH</span>
                     {/* <img className="img-responsive" src={metadata.image}/> */}
-                    <RetinaImage className="img-responsive" style={{ margin: 'auto' }} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/santa_zombie.png" />
+                    <RetinaImage className="img-responsive" style={{ margin: 'auto' }} src={metadata.image} />
                     <div style={{ textAlign: 'center', color: 'black', fontFamily: 'Inter UI Bold', fontSize: 14 }}>{metadata.name}</div>
                 </div>
             </a>

@@ -3,7 +3,7 @@ import React from 'react';
 const styles = {
     loaderText: {
 	height: 40,
-	color: '#000000',
+	color: '#fff',
 	fontFamily: 'SF Display Bold',
 	fontSize: 12,
 	letterSpacing: 1.45,
