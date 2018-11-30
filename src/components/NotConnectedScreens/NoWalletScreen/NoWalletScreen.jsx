@@ -6,7 +6,6 @@ const qs = require('querystring');
 import styles from './styles';
 import wallets from './wallets';
 import ButtonPrimary from '../../../components/common/ButtonPrimary';
-import WalletSlider from './WalletSlider';
 import { getDeviceOS } from '../../../utils';
 
 

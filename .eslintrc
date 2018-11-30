@@ -4,7 +4,7 @@
       "rules": {
           "jsx-a11y/href-no-hash": "off",
 	  "array-callback-return": "off",
-          "prettier/prettier": "error"
+          "prettier/prettier": "warn"
     },
     "globals": {
       "document": true,
