@@ -9,6 +9,7 @@ import { getNetworkNameById } from '../../utils';
 const qs = require('querystring');
 import web3Service from "../../services/web3Service";
 import { claimGift } from './../../actions/transfer';
+import Footer from './../common/poweredByVolca';
 
 
 const styles = {
@@ -37,7 +38,7 @@ const styles = {
     },
     button: {
         margin: 'auto',
-	marginTop: 40
+        marginTop: 40
     },
     green: '#2bc64f'
 }
@@ -50,38 +51,38 @@ class ReceiveScreen extends Component {
         const queryParams = qs.parse(props.location.search.substring(1));
         const transitPrivateKey = queryParams.pk;
         this.networkId = queryParams.chainId || queryParams.n || "1";
-	
+
         this.state = {
             errorMessage: "",
             fetching: true,
             gift: null,
             transitPrivateKey,
-	    claiming: false
+            claiming: false
         };
     }
 
     async componentDidMount() {
-	try { 
-	    const gift = await eth2gift.getGift(this.state.transitPrivateKey);
-	    this.setState({
-		fetching: false,
-		gift
-	    });
-	} catch(err) {
-	    console.log(err);
-	    this.setState({
-		errorMessage: "Error occured while getting gift from blockchain!"
-	    });
-	}
+        try {
+            const gift = await eth2gift.getGift(this.state.transitPrivateKey);
+            this.setState({
+                fetching: false,
+                gift
+            });
+        } catch (err) {
+            console.log(err);
+            this.setState({
+                errorMessage: "Error occured while getting gift from blockchain!"
+            });
+        }
     }
-    
-    
+
+
     _checkNetwork() {
         if (this.networkId && this.networkId != this.props.networkId) {
             const networkNeeded = getNetworkNameById(this.networkId);
             const currentNetwork = getNetworkNameById(this.props.networkId);
             const msg = `Transfer is for ${networkNeeded} network, but you are on ${currentNetwork} network`;
-	    alert(msg);
+            alert(msg);
             throw new Error(msg);
         }
     }
@@ -90,15 +91,15 @@ class ReceiveScreen extends Component {
         let result;
         try {
             const { transitPrivateKey, gift } = this.state;
-            const result = await this.props.claimGift({transitPrivateKey, gift});
+            const result = await this.props.claimGift({ transitPrivateKey, gift });
             this.props.history.push(`/transfers/${result.id}`);
         } catch (err) {
-	    console.log(err);
+            console.log(err);
             this.setState({ fetching: false, errorMessage: err.message, transfer: null });
         }
     }
 
- 
+
     _onSubmit() {
         // // disabling button
         this.setState({ claiming: true });
@@ -106,53 +107,65 @@ class ReceiveScreen extends Component {
         // // sending request for sms-code
         this._withdrawWithPK();
     }
-    
+
     _renderForm() {
 
-	if (this.state.fetching) {
-	    return (<Loader text="Getting gift"/>);
-	}
-	
-	
-	// if gift was already claimed
-	if (this.state.gift.status !== "1") {
-	    return (<div>Gift was already claimed</div>);
-	}
-	return ( 
-		<div style={{width: 354, margin: 'auto', marginTop: 50, textAlign: 'left'}}>
-		<div style={{ marginBottom: 45, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>Your friend<br />sent you a gift</div>
-		<RetinaImage className="img-responsive" style={{ margin: 'auto'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/letter.png" />
+        if (this.state.fetching) {
+            return (<Loader text="Getting gift" />);
+        }
+
+
+        // if gift was already claimed
+        if (this.state.gift.status !== "1") {
+            return (
+                <Row>
+                <div style={{ width: 354, margin: 'auto', marginTop: 50, textAlign: 'left' }}>
+                    <div style={{ marginBottom: 25, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>
+                        Oops!</div>
+                    <div style={{ marginBottom: 55, fontFamily: 'Inter UI Medium', fontSize: 24, color: 'white', textAlign: 'left' }}>Link is already claimed</div>
+                </div>
+              <RetinaImage className="img-responsive" style={{ margin: 'auto'}} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/oops.png" />                
+            </Row>
+            );
+        }
+        return (
+            <div style={{ width: 354, margin: 'auto', marginTop: 50, textAlign: 'left' }}>
+                <div style={{ marginBottom: 45, fontFamily: 'Inter UI Medium', fontSize: 30, color: '#4CD964', textAlign: 'left' }}>Your friend<br />sent you a gift</div>
+                <RetinaImage className="img-responsive" style={{ margin: 'auto' }} src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/letter.png" />
                 <div style={styles.button}>
-                  <ButtonPrimary
-            handleClick={this._onSubmit.bind(this)}
-            disabled={this.state.fetching}
-            buttonColor={styles.green}>
-	    {this.state.claiming ? <ButtonLoader /> : "Claim"}
-	    </ButtonPrimary>
-                <SpinnerOrError fetching={false} error={this.state.errorMessage} />		
+                    <ButtonPrimary
+                        handleClick={this._onSubmit.bind(this)}
+                        disabled={this.state.fetching}
+                        buttonColor={styles.green}>
+                        {this.state.claiming ? <ButtonLoader /> : "Claim"}
+                    </ButtonPrimary>
+                    <SpinnerOrError fetching={false} error={this.state.errorMessage} />
                 </div>
             </div>
-	);
+        );
     }
-    
+
     render() {
         if (this.state.fetching) {
             return <Loader text="Getting transfer details..." textLeftMarginOffset={-40} />;
         }
 
-	if (this.state.errorMessage) {
+        if (this.state.errorMessage) {
             return <SpinnerOrError fetching={false} error={this.state.errorMessage} />;
-	}
-	
+        }
+
         return (
             <Grid>
-              <Row>
-                <Col sm={4} smOffset={4}>
-		  { this._renderForm() } 
-                </Col>
-              </Row>
+                <Row>
+                    <Col sm={4} smOffset={4}>
+                        {this._renderForm()}
+                    </Col>
+                </Row>
+                <div style={{width: '100%', margin: 'auto', position: 'fixed', bottom: 0}}>
+                <Footer/>
+                </div>
             </Grid>
-	    
+
         );
     }
 }
