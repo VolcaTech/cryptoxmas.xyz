@@ -126,7 +126,8 @@ class HomeScreen extends Component {
                                 Surprise your friend<br />with a Nifty & send<br />some Ether to charity</div>
                             <div style={{ marginBottom: 50, fontFamily: 'Inter UI Regular', fontSize: 18, color: '#8B8B8B', textAlign: 'left' }}>*receiver doesn’t need a<br /> crypto wallet</div>
                             <div style={{ marginBottom: 40, fontFamily: 'Inter UI Medium', fontSize: 24, color: 'white', textAlign: 'left' }}>First, choose a Nifty</div>
-                            <div style={{ marginBottom: 25, fontFamily: 'Inter UI Medium', fontSize: 24, color: '#FFF100', textAlign: 'left' }}>Binance</div>
+                            { // <div style={{ marginBottom: 25, fontFamily: 'Inter UI Medium', fontSize: 24, color: '#FFF100', textAlign: 'left' }}>Binance</div>
+			    } 
                         </div>
                         <Col xs={6} sm={6} lg={6} col-centered style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             {(this.state.fetching || this.state.errorMessage) ? (<Loader text="Getting tokens" />) :
