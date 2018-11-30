@@ -1,0 +1,13 @@
+{
+  "plugins": ["prettier"],
+    "extends": ["react-app", "prettier"],
+      "rules": {
+          "jsx-a11y/href-no-hash": "off",
+	  "array-callback-return": "off",
+          "prettier/prettier": "warn"
+    },
+    "globals": {
+      "document": true,
+      "window": true
+    }
+}
