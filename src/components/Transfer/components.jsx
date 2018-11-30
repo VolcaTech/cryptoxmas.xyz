@@ -73,7 +73,8 @@ export const ShareButton = ({ transfer }) => {
     
     return (
         <div style={styles.shareLinkContainer}>
-            <ButtonPrimary buttonColor='#2bc64f' handleClick={() => {
+        
+            <ButtonPrimary handleClick={() => {
                 // copy share link to clipboard
                 copy(shareLink);
                 alert("The link is copied to your clipboard. Share the link with receiver");
