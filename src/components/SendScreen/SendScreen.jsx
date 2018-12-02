@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "react-bootstrap";
-import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
-const qs = require("querystring");
+import { Row } from "react-bootstrap";
 import Footer from "./../common/poweredByVolca";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
@@ -152,21 +150,6 @@ class SendScreen extends Component {
       return;
     }
 
-    // check amount maximum
-    // if (this.state.amount > 1) {
-    //   this.setState({
-    //     fetching: false,
-    //     errorMessage: (
-    //       <span>
-    //         *In beta you can send <span style={styles.betaBold}>1 ETH</span>{" "}
-    //         max.
-    //       </span>
-    //     ),
-    //     numberInputError: true
-    //   });
-    //   return;
-    // }
-
     // check wallet has enough ether
     if (this.state.amount > balance) {
       this.setState({
@@ -253,6 +236,8 @@ class SendScreen extends Component {
           disabled={false}
           style={{ touchInput: "manipulation" }}
           placeholder="Wanna add ETH?"
+          type="number"
+          readOnly={false}
           error={this.state.numberInputError}
         />
         <div style={styles.sendButton}>

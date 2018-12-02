@@ -36,17 +36,10 @@ const _setupContract = (web3, networkId) => {
 };
 
 export const setupWeb3 = () => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
       const web3Details = await web3Service.setup();
-      const {
-        web3,
-        balance,
-        address,
-        connected,
-        networkName,
-        networkId
-      } = web3Details;
+      const { web3, networkId } = web3Details;
 
       _setupContract(web3, networkId);
 

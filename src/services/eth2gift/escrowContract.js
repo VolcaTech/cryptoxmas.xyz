@@ -1,7 +1,5 @@
 import Promise from "bluebird";
 import eth2giftABI from "../../../contracts/build/eth2gift";
-const contract = require("truffle-contract");
-import web3Service from "../web3Service";
 import NFTService from "./NFTService";
 
 const CONTRACT_ADDRESS = "0xa1d89cb2dc2283325dde52defd2056e099916103";
@@ -15,7 +13,6 @@ const EscrowContractService = () => {
     contract = web3.eth.contract(eth2giftABI).at(CONTRACT_ADDRESS);
     Promise.promisifyAll(contract, { suffix: "Promise" });
     nftService = new NFTService(web3);
-    console.log(" eth2gift escrow contract is set up!");
   }
 
   function buyGift(tokenAddress, tokenId, transitAddress, amount) {

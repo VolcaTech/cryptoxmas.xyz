@@ -1,17 +1,15 @@
-import {
-    CHOOSE_SEND_MODE 
-} from './../../actions/modes';
+import { CHOOSE_SEND_MODE } from "./../../actions/modes";
 
-const sendMode = (state = 'link', action) => {
-    let newState;
+const sendMode = (state = "link", action) => {
+  let newState;
   switch (action.type) {
-  case CHOOSE_SEND_MODE:
+    case CHOOSE_SEND_MODE:
       newState = action.mode;
       break;
-  default:
-      newState = state;     
+    default:
+      newState = state;
   }
-    return newState || state;
-}
+  return newState || state;
+};
 
 export default sendMode;

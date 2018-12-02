@@ -1,6 +1,5 @@
 import React from "react";
 import { getEtherscanLink } from "./components";
-import TransferStepsBar from "./../common/TransferStepsBar";
 
 const styles = {
   titleContainer: {
@@ -26,13 +25,6 @@ const TxErrorScreen = ({ transfer }) => {
   });
   return (
     <div>
-      <div style={styles.stepsBar}>
-        <TransferStepsBar
-          status={transfer.status}
-          direction={transfer.direction}
-          isError={transfer.isError}
-        />
-      </div>
       <div className="text-center">
         <div style={styles.titleContainer}>
           <div className="title">Transaction failed</div>

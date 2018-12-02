@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import TransferStepsBar from "./../common/TransferStepsBar";
 import { getAllTransfers } from "../../data/selectors";
-import CompletedSentScreen from "./CompletedSentScreen";
 import DepositedScreen from "./DepositedScreen";
 import CompletedReceivedScreen from "./CompletedReceivedScreen";
 import PendingTxScreen from "./PendingTxScreen";
-import CancellingScreen from "./CancellingScreen";
 import CancelledTransferScreen from "./CancelledTransferScreen";
 import TxErrorScreen from "./TxErrorScreen";
 import { Row, Col } from "react-bootstrap";
 
 export class TransferComponent extends Component {
   render() {
-    const { transfer, currentStep, urlError } = this.props;
+    const { transfer, urlError } = this.props;
     // if transfer not found
     if (urlError) {
       return <div style={{ color: "red" }}>{urlError}</div>;
@@ -29,15 +26,10 @@ export class TransferComponent extends Component {
         return <PendingTxScreen transfer={transfer} />;
       case "deposited":
         return <DepositedScreen transfer={transfer} />;
-      case "sent":
-      case "completed":
-        return <CompletedSentScreen transfer={transfer} />;
       case "received":
         return <CompletedReceivedScreen transfer={transfer} />;
-      case "cancelling":
-        return <CancellingScreen transfer={transfer} />;
       case "cancelled":
-        return <CancelledTransferScreen transfer={transfer} />;
+        return <CancelledTransferScreen />;
       default: {
         alert("Unknown status: " + transfer.status);
       }
