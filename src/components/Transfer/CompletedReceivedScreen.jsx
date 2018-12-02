@@ -1,5 +1,6 @@
 import React from "react";
 import TokenImage from "./../common/TokenImage";
+import Footer from "./../common/poweredByVolca";
 import styles from "./styles";
 
 const CompletedReceivedScreen = ({ transfer }) => {
@@ -7,15 +8,18 @@ const CompletedReceivedScreen = ({ transfer }) => {
 
   return (
     <div>
-      <div style={styles.textContainer}>
-        <div style={{ ...styles.greenTitle, marginBottom: 20 }}>Hooray!</div>
-        <div style={{ ...styles.whiteTitle, marginBottom: 40 }}>
-          You received {gift.name}
-          <br />
-          and <span style={{ color: "#4CD964" }}>{gift.amount}</span> ETH
+      <div style={{ height: innerHeight }}>
+        <div style={styles.textContainer}>
+          <div style={{ ...styles.greenTitle, marginBottom: 20 }}>Hooray!</div>
+          <div style={{ ...styles.whiteTitle, marginBottom: 40 }}>
+            You received {gift.name}
+            <br />
+            and <span style={{ color: "#4CD964" }}>{gift.amount}</span> ETH
+          </div>
+          <TokenImage url={gift.image} />
         </div>
-        <TokenImage url={gift.image} />
       </div>
+      <Footer />
     </div>
   );
 };
