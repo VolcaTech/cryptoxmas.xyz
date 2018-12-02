@@ -40,16 +40,16 @@ class App extends Component {
 
   _renderStaticRouter() {
     return (
-      <div style={{ backgroundColor: "#474D5B" }}>
+      <div style={{ backgroundColor: "#474D5B", height: innerHeight }}>
         <Header />
         <Router>
           <div style={styles.background}>
             <Switch>
               <Route component={NoWalletScreen} />
             </Switch>
-            <Footer />
           </div>
         </Router>
+        <Footer />
       </div>
     );
   }
