@@ -71,7 +71,7 @@ class App extends Component {
       <div style={{ backgroundColor: "#474D5B" }}>
         <Header />
         <Router>
-          <div style={styles.background}>
+          <div>
             <Switch>
               <Route
                 exact

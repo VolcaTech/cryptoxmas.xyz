@@ -77,14 +77,14 @@ class HomeScreen extends Component {
     const column1 = this.state.tokens.filter((token, index) => index % 2 === 0);
     const column2 = this.state.tokens.filter((token, index) => index % 2 !== 0);
     return (
-      <div style={{ backgroundColor: "#474D5B" }}>
         <div
           style={{
             width: 414,
             margin: "auto",
+            backgroundColor: "#474D5B",
             backgroundImage:
               "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles_tree.png)",
-            backgroundPosition: "right",
+            backgroundPosition: "right top",
             backgroundRepeat: "no-repeat"
           }}
         >
@@ -170,7 +170,6 @@ class HomeScreen extends Component {
           </Row>
           <Footer />
         </div>
-      </div>
     );
   }
 }
