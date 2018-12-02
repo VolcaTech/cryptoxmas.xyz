@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import RetinaImage from "react-retina-image";
-import { Row } from "react-bootstrap";
 
 const styles = {
   title: {
@@ -67,7 +65,7 @@ const styles = {
   },
   instructionsText: {
     fontFamily: "Inter UI Regular",
-    fontSize: 24,
+    fontSize: 24
   },
   instructionsTextBold: {
     display: "inline",
@@ -90,16 +88,16 @@ class UnsupportedNetwork extends Component {
       <div style={{ color: "white" }}>
         <div style={styles.title}>Network is not supported</div>
         <div style={styles.instructionsContainer}>
-        <div style={{ ...styles.instructionsText }}>
-          We support Ropsten Test Network
-          <br />
-          <br />
+          <div style={{ ...styles.instructionsText }}>
+            We support Ropsten Test Network
+            <br />
+            <br />
             How to change Network:
-          <br />
+            <br />
             1. Go to Settings in your wallet app
-          <br />
+            <br />
             2. Switch Network to Ropsten
-          <br />
+            <br />
             3. Back to DApp browser in your wallet and reload the receiver’s
             link
           </div>

@@ -44,31 +44,38 @@ const PendingTxScreen = ({ transfer }) => {
           </div>
           <div
             style={{
-              marginBottom: 50,
+              marginBottom: 40,
               fontFamily: "Inter UI Regular",
               fontSize: 18,
               color: "#8B8B8B",
               textAlign: "left"
             }}
           >
-            It may take a few minutes. You can
+            It may take a moment.
             <br />
-            check the status later here
-            <div style={{ marginTop: 8 }}>
-              Details on{" "}
-              <a
-                target="_blank"
-                href={etherscanLink}
-                style={{ textDecoration: "underline", color: "#8B8B8B" }}
-              >
-                {" "}
-                Etherscan
-              </a>
-            </div>
+            You can check the
+            <a
+              target="_blank"
+              href={etherscanLink}
+              style={{ textDecoration: "underline", color: "#4CD964", marginLeft: 7 }}
+            >
+              status here 
+            </a>
           </div>
+          <img
+            style={{
+              display: "block",
+              margin: "auto",
+              height: 200,
+              width: 200
+            }}
+            src={
+              "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/ball.gif"
+            }
+          />
         </div>
       </Row>
-      <div style={{ width: "100%", bottom: 0, position: "fixed" }}>
+      <div style={{ width: "100%", margin: 'auto', bottom: 0, position: "fixed" }}>
         <Footer />
       </div>
     </div>

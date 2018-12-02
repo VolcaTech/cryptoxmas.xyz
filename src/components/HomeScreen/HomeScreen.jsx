@@ -53,9 +53,8 @@ class HomeScreen extends Component {
           >
             0.05 ETH
           </span>
-          <RetinaImage
-            className="img-responsive"
-            style={{ margin: "auto" }}
+          <img
+            style={{ display: 'block', margin: "auto", height: 115, width: 115 }}
             src={metadata.image}
           />
           <div

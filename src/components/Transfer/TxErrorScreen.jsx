@@ -1,22 +1,8 @@
 import React from "react";
 import { getEtherscanLink } from "./components";
+import { Row } from "react-bootstrap";
+import styles from "./styles";
 
-const styles = {
-  titleContainer: {
-    marginTop: 65,
-    marginBottom: 12
-  },
-  subTitleContainer: {
-    width: 300,
-    margin: "auto"
-  },
-  helpContainer: {
-    marginTop: 31.5
-  },
-  stepsBar: {
-    marginTop: 60
-  }
-};
 
 const TxErrorScreen = ({ transfer }) => {
   const etherscanLink = getEtherscanLink({
@@ -24,65 +10,39 @@ const TxErrorScreen = ({ transfer }) => {
     networkId: transfer.networkId
   });
   return (
-    <div>
-      <div className="text-center">
-        <div style={styles.titleContainer}>
-          <div className="title">Transaction failed</div>
+    <Row>
+      <div style={styles.textContainer}>
+        <div style={{ ...styles.greenTitle, marginBottom: 25 }}>
+          Transaction failed
         </div>
-
-        {!transfer.fetchedFromServer ? (
-          <div>
-            <div style={styles.subTitleContainer}>
-              <div className="text">
-                Something went wrong. Check details on
-                <br />
-                <a href={etherscanLink} className="link">
-                  Etherscan
-                </a>{" "}
-                and if transaction is out of gas
-                <br />
-                send Ether again with higher gas price
-              </div>
-            </div>
-
-            <div style={styles.helpContainer}>
-              <div className="text">
-                Also check FAQ or text us
-                <br />
-                in{" "}
-                <a href="https://t.me/eth2io" className="link">
-                  Telegram
-                </a>{" "}
-                so we can help
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <div style={styles.subTitleContainer}>
-              <div className="text">
-                Something went wrong. You can reach us
-                <br />
-                in{" "}
-                <a href="https://t.me/eth2io" className="link">
-                  Telegram
-                </a>{" "}
-                so we can help
-              </div>
-
-              <div style={styles.helpContainer}>
-                <div className="text">
-                  Transaction details on{" "}
-                  <a href={etherscanLink} className="link">
-                    Etherscan
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <div
+          style={{
+            ...styles.whiteTitle,
+            marginBottom: 55
+          }}
+        >
+          Something went wrong. Check details on 
+          <a
+            target="_blank"
+            href={etherscanLink}
+            style={{ textDecoration: "underline", color: "#4CD964", marginLeft: 7 }}
+          >
+            Etherscan
+          </a>
+        </div>
       </div>
-    </div>
+      <img
+        style={{
+          display: "block",
+          margin: "auto",
+          height: 200,
+          width: 200
+        }}
+        src={
+          "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/boom.gif"
+        }
+      />
+    </Row>
   );
 };
 
