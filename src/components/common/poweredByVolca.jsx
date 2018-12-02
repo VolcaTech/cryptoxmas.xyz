@@ -4,8 +4,7 @@ const PoweredByVolca = () => {
   return (
     <div
       style={{
-        display: "block",
-        backgroundColor: "#474D5B",
+        display: "flex",
         paddingBottom: 30,
         marginTop: 20,
         width: "100%"
