@@ -77,7 +77,7 @@ class HomeScreen extends Component {
     const column1 = this.state.tokens.filter((token, index) => index % 2 === 0);
     const column2 = this.state.tokens.filter((token, index) => index % 2 !== 0);
     return (
-        <div style={{}}>
+      <div>
         <div
           style={{
             width: 414,
@@ -172,7 +172,7 @@ class HomeScreen extends Component {
           </Row>
         </div>
         <Footer />
-        </div>
+      </div>
     );
   }
 }
