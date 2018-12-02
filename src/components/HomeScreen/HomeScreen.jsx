@@ -7,75 +7,6 @@ import { Loader } from "./../common/Spinner";
 import * as eth2gift from "./../../services/eth2gift";
 import Footer from "./../common/poweredByVolca";
 
-const styles = {
-  title: {
-    width: "90%",
-    height: 110,
-    display: "block",
-    margin: "auto",
-    fontSize: 24,
-    lineHeight: 1.4,
-    fontFamily: "SF Display Black",
-    textAlign: "center",
-    marginBottom: 10,
-    marginTop: 27
-  },
-  text1: {
-    width: "85%",
-    height: 68,
-    display: "block",
-    margin: "auto",
-    fontSize: 15,
-    lineHeight: "17px",
-    fontFamily: "SF Display Regular",
-    textAlign: "center",
-    marginBottom: 36
-  },
-  container: {
-    display: "flex",
-    margin: "auto",
-    flexDirection: "column",
-    justifyContent: "space-between"
-  },
-  numberInput: {
-    display: "block",
-    margin: "auto",
-    width: "78%",
-    height: 39,
-    marginBottom: 19,
-    marginTop: 19
-  },
-  sendButton: {
-    width: "78%",
-    display: "block",
-    margin: "auto"
-  },
-  spinner: {
-    height: 28,
-    textAlign: "center",
-    marginTop: 10
-  },
-  betaText: {
-    fontSize: 13,
-    fontFamily: "SF Display Regular",
-    opacity: 0.4
-  },
-  betaContainer: {
-    paddingTop: 8,
-    height: 28,
-    textAlign: "center"
-  },
-  betaBold: {
-    fontFamily: "SF Display Bold"
-  },
-  blue: "#0099ff",
-  blueOpacity: "#80ccff",
-  hiddenInput: {
-    height: 0,
-    overflow: "hidden"
-  }
-};
-
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -88,14 +19,13 @@ class HomeScreen extends Component {
 
   async componentDidMount() {
     const tokens = await eth2gift.getGiftsForSale();
-    console.log({ tokens });
     this.setState({ fetching: false, tokens });
   }
 
   _renderToken(token, position) {
     const { tokenId, metadata } = token;
     return (
-      <a style={{ display: "block" }} href={`/#/send/${tokenId}`}>
+      <a style={{ display: "block" }} href={`/#/send/${tokenId}`} key={tokenId}>
         <div
           style={{
             display: "block",
@@ -111,7 +41,6 @@ class HomeScreen extends Component {
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             marginBottom: 30
           }}
-          key={tokenId}
         >
           <span
             style={{
@@ -210,7 +139,6 @@ class HomeScreen extends Component {
               xs={6}
               sm={6}
               lg={6}
-              col-centered
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -227,7 +155,6 @@ class HomeScreen extends Component {
               xs={6}
               sm={6}
               lg={6}
-              col-centered
               style={{
                 display: "flex",
                 flexDirection: "column",

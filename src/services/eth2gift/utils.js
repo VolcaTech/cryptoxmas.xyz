@@ -1,4 +1,3 @@
-import sha3 from "solidity-sha3";
 const Web3Utils = require("web3-utils");
 const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
 import ksHelper from "../../utils/keystoreHelper";

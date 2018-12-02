@@ -35,17 +35,9 @@ const styles = {
   }
 };
 
-const shortHash = (hash, num, showEnd = true) => {
-  const sanitized = hash.substring(2);
-  const shorten = `${sanitized.slice(0, 3)}...${
-    showEnd ? sanitized.slice(-num) : ""
-  }`;
-  return "0x".concat(shorten);
-};
-
 export const getEtherscanLink = ({ txHash, networkId }) => {
   let subdomain = "";
-  if (networkId == "3") {
+  if (networkId === "3") {
     subdomain = "ropsten.";
   }
   const etherscanLink = `https://${subdomain}etherscan.io/tx/${txHash}`;
@@ -57,7 +49,7 @@ export const ShareButton = ({ transfer }) => {
 
   shareLink = `${ETH2PHONE_HOST}/#/r?pk=${transfer.transitPrivateKey}`;
 
-  if (transfer.networkId != "1") {
+  if (transfer.networkId !== "1") {
     shareLink += `&n=${transfer.networkId}`;
   }
 

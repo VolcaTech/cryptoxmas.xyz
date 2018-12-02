@@ -2,10 +2,10 @@ import { attr, Model } from "redux-orm";
 import * as actions from "../../../actions/types";
 
 export default class AssetTransfer extends Model {
-  // eslint-disable-next-line no-undef    
+  // eslint-disable-next-line no-undef
   static modelName = "Transfer";
   // eslint-disable-next-line no-undef
-  static fields = { 
+  static fields = {
     id: attr(),
     verificationType: attr(), // 'none', 'email', 'phone'
     txHash: attr(),

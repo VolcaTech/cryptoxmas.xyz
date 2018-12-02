@@ -11,9 +11,7 @@ export default class NFTService {
   }
 
   async tokensOf(owner) {
-    const service = this;
     const numberOfTokens = await this.tokenContract.balanceOfPromise(owner);
-    console.log({ numberOfTokens });
     const promises = [];
     for (let i = 0; i < numberOfTokens; i++) {
       promises.push(
@@ -21,7 +19,6 @@ export default class NFTService {
           .tokenOfOwnerByIndexPromise(owner, i)
           .then(t => t.toString())
           .then(async tokenId => {
-            console.log({ tokenId });
             const metadata = await this.getMetadata(tokenId);
             return { tokenId, metadata };
           })
@@ -55,7 +52,6 @@ export default class NFTService {
     if (tokenURI) {
       try {
         metadata = await fetch(tokenURI).then(res => res.json());
-        console.log({ metadata });
       } catch (err) {
         console.log(err);
       }

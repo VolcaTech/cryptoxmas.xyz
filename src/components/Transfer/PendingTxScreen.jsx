@@ -1,46 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { getEtherscanLink } from "./components";
-import TransferStepsBar from "./../common/TransferStepsBar";
-import {
-  HashRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect
-} from "react-router-dom";
-import { ShareButton } from "./components";
-import { Row, Col } from "react-bootstrap";
-import RetinaImage from "react-retina-image";
+import { Row } from "react-bootstrap";
 import Footer from "./../common/poweredByVolca";
-
-const styles = {
-  titleContainer: {
-    marginTop: 30,
-    marginBottom: 12
-  },
-  subTitleContainer: {
-    margin: "auto"
-  },
-  helpContainer: {
-    marginTop: 27
-  },
-  stepsBar: {
-    marginTop: 20
-  },
-  instructionsText: {
-    lineHeight: "22px",
-    color: "#000000",
-    fontFamily: "SF Display Bold",
-    fontSize: 16,
-    fontWeight: 700,
-    marginBottom: 15,
-    marginTop: 30
-  },
-  greenBold: {
-    color: "#2bc64f",
-    fontFamily: "SF Display Bold"
-  }
-};
 
 const PendingTxScreen = ({ transfer }) => {
   const etherscanLink = getEtherscanLink({

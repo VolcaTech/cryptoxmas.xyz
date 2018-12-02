@@ -1,7 +1,4 @@
-import Promise from "bluebird";
-import sha3 from "solidity-sha3";
 import urlGetter from "./serverUrl";
-const Wallet = require("ethereumjs-wallet");
 
 export const confirmLinkTx = (transitAddress, receiverAddress, v, r, s) => {
   const serverUrl = urlGetter.getServerUrl();
@@ -13,7 +10,6 @@ export const confirmLinkTx = (transitAddress, receiverAddress, v, r, s) => {
     r,
     s
   };
-  console.log(serverUrl, data);
 
   return fetch(`${serverUrl}/api/v1/receiver/claim-gift`, {
     method: "POST",

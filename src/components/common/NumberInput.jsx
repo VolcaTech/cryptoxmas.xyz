@@ -9,7 +9,8 @@ class e2pInput extends React.Component {
         disabled={this.props.disabled}
         componentClass="input"
         value={this.props.value}
-        type="number"
+        type={this.props.type}
+        readOnly={this.props.readOnly}
         style={{
           width: 300,
           height: 50,

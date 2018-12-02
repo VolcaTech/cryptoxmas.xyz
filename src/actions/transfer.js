@@ -2,8 +2,7 @@ import web3Service from "../services/web3Service";
 import {
   getDepositingTransfers,
   getReceivingTransfers,
-  getCancellingTransfers,
-  getTransfersForActiveAddress
+  getCancellingTransfers
 } from "./../data/selectors";
 import * as eth2gift from "../services/eth2gift";
 import * as actionTypes from "./types";
@@ -31,7 +30,7 @@ const updateTransfer = payload => {
 };
 
 const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     const web3 = web3Service.getWeb3();
     const txReceipt = await web3.eth.getTransactionReceiptMined(
       txHash || transfer.txHash
@@ -130,7 +129,6 @@ export const claimGift = ({ transitPrivateKey, gift }) => {
 
     const id = `${result.transferId}-IN`;
     const txHash = result.txHash;
-    const amount = result.amount;
     const transfer = {
       id,
       verificationType: "none",
@@ -152,9 +150,7 @@ export const claimGift = ({ transitPrivateKey, gift }) => {
 };
 
 export const cancelTransfer = transfer => {
-  return async (dispatch, getState) => {
-    const state = getState();
-
+  return async dispatch => {
     // take contract redeploy into account
     let contractVersion;
     const contractRedeployTimestamp = 1529011666000;
@@ -181,33 +177,3 @@ export const cancelTransfer = transfer => {
     return transfer;
   };
 };
-
-// export const fetchWithdrawalEvents = () => {
-//     return async (dispatch, getState) => {
-// 	const state = getState();
-// 	const address = state.web3Data.address;
-// 	const lastChecked = 0;
-// 	const activeAddressTransfers = getTransfersForActiveAddress(state);
-// 	try {
-// 	    const events = await e2pService.getWithdrawalEvents(address, lastChecked);
-// 	    events.map(event => {
-// 		const { transitAddress, sender } = event.args;
-// 		activeAddressTransfers
-// 		    .filter(transfer =>
-// 			    transfer.status === 'deposited' &&
-// 			    transfer.transitAddress === transitAddress &&
-// 			    transfer.senderAddress === sender
-// 			   )
-// 		    .map(transfer => {
-// 			dispatch(updateTransfer({
-// 			    status: "sent",
-// 			    id: transfer.id
-// 			}));
-// 		    });
-// 	    });
-
-// 	} catch (err) {
-// 	    console.log("Error while getting events", err);
-// 	}
-//     };
-// }

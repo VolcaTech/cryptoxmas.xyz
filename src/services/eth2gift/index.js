@@ -1,21 +1,13 @@
-import Promise from "bluebird";
 import escrowContract from "./escrowContract";
 import * as server from "./serverApi";
 import { signReceiverAddress } from "./utils";
-import { sha3 } from "web3-utils";
-import getWeb3 from "./../../utils/getWeb3";
 const Wallet = require("ethereumjs-wallet");
 
 const _generateTransferIdForLink = address => {
   return `link-${address}`;
 };
 
-export const buyGift = async ({
-  tokenAddress,
-  tokenId,
-  amountToPay,
-  senderAddress
-}) => {
+export const buyGift = async ({ tokenAddress, tokenId, amountToPay }) => {
   const wallet = Wallet.generate();
   const transitAddress = wallet.getChecksumAddressString();
   const transitPrivateKey = wallet.getPrivateKeyString().substring(2);
@@ -31,18 +23,6 @@ export const buyGift = async ({
   return { txHash, transitPrivateKey, transferId, transitAddress };
 };
 
-export const cancelTransfer = (transitAddress, contractVersion) =>
-  escrowContract.cancel(transitAddress, contractVersion);
-export const getTokenMetadata = tokenId =>
-  escrowContract.getTokenMetadata(tokenId);
-export const getGift = transitPrivateKey => {
-  const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
-  return escrowContract.getGift(transitAddress);
-};
-
-//export const getAmountWithCommission = ((amount) => escrowContract.getAmountWithCommission(amount));
-//export const getWithdrawalEvents = ((address, fromBlock) => escrowContract.getWithdrawalEvents(address, fromBlock));
-
 const _getAddressFromPrivateKey = privateKey => {
   return (
     "0x" +
@@ -50,6 +30,15 @@ const _getAddressFromPrivateKey = privateKey => {
       .getAddress()
       .toString("hex")
   );
+};
+
+export const cancelTransfer = (transitAddress, contractVersion) =>
+  escrowContract.cancel(transitAddress, contractVersion);
+export const getTokenMetadata = tokenId =>
+  escrowContract.getTokenMetadata(tokenId);
+export const getGift = transitPrivateKey => {
+  const transitAddress = _getAddressFromPrivateKey(transitPrivateKey);
+  return escrowContract.getGift(transitAddress);
 };
 
 export const getGiftsForSale = () => escrowContract.getGiftsForSale();

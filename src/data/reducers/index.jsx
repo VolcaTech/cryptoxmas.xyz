@@ -1,11 +1,8 @@
-import { combineReducers } from 'redux';
-import web3Data from './web3Data';
-import orm from './models';
-import sendMode from './sendModes';
-
+import { combineReducers } from "redux";
+import web3Data from "./web3Data";
+import orm from "./models";
 
 export default combineReducers({
-    web3Data,
-    orm,
-    sendMode
+  web3Data,
+  orm,
 });
