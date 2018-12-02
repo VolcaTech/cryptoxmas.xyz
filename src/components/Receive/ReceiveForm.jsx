@@ -102,7 +102,6 @@ class ReceiveScreen extends Component {
     // // disabling button
     this.setState({ claiming: true });
 
-    // // sending request for sms-code
     this._withdrawWithPK();
   }
 
