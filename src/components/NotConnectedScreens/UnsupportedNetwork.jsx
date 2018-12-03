@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import RetinaImage from "react-retina-image";
-import { Row } from "react-bootstrap";
 
 const styles = {
   title: {
     width: "90%",
     display: "block",
     margin: "auto",
-    fontSize: 24,
+    fontSize: 30,
     lineHeight: 1,
-    fontFamily: "SF Display Black",
+    fontFamily: "Inter UI Medium",
+    color: "#4CD964",
     textAlign: "center",
     marginBottom: 25,
     marginTop: 50
@@ -65,19 +64,20 @@ const styles = {
     margin: "auto"
   },
   instructionsText: {
-    fontFamily: "SF Display Regular",
-    fontSize: 14
+    fontFamily: "Inter UI Regular",
+    fontSize: 24
   },
   instructionsTextBold: {
     display: "inline",
     fontFamily: "SF Display Bold"
   },
   instructionsContainer: {
-    width: 300,
+    width: 400,
+    padding: 20,
     margin: "auto",
     textAlign: "left",
     verticalAlign: "text-top",
-    marginTop: 25,
+    marginTop: 40,
     marginBottom: 35
   }
 };
@@ -87,85 +87,24 @@ class UnsupportedNetwork extends Component {
     return (
       <div style={{ color: "white" }}>
         <div style={styles.title}>Network is not supported</div>
-        <div style={{ ...styles.instructionsText, textAlign: "center" }}>
-          {" "}
-          We support Ethereum Main
-          <br />
-          and Ropsten Test Networks{" "}
-        </div>
         <div style={styles.instructionsContainer}>
-          <div
-            style={{
-              ...styles.instructionsText,
-              fontFamily: "SF Display Bold"
-            }}
-          >
+          <div style={{ ...styles.instructionsText }}>
+            We support Ropsten Test Network
+            <br />
+            <br />
             How to change Network:
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
+            <br />
             1. Go to Settings in your wallet app
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
-            2. Swich Network to{" "}
-            <div style={styles.instructionsTextBold}>Ethereum Main</div>{" "}
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
+            <br />
+            2. Switch Network to Ropsten
+            <br />
             3. Back to DApp browser in your wallet and reload the receiver’s
-            link{" "}
+            link
           </div>
         </div>
-        <WalletsList />
       </div>
     );
   }
 }
-
-const WalletsList = () => {
-  return (
-    <div>
-      <Row style={styles.row}>
-        <div style={styles.supported}>Supported wallets</div>
-      </Row>
-
-      <div style={{ ...styles.row, maxWidth: 400 }}>
-        <div style={styles.walletLogoContainer}>
-          <RetinaImage
-            className="img-responsive"
-            style={styles.logo}
-            src="https://eth2.io/images/trust.png"
-          />
-          <div style={styles.logoText}>Trust</div>
-        </div>
-        <div style={styles.walletLogoContainer}>
-          <RetinaImage
-            className="img-responsive"
-            style={styles.logo}
-            src="https://eth2.io/images/metamask.png"
-          />
-          <div style={styles.logoText}>Metamask</div>
-        </div>
-        <div style={styles.walletLogoContainer}>
-          <RetinaImage
-            className="img-responsive"
-            style={styles.logo}
-            src="https://eth2.io/images/cipher.png"
-          />
-          <div style={styles.logoText}>Cipher</div>
-        </div>
-        <div style={styles.walletLogoContainer}>
-          <RetinaImage
-            className="img-responsive"
-            style={styles.logo}
-            src="https://eth2.io/images/toshi.png"
-          />
-          <div style={styles.logoText}>Toshi</div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default UnsupportedNetwork;

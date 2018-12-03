@@ -15,42 +15,49 @@ const DepositedScreen = ({ transfer }) => {
   }
 
   return (
-    <Row>
-      <div
-        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
-      >
+    <div>
+      <Row style={{ height: innerHeight }}>
         <div
           style={{
-            marginBottom: 25,
-            fontFamily: "Inter UI Medium",
-            fontSize: 30,
-            color: "#4CD964",
+            width: 354,
+            margin: "auto",
+            marginTop: 50,
             textAlign: "left"
           }}
         >
-          We generated a link
+          <div
+            style={{
+              marginBottom: 25,
+              fontFamily: "Inter UI Medium",
+              fontSize: 30,
+              color: "#4CD964",
+              textAlign: "left"
+            }}
+          >
+            We generated a link
+          </div>
+          <div
+            style={{
+              marginBottom: 150,
+              fontFamily: "Inter UI Medium",
+              fontSize: 24,
+              color: "white",
+              textAlign: "left"
+            }}
+          >
+            Now you can send it to
+            <br />
+            anyone — just like a<br />
+            text message
+          </div>
         </div>
-        <div
-          style={{
-            marginBottom: 150,
-            fontFamily: "Inter UI Medium",
-            fontSize: 24,
-            color: "white",
-            textAlign: "left"
-          }}
-        >
-          Now you can send it to
-          <br />
-          anyone — just like a<br />
-          text message
+        <div style={{ marginBottom: 20 }}>
+          <LinkInput value={shareLink} readOnly={true} />
         </div>
-      </div>
-      <div style={{ marginBottom: 20 }}>
-        <LinkInput value={shareLink} readOnly={true} />
-      </div>
-      <ShareButton transfer={transfer} />
+        <ShareButton transfer={transfer} />
+      </Row>
       <Footer />
-    </Row>
+    </div>
   );
 };
 

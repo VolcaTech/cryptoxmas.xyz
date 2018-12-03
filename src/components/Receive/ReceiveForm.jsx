@@ -145,10 +145,16 @@ class ReceiveScreen extends Component {
               Link is already claimed
             </div>
           </div>
-          <RetinaImage
-            className="img-responsive"
-            style={{ margin: "auto" }}
-            src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/oops.png"
+          <img
+            style={{
+              display: "block",
+              margin: "auto",
+              height: 200,
+              width: 200
+            }}
+            src={
+              "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/boom.gif"
+            }
           />
         </Row>
       );

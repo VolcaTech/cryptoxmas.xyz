@@ -134,52 +134,35 @@ class NoWalletScreen extends Component {
 
   _renderForDesktop() {
     return (
-      <div style={{ color: "white" }}>
-        <div style={styles.title}>
-          You need wallet to
+      <div
+        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
+      >
+        <div
+          style={{
+            marginBottom: 45,
+            fontFamily: "Inter UI Medium",
+            fontSize: 30,
+            color: "#4CD964",
+            textAlign: "left"
+          }}
+        >
+          You need Metamask to
           <br />
-          send or receive ether
+          send or receive gifts
         </div>
-        <div style={{ ...styles.instructionsText, textAlign: "center" }}>
+        <RetinaImage
+          className="img-responsive"
+          style={{ margin: "auto" }}
+          src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/letter.png"
+        />
+        <a
+          href={"https://metamask.io/"}
+          style={{ ...styles.button, marginTop: 40 }}
+          target="_blank"
+        >
           {" "}
-          On desktop we recommend Metamask{" "}
-        </div>
-        <div style={styles.instructionsContainer}>
-          <div
-            style={{ ...styles.instructionsText, fontFamily: "Inter UI Bold" }}
-          >
-            How to:
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
-            1. Install Metamask Chrome Extension
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
-            2. Create new or import existing wallet{" "}
-          </div>
-          <div style={styles.instructionsText}>
-            {" "}
-            3. Receive Ether (link will be reload automatically){" "}
-          </div>
-        </div>
-        <div style={styles.buttonRow}>
-          <a
-            href="https://metamask.io/"
-            style={{
-              ...styles.button,
-              backgroundColor: "#f5a623",
-              borderColor: "#f5a623"
-            }}
-            target="_blank"
-          >
-            {" "}
-            Install Metamask{" "}
-          </a>
-          <a href="https://info.eth2.io/faq">
-            <RetinaImage src="https://eth2.io/images/q.png" />{" "}
-          </a>
-        </div>
+          Install Metamask{" "}
+        </a>
       </div>
     );
   }
