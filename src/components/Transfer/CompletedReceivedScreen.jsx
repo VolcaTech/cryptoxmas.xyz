@@ -1,6 +1,5 @@
 import React from "react";
 import TokenImage from "./../common/TokenImage";
-import Footer from "./../common/poweredByVolca";
 import styles from "./styles";
 
 const CompletedReceivedScreen = ({ transfer }) => {
@@ -19,7 +18,6 @@ const CompletedReceivedScreen = ({ transfer }) => {
           <TokenImage url={gift.image} />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
