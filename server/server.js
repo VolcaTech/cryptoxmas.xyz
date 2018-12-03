@@ -1,7 +1,6 @@
 'use strict';
 
 // set up ========================
-//require('newrelic');
 const express  = require('express');
 const app      = express();                               // create our app w/ express
 const log = require('./src/libs/log')(module);
@@ -12,7 +11,6 @@ const methodOverride = require('method-override'); // simulate DELETE and PUT (e
 const buildRouter = require('./src/routes');
 const https = require('https');
 const fs = require('fs');
-//const EventsParserService = require('./src/services/EventsParserService');
 
 
 app.use(morgan('dev'));                                         // log every request to the console
@@ -67,11 +65,9 @@ app.use(function(err, req, res, next){
 
 
 // listen (start app with node server.js) ======================================
-
 const portNum = config.get('PORT') || 3000;    
 app.listen(portNum, function(){
     console.log("server is up at /", portNum);
-    //EventsParserService.start();
 });
 
 
