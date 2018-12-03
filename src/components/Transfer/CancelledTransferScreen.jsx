@@ -1,6 +1,5 @@
 import React from "react";
 import { Row } from "react-bootstrap";
-import RetinaImage from "react-retina-image";
 import styles from "./styles";
 
 const CancelledTransferScreen = () => {

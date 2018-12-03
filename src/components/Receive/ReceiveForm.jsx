@@ -8,7 +8,6 @@ import { SpinnerOrError, Loader, ButtonLoader } from "./../common/Spinner";
 import { getNetworkNameById } from "../../utils";
 const qs = require("querystring");
 import { claimGift } from "./../../actions/transfer";
-import Footer from "./../common/poweredByVolca";
 
 const styles = {
   container: { alignContent: "center" },
@@ -222,9 +221,7 @@ class ReceiveScreen extends Component {
             position: "fixed",
             bottom: 0
           }}
-        >
-          <Footer />
-        </div>
+        />
       </Grid>
     );
   }

@@ -75,9 +75,6 @@ const PendingTxScreen = ({ transfer }) => {
           />
         </div>
       </Row>
-      <div style={{ width: "100%", margin: 'auto', bottom: 0, position: "fixed" }}>
-        <Footer />
-      </div>
     </div>
   );
 };

@@ -19,6 +19,9 @@ import Footer from "./components/common/poweredByVolca";
 
 const styles = {
   background: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     margin: "auto",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -33,7 +36,17 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <UnsupportedNetwork />
+        <div
+          style={{
+            height: innerHeight - 100,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between"
+          }}
+        >
+          <UnsupportedNetwork />
+          <Footer />
+        </div>
       </div>
     );
   }
@@ -94,9 +107,11 @@ class App extends Component {
                   );
                 }}
               />
-
               <Route component={HomeScreen} />
             </Switch>
+            <div>
+              <Footer />
+            </div>
           </div>
         </Router>
       </div>

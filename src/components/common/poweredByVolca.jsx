@@ -5,9 +5,9 @@ const PoweredByVolca = () => {
     <div
       style={{
         display: "flex",
-        paddingBottom: 30,
         marginTop: 20,
-        width: "100%"
+        width: "100%",
+        paddingBottom: 30
       }}
     >
       <div style={{ width: "100%", textAlign: "center" }}>

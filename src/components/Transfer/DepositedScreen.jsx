@@ -1,7 +1,6 @@
 import React from "react";
 import { ShareButton } from "./components";
 import { Row } from "react-bootstrap";
-import Footer from "./../common/poweredByVolca";
 import LinkInput from "./../common/NumberInput";
 const ETH2PHONE_HOST = "https://cryptoxmas.xyz";
 
@@ -56,7 +55,6 @@ const DepositedScreen = ({ transfer }) => {
         </div>
         <ShareButton transfer={transfer} />
       </Row>
-      <Footer />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import Footer from "./../common/poweredByVolca";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
 import NumberInput from "./../common/NumberInput";
@@ -260,7 +259,6 @@ class SendScreen extends Component {
             </div>
           )}
         </div>
-        <Footer />
       </Row>
     );
   }

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-import RetinaImage from "react-retina-image";
 import { buyGift } from "../../actions/transfer";
 import { Loader } from "./../common/Spinner";
 import * as eth2gift from "./../../services/eth2gift";
-import Footer from "./../common/poweredByVolca";
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -170,7 +168,6 @@ class HomeScreen extends Component {
             </Col>
           </Row>
         </div>
-        <Footer />
       </div>
     );
   }
