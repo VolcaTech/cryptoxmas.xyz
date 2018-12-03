@@ -1,7 +1,7 @@
 import React from "react";
 import copy from "copy-to-clipboard";
 import ButtonPrimary from "./../common/ButtonPrimary";
-const ETH2PHONE_HOST = "https://app.cryptoxmas.xyz";
+const HOST = "https://app.cryptoxmas.xyz";
 const shareIcon = require("../../../public/images/share_icon.png");
 import { getCurrentWalletId } from "../../utils";
 import web3Service from "./../../services/web3Service";
@@ -47,7 +47,7 @@ export const getEtherscanLink = ({ txHash, networkId }) => {
 export const ShareButton = ({ transfer }) => {
   let shareLink;
 
-  shareLink = `${ETH2PHONE_HOST}/#/r?pk=${transfer.transitPrivateKey}`;
+  shareLink = `${HOST}/#/r?pk=${transfer.transitPrivateKey}`;
 
   if (transfer.networkId !== "1") {
     shareLink += `&n=${transfer.networkId}`;
