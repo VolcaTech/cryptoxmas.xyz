@@ -1,7 +1,7 @@
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
-import 'openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
+import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol';
 
 
 contract eth2giftEscrow is Pausable, Ownable {
@@ -68,10 +68,6 @@ contract eth2giftEscrow is Pausable, Ownable {
 				        uint newCommissionFee
 				    );
 
-  event LogChangeVerifier(
-			  address oldVerifier,
-			    address newVerifier
-			  );
 
 
   /**
@@ -79,33 +75,24 @@ contract eth2giftEscrow is Pausable, Ownable {
    * and sets verifier's fixed commission fee.
    * @param _commissionFee uint Verifier's fixed commission for each transfer
    */
-  constructor(uint _commissionFee,
-	                  address _tokenAddress
-	      //address _verifier,
+  constructor(uint _commissionFee
 	      ) public {
     commissionFee = _commissionFee;
-    //verifier = _verifier;
-    verifier = msg.sender;
   }
 
 
-  modifier onlyVerifier() {
-    require(msg.sender == verifier);
-    _;
-  }
-
-  function addSeller(address _sellerAddress, address _tokenAddress) {
+  function addSeller(address _sellerAddress, address _tokenAddress) public {
     sellers[_tokenAddress] = _sellerAddress;
   }
 
-  function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress) public returns (bool) {
-    require(msg.value > commissionFee);
+  function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
+    require(_value > commissionFee);
 
     // can not override existing gift
     require(gifts[_transitAddress].status == Statuses.Empty);
 
     // check that nft wasn't sold before
-    ERC721 nft = ERC721(_tokenAddress);
+    ERC721Metadata nft = ERC721Metadata(_tokenAddress);
     require(nft.ownerOf(_tokenId) == sellers[_tokenAddress]);
 
     return true;
@@ -113,11 +100,9 @@ contract eth2giftEscrow is Pausable, Ownable {
 
 
   function buyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress)
-          payable public
-            whenNotPaused
-    whenNotStopped returns (bool) {
+          payable public  whenNotPaused returns (bool) {
 
-    require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress));
+    require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
     uint amount = msg.value.sub(commissionFee); //amount = msg.value - comission
 
@@ -134,7 +119,7 @@ contract eth2giftEscrow is Pausable, Ownable {
     commissionToWithdraw = commissionToWithdraw.add(commissionFee);
 
     // send nft
-    ERC721 nft = ERC721(_tokenAddress);
+    ERC721Metadata nft = ERC721Metadata(_tokenAddress);
     nft.transferFrom(sellers[_tokenAddress], address(this), _tokenId);
 
     // log buy event
@@ -158,34 +143,12 @@ contract eth2giftEscrow is Pausable, Ownable {
   function changeFixedCommissionFee(uint _newCommissionFee)
                               public
                               whenNotPaused
-                              whenNotStopped
                               onlyOwner
     returns(bool success)
   {
     uint oldCommissionFee = commissionFee;
     commissionFee = _newCommissionFee;
     emit LogChangeFixedCommissionFee(oldCommissionFee, commissionFee);
-    return true;
-  }
-
-
-  /**
-   * @dev Change verifier's address.
-   * Only owner can change verifier's address.
-   * 
-   * @param _newVerifier address New verifier's address
-   * @return True if success.
-   */
-  function changeVerifier(address _newVerifier)
-                              public
-                              whenNotPaused
-                              whenNotStopped
-                              onlyOwner
-    returns(bool success)
-  {
-    address oldVerifier = verifier;
-    verifier = _newVerifier;
-    emit LogChangeVerifier(oldVerifier, verifier);
     return true;
   }
 
@@ -201,7 +164,7 @@ contract eth2giftEscrow is Pausable, Ownable {
   {
     uint commissionToTransfer = commissionToWithdraw;
     commissionToWithdraw = 0;
-    owner.transfer(commissionToTransfer); // owner is verifier
+    owner().transfer(commissionToTransfer); // owner is verifier
 
     emit LogWithdrawCommission(commissionToTransfer);
     return true;
@@ -227,7 +190,7 @@ contract eth2giftEscrow is Pausable, Ownable {
   {
     Gift memory gift = gifts[_transitAddress];
 
-    ERC721 nft = ERC721(gift.tokenAddress);
+    ERC721Metadata nft = ERC721Metadata(gift.tokenAddress);
 
     return (
 	    gift.sender,
@@ -258,7 +221,7 @@ contract eth2giftEscrow is Pausable, Ownable {
     gift.sender.transfer(gift.amount);
 
     // send nft
-    ERC721 nft = ERC721(gift.tokenAddress);
+    ERC721Metadata nft = ERC721Metadata(gift.tokenAddress);
     nft.transferFrom(address(this), msg.sender, gift.tokenId);
 
     // log cancel event
@@ -342,7 +305,6 @@ contract eth2giftEscrow is Pausable, Ownable {
 		    )
         public
         whenNotPaused
-        whenNotStopped
     returns (bool success)
   {
     Gift memory gift = gifts[_transitAddress];
@@ -354,7 +316,7 @@ contract eth2giftEscrow is Pausable, Ownable {
     gift.status = Statuses.Claimed;
 
     // send nft
-    ERC721 nft = ERC721(gift.tokenAddress);
+    ERC721Metadata nft = ERC721Metadata(gift.tokenAddress);
     nft.transferFrom(address(this), _recipient, gift.tokenId);
 
     // transfer ether to recipient's address
