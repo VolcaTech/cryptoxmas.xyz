@@ -1,9 +1,10 @@
-import './SafeMath.sol';
-import './Stoppable.sol';
-import './MintableNFT.sol';
+import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
+import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
+import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
+import 'openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
 
-contract eth2giftEscrow is Stoppable {
+contract eth2giftEscrow is Pausable, Ownable {
   using SafeMath for uint256;
 
   // fixed amount of wei accrued to verifier with each transfer
@@ -104,7 +105,7 @@ contract eth2giftEscrow is Stoppable {
     require(gifts[_transitAddress].status == Statuses.Empty);
 
     // check that nft wasn't sold before
-    MintableNFT nft = MintableNFT(_tokenAddress);
+    ERC721 nft = ERC721(_tokenAddress);
     require(nft.ownerOf(_tokenId) == sellers[_tokenAddress]);
 
     return true;
@@ -133,7 +134,7 @@ contract eth2giftEscrow is Stoppable {
     commissionToWithdraw = commissionToWithdraw.add(commissionFee);
 
     // send nft
-    MintableNFT nft = MintableNFT(_tokenAddress);
+    ERC721 nft = ERC721(_tokenAddress);
     nft.transferFrom(sellers[_tokenAddress], address(this), _tokenId);
 
     // log buy event
@@ -226,7 +227,7 @@ contract eth2giftEscrow is Stoppable {
   {
     Gift memory gift = gifts[_transitAddress];
 
-    MintableNFT nft = MintableNFT(gift.tokenAddress);
+    ERC721 nft = ERC721(gift.tokenAddress);
 
     return (
 	    gift.sender,
