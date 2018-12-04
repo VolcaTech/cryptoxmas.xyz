@@ -1,16 +1,17 @@
 import Promise from "bluebird";
-import eth2giftABI from "../../../contracts/build/eth2gift";
+import Eth2gift from "../../../cryptoxmas-contracts/build/eth2giftEscrow.json";
 import NFTService from "./NFTService";
 
 const CONTRACT_ADDRESS = "0xa1d89cb2dc2283325dde52defd2056e099916103";
 const SELLER_ADDRESS = "0xF695e673d7D159CBFc119b53D8928cEca4Efe99e";
+
 
 const EscrowContractService = () => {
   var web3, contract, nftService;
 
   function setup(_web3) {
     web3 = _web3;
-    contract = web3.eth.contract(eth2giftABI).at(CONTRACT_ADDRESS);
+      contract = web3.eth.contract(JSON.parse(Eth2gift.interface)).at(CONTRACT_ADDRESS);
     Promise.promisifyAll(contract, { suffix: "Promise" });
     nftService = new NFTService(web3);
   }
