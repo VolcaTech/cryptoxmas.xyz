@@ -1,0 +1,8 @@
+{
+    "ropsten": { 
+	"ESCROW_CONTRACT": "0xa1d89cb2dc2283325dde52defd2056e099916103",
+	"SELLER_ADDRESS": "0xF695e673d7D159CBFc119b53D8928cEca4Efe99e",
+	"NFT_ADDRESS": "0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276",
+	"SERVER_HOST": "https://christmas-ropsten.eth2phone.com"	
+    }
+}

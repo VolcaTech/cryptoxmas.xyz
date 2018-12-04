@@ -20,7 +20,7 @@ class Header extends React.Component {
                 fontFamily: "Inter UI Bold",
                 fontSize: 30,
                 color: "white",
-                textAlign: "right"
+                textAlign: "right",
               }}
             >
               Crypto Xmas

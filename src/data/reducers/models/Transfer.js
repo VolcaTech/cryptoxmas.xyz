@@ -7,7 +7,6 @@ export default class AssetTransfer extends Model {
   // eslint-disable-next-line no-undef
   static fields = {
     id: attr(),
-    verificationType: attr(), // 'none', 'email', 'phone'
     txHash: attr(),
     senderAddress: attr(),
     direction: attr(),
@@ -16,10 +15,8 @@ export default class AssetTransfer extends Model {
     fee: attr(),
     networkId: attr(),
     transferId: attr(), // sha3(phone, secretCode)
-    secretCode: attr(),
     transitAddress: attr(),
     transitPrivateKey: attr(),
-    receiverPhone: attr(),
     receiverAddress: attr(),
     status: attr(), // pending, sent, completed, canceled,
     isError: attr() // if last tx is error
@@ -28,11 +25,6 @@ export default class AssetTransfer extends Model {
   static reducer(action, model) {
     switch (action.type) {
       case actions.CREATE_TRANSFER: {
-        const transfer = action.payload;
-        model.create(transfer);
-        return undefined;
-      }
-      case actions.CREATE_LINK_TRANSFER: {
         const transfer = action.payload;
         model.create(transfer);
         return undefined;

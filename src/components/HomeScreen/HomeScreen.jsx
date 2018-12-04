@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import { buyGift } from "../../actions/transfer";
 import { Loader } from "./../common/Spinner";
-import * as eth2gift from "./../../services/eth2gift";
+import cryptoxmasService from "./../../services/cryptoxmasService";
+
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class HomeScreen extends Component {
   }
 
   async componentDidMount() {
-    const tokens = await eth2gift.getGiftsForSale();
+    const tokens = await cryptoxmasService.getGiftsForSale();
     this.setState({ fetching: false, tokens });
   }
 

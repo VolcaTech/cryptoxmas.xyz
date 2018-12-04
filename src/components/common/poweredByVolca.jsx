@@ -5,7 +5,7 @@ const PoweredByVolca = () => {
     <div
       style={{
         display: "flex",
-        marginTop: 20,
+        paddingTop: 50,
         width: "100%",
         paddingBottom: 30
       }}

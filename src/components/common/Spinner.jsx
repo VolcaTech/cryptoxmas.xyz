@@ -71,7 +71,8 @@ export const Error = ({ fetching, error }) => {
 
 export const Loader = ({
   text = "Loading page...",
-  textLeftMarginOffset = -15
+  textLeftMarginOffset = -50,
+  instruction = ""
 }) => (
   <div>
     <div className="centered-lds">
@@ -82,7 +83,8 @@ export const Loader = ({
         <div />
       </div>
       <div style={{ ...styles.loaderText, marginLeft: textLeftMarginOffset }}>
-        {text}
+        <div style={{ textAlign: "center" }}>{text}</div>
+        <div style={{ marginTop: 10 }}>{instruction}</div>
       </div>
     </div>
   </div>

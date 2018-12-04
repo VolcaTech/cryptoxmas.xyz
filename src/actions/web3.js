@@ -1,8 +1,8 @@
 import web3Service from "../services/web3Service";
-import escrowContract from "../services/eth2gift/escrowContract";
-import verificationUrlGetter from "../services/eth2gift/serverUrl";
+import cryptoxmas from "../services/cryptoxmasService";
 import { detectNetwork } from "../utils";
 import * as actionTypes from "./types";
+
 
 const updateWeb3Details = payload => {
   return {
@@ -25,10 +25,9 @@ export const updateBalance = () => {
   };
 };
 
-const _setupContract = (web3, networkId) => {
+const _setupCryptoxmasService = (web3) => {
   try {
-    escrowContract.setup(web3);
-    verificationUrlGetter.setNetwork(networkId);
+    cryptoxmas.setup(web3);
   } catch (err) {
     console.log("Error while setuping contract");
     console.log(err);
@@ -39,9 +38,9 @@ export const setupWeb3 = () => {
   return async dispatch => {
     try {
       const web3Details = await web3Service.setup();
-      const { web3, networkId } = web3Details;
+      const { web3 } = web3Details;
 
-      _setupContract(web3, networkId);
+      _setupCryptoxmasService(web3);
 
       dispatch(updateWeb3Details(web3Details));
     } catch (err) {
@@ -78,7 +77,7 @@ export const setupWeb3ChangeListener = () => {
             balance = await web3.eth.getBalancePromise(address);
           }
 
-          _setupContract(web3, networkId);
+          _setupCryptoxmasService(web3);
 
           dispatch(
             updateWeb3Details({
