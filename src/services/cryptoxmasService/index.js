@@ -3,7 +3,7 @@ import EscrowContract from "./escrowContract";
 import ServerApi from "./serverApi";
 import { signReceiverAddress } from "./utils";
 import NFTService from "./NFTService";
-import config from '../../../config.json';
+import config from '../../../dapp-config.json';
 import { detectNetwork } from '../../utils';
 
 class CryptoxmasService { 

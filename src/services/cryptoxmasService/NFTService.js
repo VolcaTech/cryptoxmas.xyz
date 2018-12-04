@@ -1,6 +1,6 @@
 import Promise from "bluebird";
 import NFT from "../../../cryptoxmas-contracts/build/NFT.json";
-import config from '../../../config';
+import config from '../../../dapp-config.json';
 
 
 export default class NFTService {
