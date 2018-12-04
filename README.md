@@ -21,7 +21,7 @@ All proceeds, excluding gas cost for the Nifty token creation, is donated via th
 
 ## Not happy with your present? 
 
-All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenSea](https://opensea.io/)
+All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenSea](https://opensea.io/).
 
 ## Non-custodian escrow via eth2.io
 
