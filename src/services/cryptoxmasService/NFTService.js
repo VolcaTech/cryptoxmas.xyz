@@ -1,15 +1,18 @@
 import Promise from "bluebird";
 import NFT from "../../../cryptoxmas-contracts/build/NFT.json";
+import config from '../../../config';
 
-const TOKEN_ADDRESS = "0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276";
 
 export default class NFTService {
-  constructor(web3) {
-    const contract = web3.eth
-      .contract(JSON.parse(NFT.interface))
-      .at(TOKEN_ADDRESS);
-    Promise.promisifyAll(contract, { suffix: "Promise" });
-    this.tokenContract = contract;
+    setup({web3, network}) {
+
+	const nftAddress = config[network].NFT_ADDRESS;
+	
+	const contract = web3.eth
+		  .contract(JSON.parse(NFT.interface))
+		  .at(nftAddress);
+	Promise.promisifyAll(contract, { suffix: "Promise" });
+	this.tokenContract = contract;
   }
 
   async tokensOf(owner) {

@@ -4,20 +4,14 @@ import {
   getReceivingTransfers,
   getCancellingTransfers
 } from "./../data/selectors";
-import * as eth2gift from "../services/eth2gift";
+import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
 import { updateBalance } from "./web3";
+
 
 const createTransfer = payload => {
   return {
     type: actionTypes.CREATE_TRANSFER,
-    payload
-  };
-};
-
-const createLinkTransfer = payload => {
-  return {
-    type: actionTypes.CREATE_LINK_TRANSFER,
     payload
   };
 };
@@ -84,7 +78,7 @@ export const buyGift = ({ amount, tokenId }) => {
       transitPrivateKey,
       transferId,
       transitAddress
-    } = await eth2gift.buyGift({
+    } = await cryptoxmasService.buyGift({
       tokenAddress: TOKEN_ADDRESS,
       tokenId,
       amountToPay: amount,
@@ -94,7 +88,6 @@ export const buyGift = ({ amount, tokenId }) => {
 
     const transfer = {
       id,
-      verificationType: "none",
       txHash,
       transitPrivateKey,
       transferId,
@@ -108,7 +101,7 @@ export const buyGift = ({ amount, tokenId }) => {
       direction: "out"
     };
 
-    dispatch(createLinkTransfer(transfer));
+    dispatch(createTransfer(transfer));
     // subscribe
     dispatch(subscribePendingTransferMined(transfer, "deposited"));
 
@@ -122,7 +115,7 @@ export const claimGift = ({ transitPrivateKey, gift }) => {
     const networkId = state.web3Data.networkId;
     const receiverAddress = state.web3Data.address;
 
-    const result = await eth2gift.claimGift({
+    const result = await cryptoxmasService.claimGift({
       transitPrivateKey,
       receiverAddress
     });
@@ -131,7 +124,6 @@ export const claimGift = ({ transitPrivateKey, gift }) => {
     const txHash = result.txHash;
     const transfer = {
       id,
-      verificationType: "none",
       txHash,
       transferId: result.transferId,
       status: "receiving",
@@ -153,14 +145,9 @@ export const cancelTransfer = transfer => {
   return async dispatch => {
     // take contract redeploy into account
     let contractVersion;
-    const contractRedeployTimestamp = 1529011666000;
-    if (transfer.timestamp && transfer.timestamp < contractRedeployTimestamp) {
-      contractVersion = 1;
-    }
 
-    const txHash = await eth2gift.cancelTransfer(
-      transfer.transitAddress,
-      contractVersion
+    const txHash = await cryptoxmasService.cancelTransfer(
+      transfer.transitAddress
     );
 
     dispatch(

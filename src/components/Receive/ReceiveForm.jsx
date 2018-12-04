@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Grid } from "react-bootstrap";
 import RetinaImage from "react-retina-image";
-import * as eth2gift from "../../services/eth2gift";
+import cryptoxmasService from "../../services/cryptoxmasService";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { SpinnerOrError, Loader, ButtonLoader } from "./../common/Spinner";
 import { getNetworkNameById } from "../../utils";
@@ -59,7 +59,7 @@ class ReceiveScreen extends Component {
 
   async componentDidMount() {
     try {
-      const gift = await eth2gift.getGift(this.state.transitPrivateKey);
+      const gift = await cryptoxmasService.getGift(this.state.transitPrivateKey);
       this.setState({
         fetching: false,
         gift

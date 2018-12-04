@@ -7,7 +7,7 @@ import NumberInput from "./../common/NumberInput";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
 import web3Service from "./../../services/web3Service";
-import * as eth2gift from "../../services/eth2gift";
+import cryptoxmasService from "../../services/cryptoxmasService";
 
 const styles = {
   title: {
@@ -103,7 +103,7 @@ class SendScreen extends Component {
 
   async componentDidMount() {
     try {
-      const token = await eth2gift.getTokenMetadata(this.state.tokenId);
+      const token = await cryptoxmasService.getTokenMetadata(this.state.tokenId);
       this.setState({
         fetching: false,
         token
