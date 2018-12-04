@@ -1,6 +1,6 @@
 {
-  "name": "quid-proxy-server",
-  "version": "1.0.0",
+  "name": "cryptoxmas-server",
+  "version": "0.1.0",
   "scripts": {
     "start": "node server",
     "watch": "nodemon server"
@@ -9,25 +9,25 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dobrokhvalov/quid-proxy-server.git"
+    "url": "git+https://github.com/VolcaTech/cryptoxmas.xyz.git"
   },
   "keywords": [
     "Ethereum",
-    "Quid",
+    "NFT",
+    "Linkdrop",
     "Smart",
     "Contracts"
   ],
   "author": "Dobrokhvalov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Dobrokhvalov/quid-proxy-server/issues"
+    "url": "https://github.com/VolcaTech/cryptoxmas.xyz/issues"
   },
-  "homepage": "https://github.com/Dobrokhvalov/quid-proxy-server#readme",
+  "homepage": "https://github.com/VolcaTech/cryptoxmas.xyz#readme",
   "devDependencies": {
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "authy": "^1.2.0",
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
