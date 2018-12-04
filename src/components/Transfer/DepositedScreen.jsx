@@ -2,12 +2,12 @@ import React from "react";
 import { ShareButton } from "./components";
 import { Row } from "react-bootstrap";
 import LinkInput from "./../common/NumberInput";
-const ETH2PHONE_HOST = "https://cryptoxmas.xyz";
+const HOST = "https://app.cryptoxmas.xyz";
 
 const DepositedScreen = ({ transfer }) => {
   let shareLink;
 
-  shareLink = `${ETH2PHONE_HOST}/#/r?pk=${transfer.transitPrivateKey}`;
+  shareLink = `${HOST}/#/r?pk=${transfer.transitPrivateKey}`;
 
   if (transfer.networkId !== "1") {
     shareLink += `&n=${transfer.networkId}`;
