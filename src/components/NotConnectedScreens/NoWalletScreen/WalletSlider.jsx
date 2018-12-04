@@ -47,8 +47,7 @@ const styles = {
   prevArrow: { height: 20, float: "left", top: 25, paddingTop: 26 }
 };
 
-class WalletSlider extends React.Component {
-  _renderNextArrow = props => {
+const NextArrow = props => {
     const { onClick } = props;
     return (
       <div
@@ -64,22 +63,23 @@ class WalletSlider extends React.Component {
     );
   };
 
-  _renderPreviousArrow = props => {
-    const { onClick } = props;
+const PreviousArrow = props => {
     return (
-      // <div style={window.innerWidth > 320 ? styles.prevArrow : { ...styles.prevArrow, paddingTop: 20 }} onClick={onClick}>
-      //     <RetinaImage src="https://eth2.io/images/arrowLeft.png" />
-      // </div>
       <div />
     );
   };
+
+
+
+class WalletSlider extends React.Component {
+
 
   render() {
     const settings = {
       arrows: true,
       padding: 7,
-      nextArrow: <this._renderNextArrow />,
-      prevArrow: <this._renderPreviousArrow />,
+	nextArrow: <NextArrow />,
+	prevArrow: <PreviousArrow />,
       fontSize: 10,
       slidesToShow: 4,
       slidesToScroll: 4
@@ -93,9 +93,7 @@ class WalletSlider extends React.Component {
         <Slider {...settings}>
           {Object.keys(wallets)
             .map(walletId => wallets[walletId])
-            // .filter(wallet => wallet.id !== this.props.selectedWallet.id)
             .filter(wallet => {
-              // console.log({wallet, deviceOS});
               return wallet.mobile[deviceOS] && wallet.mobile[deviceOS].support;
             })
             .map(wallet => {
@@ -121,9 +119,7 @@ const WalletButtonContainer = ({ wallet, selectWallet }) => {
     logoStyle = styles.logo5;
   }
 
-  const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${
-    wallet.id
-  }.png`;
+  const walletIcon = `https://raw.githubusercontent.com/Eth2io/eth2-assets/master/images/${wallet.id}.png`;
 
   return (
     <RetinaImage
