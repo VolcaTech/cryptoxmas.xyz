@@ -26,4 +26,4 @@ npm run start
 ```
 
 ## License
-MIT Liscense 
+GPL-3 Liscense 
