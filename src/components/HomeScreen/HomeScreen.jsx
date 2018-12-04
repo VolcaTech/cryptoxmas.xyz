@@ -78,7 +78,6 @@ class HomeScreen extends Component {
       <div>
         <div
           style={{
-            width: 414,
             margin: "auto",
             backgroundColor: "#474D5B",
             height: window.innerHeight,
@@ -88,7 +87,6 @@ class HomeScreen extends Component {
             backgroundRepeat: "no-repeat"
           }}
         >
-          <Row>
             <div
               style={{
                 width: 354,
@@ -167,7 +165,6 @@ class HomeScreen extends Component {
                 <div>{column2.map(t => this._renderToken(t, "left"))}</div>
               )}
             </Col>
-          </Row>
         </div>
       </div>
     );

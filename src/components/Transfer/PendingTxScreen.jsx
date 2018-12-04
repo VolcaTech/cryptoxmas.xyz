@@ -11,7 +11,6 @@ const PendingTxScreen = ({ transfer }) => {
 
   return (
     <div>
-      <Row>
         <div
           style={{
             width: 354,
@@ -74,7 +73,6 @@ const PendingTxScreen = ({ transfer }) => {
             }
           />
         </div>
-      </Row>
     </div>
   );
 };

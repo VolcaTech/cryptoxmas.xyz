@@ -24,8 +24,7 @@ const styles = {
   },
   shareLinkContainer: {
     display: "block",
-    margin: "auto",
-    width: "70%"
+    margin: "auto"
   },
   shareIcon: {
     position: "absolute",

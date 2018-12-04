@@ -207,13 +207,11 @@ class ReceiveScreen extends Component {
       );
     }
 
-    return (
-      <Grid>
-        <Row>
-          <Col sm={4} smOffset={4}>
+      return (
+	  <div>
+	  <div>
             {this._renderForm()}
-          </Col>
-        </Row>
+	  </div>
         <div
           style={{
             width: "100%",
@@ -222,7 +220,7 @@ class ReceiveScreen extends Component {
             bottom: 0
           }}
         />
-      </Grid>
+      </div>
     );
   }
 }

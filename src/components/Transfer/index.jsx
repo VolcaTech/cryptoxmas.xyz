@@ -37,11 +37,7 @@ export class TransferComponent extends Component {
   }
 }
 const TransferScreen = props => (
-  <Row>
-    <Col sm={4} smOffset={4}>
-      <TransferComponent {...props} />
-    </Col>
-  </Row>
+    <TransferComponent {...props} />    
 );
 
 const mapStateToProps = (state, props) => {
