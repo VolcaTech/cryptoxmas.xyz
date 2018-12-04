@@ -1,11 +1,13 @@
 import Promise from "bluebird";
-import NFT_ABI from "../../../contracts/build/NFT";
+import NFT from "../../../cryptoxmas-contracts/build/NFT.json";
 
 const TOKEN_ADDRESS = "0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276";
 
 export default class NFTService {
   constructor(web3) {
-    const contract = web3.eth.contract(NFT_ABI).at(TOKEN_ADDRESS);
+    const contract = web3.eth
+      .contract(JSON.parse(NFT.interface))
+      .at(TOKEN_ADDRESS);
     Promise.promisifyAll(contract, { suffix: "Promise" });
     this.tokenContract = contract;
   }

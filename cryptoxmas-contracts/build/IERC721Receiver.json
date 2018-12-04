@@ -1,0 +1,18 @@
+{
+  "assembly": null,
+  "bytecode": "",
+  "functionHashes": {
+    "onERC721Received(address,address,uint256,bytes)": "150b7a02"
+  },
+  "gasEstimates": {
+    "creation": {},
+    "external": {},
+    "internal": {}
+  },
+  "interface": "[{\"constant\":false,\"inputs\":[{\"name\":\"operator\",\"type\":\"address\"},{\"name\":\"from\",\"type\":\"address\"},{\"name\":\"tokenId\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes4\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+  "metadata": "",
+  "opcodes": "",
+  "runtimeBytecode": "",
+  "srcmap": "",
+  "srcmapRuntime": ""
+}
