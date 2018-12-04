@@ -1,7 +1,7 @@
 const Promise = require("bluebird");
 const config = require("../config/app-config");
 const log  = require('./../libs/log')(module);
-const CONTRACT_ABI = require("../../../contracts/build/eth2gift");
+const EscrowContract = require("../../../cryptoxmas-contracts/build/eth2giftEscrow");
 
 const ethers = require('ethers');
 const provider = ethers.getDefaultProvider(config.get('ETHEREUM_NETWORK'));
@@ -9,7 +9,7 @@ const wallet = new ethers.Wallet(config.get("ETHEREUM_ACCOUNT_PK"), provider);
 
 // init contract
 const CONTRACT_ADDRESS = config.get("ESCROW_CONTRACT_ADDRESS");
-const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, wallet);
+const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, EscrowContract.interface, wallet);
 
 
 const getByTransitAddress = async (transitAddress) => {
@@ -77,6 +77,5 @@ const withdraw = async (transitAddress, to, v, r, s) => {
 module.exports = {
     checkCanWithdraw,
     withdraw,
-    //checkTransferStatusBeforeWithdraw,
     contractInstance
 }

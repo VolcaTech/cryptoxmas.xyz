@@ -9,7 +9,7 @@ Install libs:
 npm i 
 ```
 
-Please create config file `server/src/config/app-config.json` and add the following options:  
+Please create config file `cryptoxmas-server/src/config/app-config.json` and add the following options:  
 
 ```
 {
