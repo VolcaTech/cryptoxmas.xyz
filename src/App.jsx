@@ -69,7 +69,11 @@ class App extends Component {
 
   render() {
     if (!this.props.loaded) {
-      return <Loader />;
+      return (
+        <div>
+          <Loader instruction="Open your wallet to login" />
+        </div>
+      );
     }
 
     if (!this.props.connected || !this.props.address) {

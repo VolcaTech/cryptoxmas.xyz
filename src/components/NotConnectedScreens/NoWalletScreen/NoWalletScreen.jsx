@@ -4,6 +4,7 @@ const qs = require("querystring");
 import styles from "./styles";
 import wallets from "./wallets";
 import { getDeviceOS } from "../../../utils";
+import WalletSlider from "./WalletSlider";
 
 class NoWalletScreen extends Component {
   constructor(props) {
@@ -106,8 +107,13 @@ class NoWalletScreen extends Component {
           target="_blank"
         >
           {" "}
-          Open in Trust Wallet{" "}
+          Open in {this.state.selectedWallet.name}{" "}
         </a>
+        <WalletSlider
+          selectWallet={this._selectWallet.bind(this)}
+          selectedWallet={this.state.selectedWallet}
+        />
+        :
       </div>
     );
   }
@@ -119,15 +125,30 @@ class NoWalletScreen extends Component {
 
     // #TODO add this screen
     return (
-      <div>
-        <div>
-          <img src={walletIcon} style={styles.largeWalletIcon} />
-        </div>
-        <div style={{ ...styles.title, marginTop: 10 }}>
+      <div
+        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
+      >
+        <div
+          style={{
+            marginBottom: 45,
+            fontFamily: "Inter UI Medium",
+            fontSize: 30,
+            color: "#4CD964",
+            textAlign: "left"
+          }}
+        >
           How to use
           <br />
           {this.state.selectedWallet.name}
         </div>
+        <div>
+          <img src={walletIcon} style={styles.largeWalletIcon} />
+        </div>
+        <Instructions wallet={this.state.selectedWallet} />
+        <WalletSlider
+          selectWallet={this._selectWallet.bind(this)}
+          selectedWallet={this.state.selectedWallet}
+        />
       </div>
     );
   }
@@ -173,5 +194,31 @@ class NoWalletScreen extends Component {
       : this._renderForDesktop();
   }
 }
+
+const Instructions = ({ wallet }) => {
+  const walletId = wallet.id;
+  return (
+    <div style={styles.instructionsContainer}>
+      <div style={styles.instructionsText}>
+        {" "}
+        1. Download/Open{" "}
+        <a
+          href={wallets[walletId].walletURL}
+          style={{ ...styles.instructionsText, textDecoration: "underline" }}
+        >
+          {wallet.name}
+        </a>
+      </div>
+      <div style={styles.instructionsText}>
+        {" "}
+        2. Create new or import existing wallet{" "}
+      </div>
+      <div style={styles.instructionsText}>
+        {" "}
+        3. Open the gift link in a DApp browser and follow simple instructions{" "}
+      </div>
+    </div>
+  );
+};
 
 export default NoWalletScreen;
