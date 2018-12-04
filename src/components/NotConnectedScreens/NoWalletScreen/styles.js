@@ -64,14 +64,16 @@ export default {
     margin: "auto"
   },
   howtoTitle: {
-    fontFamily: "SF Display Bold",
-    fontSize: 20,
+    fontFamily: "Inter UI Regular",
+    fontSize: 16,
     textAlign: "center",
+    color: 'white',
     marginBottom: 20
   },
   instructionsText: {
-    fontFamily: "Inter UI Regular",
-    fontSize: 14,
+    fontFamily: "Inter UI Regular",    
+    fontSize: 16,
+    color: 'white',
     marginBottom: 5
   },
   instructionsTextBold: {
