@@ -14,7 +14,7 @@ const DepositedScreen = ({ transfer }) => {
   }
 
   return (
-    <div style={{ height: innerHeight }}>
+    <div>
         <div
           style={{
             width: 320,

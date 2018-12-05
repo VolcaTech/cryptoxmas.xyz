@@ -7,7 +7,7 @@ const CompletedReceivedScreen = ({ transfer }) => {
 
   return (
     <div>
-      <div style={{ height: innerHeight }}>
+      <div>
         <div style={styles.textContainer}>
           <div style={{ ...styles.greenTitle, marginBottom: 20 }}>Hooray!</div>
           <div style={{ ...styles.whiteTitle, marginBottom: 40 }}>
