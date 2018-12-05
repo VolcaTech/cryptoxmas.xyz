@@ -1,18 +1,16 @@
 import Promise from "bluebird";
 import NFT from "../../../cryptoxmas-contracts/build/NFT.json";
-import config from '../../../dapp-config.json';
-
+import config from "../../../dapp-config.json";
 
 export default class NFTService {
-    setup({web3, network}) {
+  setup({ web3, network }) {
+    const nftAddress = config[network].NFT_ADDRESS;
 
-	const nftAddress = config[network].NFT_ADDRESS;
-	
-	const contract = web3.eth
-		  .contract(JSON.parse(NFT.interface))
-		  .at(nftAddress);
-	Promise.promisifyAll(contract, { suffix: "Promise" });
-	this.tokenContract = contract;
+    const contract = web3.eth
+      .contract(JSON.parse(NFT.interface))
+      .at(nftAddress);
+    Promise.promisifyAll(contract, { suffix: "Promise" });
+    this.tokenContract = contract;
   }
 
   async tokensOf(owner) {

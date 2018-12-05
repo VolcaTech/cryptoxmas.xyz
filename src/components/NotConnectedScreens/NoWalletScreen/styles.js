@@ -67,13 +67,13 @@ export default {
     fontFamily: "Inter UI Regular",
     fontSize: 16,
     textAlign: "center",
-    color: 'white',
+    color: "white",
     marginBottom: 20
   },
   instructionsText: {
-    fontFamily: "Inter UI Regular",    
+    fontFamily: "Inter UI Regular",
     fontSize: 16,
-    color: 'white',
+    color: "white",
     marginBottom: 5
   },
   instructionsTextBold: {

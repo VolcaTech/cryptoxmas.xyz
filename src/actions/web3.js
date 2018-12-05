@@ -3,7 +3,6 @@ import cryptoxmas from "../services/cryptoxmasService";
 import { detectNetwork } from "../utils";
 import * as actionTypes from "./types";
 
-
 const updateWeb3Details = payload => {
   return {
     type: actionTypes.UPDATE_WEB3_DETAILS,
@@ -25,7 +24,7 @@ export const updateBalance = () => {
   };
 };
 
-const _setupCryptoxmasService = (web3) => {
+const _setupCryptoxmasService = web3 => {
   try {
     cryptoxmas.setup(web3);
   } catch (err) {
