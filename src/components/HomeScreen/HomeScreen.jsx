@@ -74,11 +74,11 @@ class HomeScreen extends Component {
   render() {
     const column1 = this.state.tokens.filter((token, index) => index % 2 === 0);
     const column2 = this.state.tokens.filter((token, index) => index % 2 !== 0);
-    return (
-      <div>
+      return (
+	  <Col xs={12} style={{paddingBottom: 30}}>
+      <Row>
         <div
           style={{
-            width: 414,
             margin: "auto",
             backgroundColor: "#474D5B",
             height: window.innerHeight,
@@ -88,7 +88,6 @@ class HomeScreen extends Component {
             backgroundRepeat: "no-repeat"
           }}
         >
-          <Row>
             <div
               style={{
                 width: 354,
@@ -166,10 +165,10 @@ class HomeScreen extends Component {
               ) : (
                 <div>{column2.map(t => this._renderToken(t, "left"))}</div>
               )}
-            </Col>
-          </Row>
+        </Col>
         </div>
-      </div>
+	  </Row>
+	      </Col>
     );
   }
 }

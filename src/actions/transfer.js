@@ -8,7 +8,6 @@ import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
 import { updateBalance } from "./web3";
 
-
 const createTransfer = payload => {
   return {
     type: actionTypes.CREATE_TRANSFER,
@@ -144,7 +143,6 @@ export const claimGift = ({ transitPrivateKey, gift }) => {
 export const cancelTransfer = transfer => {
   return async dispatch => {
     // take contract redeploy into account
-    let contractVersion;
 
     const txHash = await cryptoxmasService.cancelTransfer(
       transfer.transitAddress

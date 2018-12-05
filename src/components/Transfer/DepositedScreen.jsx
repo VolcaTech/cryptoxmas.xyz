@@ -15,10 +15,9 @@ const DepositedScreen = ({ transfer }) => {
 
   return (
     <div>
-      <Row style={{ height: innerHeight }}>
         <div
           style={{
-            width: 354,
+            width: 320,
             margin: "auto",
             marginTop: 50,
             textAlign: "left"
@@ -54,7 +53,6 @@ const DepositedScreen = ({ transfer }) => {
           <LinkInput value={shareLink} readOnly={true} />
         </div>
         <ShareButton transfer={transfer} />
-      </Row>
     </div>
   );
 };

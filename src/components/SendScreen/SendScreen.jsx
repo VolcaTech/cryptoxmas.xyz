@@ -170,8 +170,8 @@ class SendScreen extends Component {
   }
 
   _renderForm() {
-    return (
-      <Row>
+      return (
+	  <div>
         <div
           style={{
             width: 354,
@@ -259,7 +259,7 @@ class SendScreen extends Component {
             </div>
           )}
         </div>
-      </Row>
+	  </div>
     );
   }
 

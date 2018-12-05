@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Row, Col } from "react-bootstrap";
 import web3Service from "./services/web3Service";
 import SendScreen from "./components/SendScreen/SendScreen";
 import ReceiveForm from "./components/Receive/ReceiveForm";
@@ -17,15 +18,12 @@ import UnsupportedNetwork from "./components/NotConnectedScreens/UnsupportedNetw
 import HomeScreen from "./components/HomeScreen/HomeScreen.jsx";
 import Footer from "./components/common/poweredByVolca";
 
+
 const styles = {
   background: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
     margin: "auto",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    height: outerHeight,
     backgroundImage:
       "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)"
   }
@@ -38,7 +36,7 @@ class App extends Component {
         <Header />
         <div
           style={{
-            height: innerHeight - 100,
+            height: window.innerHeight - 100,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between"
@@ -53,7 +51,7 @@ class App extends Component {
 
   _renderStaticRouter() {
     return (
-      <div style={{ backgroundColor: "#474D5B", height: innerHeight }}>
+      <div style={{ backgroundColor: "#474D5B", height: window.innerHeight  }}>
         <Header />
         <Router>
           <div style={styles.background}>
@@ -112,12 +110,18 @@ class App extends Component {
                 }}
               />
               <Route component={HomeScreen} />
-            </Switch>
-            <div>
-              <Footer />
-            </div>
-          </div>
+        </Switch>
+	    <Col xs={12}>	    
+	    <Row>
+
+            <Footer />
+
+	</Row>
+	</Col>
+	    </div>
         </Router>
+
+	    
       </div>
     );
   }
