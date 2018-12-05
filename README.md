@@ -43,6 +43,18 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 * [Sending demo](https://www.youtube.com/watch?v=FeqQyFrmptA)
 * [Receiving demo](https://www.youtube.com/watch?v=qp3kkXKIHP8)
 
+## Deploy locally
+
+To deploy web app locally clone this repo and run: 
+```
+npm i && npm run start
+```
+This will install libs and open web app at localhost:3000.  
+By default web app is configured to work with our public server and smart-contracts currently deployed on Ropsten.  
+  
+If you want to update server - [check this guide](https://github.com/VolcaTech/cryptoxmas.xyz/tree/master/cryptoxmas-server).  
+For playing with smart-contracts - [see here](https://github.com/VolcaTech/cryptoxmas.xyz/blob/master/cryptoxmas-contracts).  
+Please update `dapp-config.json` to configure web app to use your server or smart-contracts.
 
 ## Join us
 
