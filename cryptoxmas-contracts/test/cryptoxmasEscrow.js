@@ -20,6 +20,7 @@ describe('CryptoxmasEscrow', () => {
     let buyerWallet;
     let receiverWallet;
     let nftPrice;
+    let withEthAmount;
 
     
     beforeEach(async () => {
@@ -32,6 +33,7 @@ describe('CryptoxmasEscrow', () => {
 
 	// deploy escrow contract
 	nftPrice = utils.parseEther('0.05');
+	withEthAmount = utils.parseEther('0.1');
 	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, [nftPrice]);
 
 	
@@ -45,15 +47,15 @@ describe('CryptoxmasEscrow', () => {
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
-		    nftPrice,
+		    value: nftPrice,
+		    tokenId: 1, 
 		    transitAddress: transitWallet.address,
 		    nftAddress: nft.address,
 		    escrowAddress: escrow.address,
 		    buyerWallet
 		});
 	    });
-	    
-	    
+
 	    it('transfers token from seller to escrow', async () => {
 		expect(await nft.ownerOf(1)).to.be.eq(escrow.address);
 	    });
@@ -67,15 +69,17 @@ describe('CryptoxmasEscrow', () => {
 		expect(gift.status).to.eq(1); // not claimed
 	    });
 
-	    xit('transfers eth from buyer to escrow', async () => {
-		
+	    it('transfers eth from buyer to escrow', async () => {
+		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
+		expect(escrowBal).to.eq(nftPrice);
 	    });
 	});
 	
 	describe("with ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
-		    nftPrice: nftPrice * 2 ,
+		    value: withEthAmount,
+		    tokenId: 1, 		    
 		    transitAddress: transitWallet.address,
 		    nftAddress: nft.address,
 		    escrowAddress: escrow.address,
@@ -96,25 +100,42 @@ describe('CryptoxmasEscrow', () => {
 		expect(gift.status).to.eq(1); // not claimed
 	    });
 
-	    xit('transfers eth from buyer to escrow', async () => {
-		
-	    }); 
+	    it('transfers eth from buyer to escrow', async () => {
+		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
+		expect(escrowBal).to.eq(withEthAmount);
+	    });	    
 	});
-
 	
 	describe("when seller doesn't have NFT", () => {
-	    xit("it reverts", async () => {
-		
+	    it("it reverts", async () => {		
+		await expect(buyNFT({
+		    value: nftPrice,
+		    tokenId: 2, 		    
+		    transitAddress: transitWallet.address,
+		    nftAddress: nft.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet
+		})).to.be.reverted;
 	    });
 	});
 	describe("with less ETH than NFT price", () => {		
-	    xit("it reverts", async () => {
+	    it("it reverts", async () => {
+		await expect(buyNFT({
+		    value: utils.parseEther('0.04'),
+		    tokenId: 2, 		    
+		    transitAddress: transitWallet.address,
+		    nftAddress: nft.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet
+		})).to.be.reverted;		
 	    });
 	});		
 
     });
 
-    describe("Cancelling", () =>  {
+    xdescribe("Cancelling", () =>  {
+	
+	
 	describe("existing gift", () => { 
 	    xit("it changes gift status", async () => {
 	    });
@@ -129,7 +150,7 @@ describe('CryptoxmasEscrow', () => {
 	});
     });
 
-    describe("Claiming", () =>  {
+    xdescribe("Claiming", () =>  {
 	describe("pending gift", () => {
 	    describe("with correct signature ", () => { 
 		xit("token goes to receiver", async () => {	    
