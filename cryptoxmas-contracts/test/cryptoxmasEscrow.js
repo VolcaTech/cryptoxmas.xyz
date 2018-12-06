@@ -3,7 +3,7 @@ import {createMockProvider, deployContract, getWallets, solidity} from 'ethereum
 import {utils} from 'ethers';
 import BasicNFT from './../build/NFT';
 import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
-import { buyNFT } from './helpers';
+import { buyNFT, cancelGift } from './helpers';
 
 chai.use(solidity);
 
@@ -43,7 +43,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    describe("Buying NFT", () =>  { 
+    xdescribe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -133,12 +133,49 @@ describe('CryptoxmasEscrow', () => {
 
     });
 
-    xdescribe("Cancelling", () =>  {
+    describe("Cancelling", () =>  {
+
+	beforeEach(async () => {
+	    await buyNFT({
+		value: nftPrice,
+		tokenId: 1, 
+		transitAddress: transitWallet.address,
+		nftAddress: nft.address,
+		escrowAddress: escrow.address,
+		buyerWallet
+	    });	  
+	});
+
 	
-	
-	describe("existing gift", () => { 
-	    xit("it changes gift status", async () => {
+	describe("existing gift", () => {
+	    
+	    describe("on first cancel", () => {
+		let gift;
+		beforeEach(async () => {
+		    await cancelGift({
+			transitAddress: transitWallet.address,
+			escrow,
+			wallet: buyerWallet
+		    });
+		    gift = await escrow.getGift(transitWallet.address);
+		});
+		
+		it("it changes gift status", async () => {
+		    expect(gift.status).to.eq(3); // cancelled
+		});
+
+		it("it sends NFT token back to seller", async () => {
+		    expect(await nft.ownerOf(1)).to.eq(sellerWallet.address);
+		});
+
+		xit("it sends eth  back to buyer", async () => {
+		});
 	    });
+	    
+	    xit("can't cancel twice", async () => {
+		
+	    });
+	    
 
 	    xit("cannot cancel gift if not sender", async () => {
 	    });
@@ -187,9 +224,6 @@ describe('CryptoxmasEscrow', () => {
 	describe("not existing gift", () => {
 	    xit("it reverts", async () => {
 	    });	    
-	});	
-	
+	});		
     });
-
-    
 });
