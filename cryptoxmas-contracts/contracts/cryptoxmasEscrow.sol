@@ -3,7 +3,7 @@ import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
 import './NFT.sol';
 
-contract eth2giftEscrow is Pausable, Ownable {
+contract cryptoxmasEscrow is Pausable, Ownable {
   using SafeMath for uint256;
 
   // fixed amount of wei accrued to verifier with each transfer
@@ -57,16 +57,16 @@ contract eth2giftEscrow is Pausable, Ownable {
 		    address indexed tokenAddress,
 		    uint tokenId,
 		    address recipient,
-		        uint amount
+		    uint amount
 		    );
 
   event LogWithdrawCommission(uint commissionAmount);
 
   event LogChangeFixedCommissionFee(
 				    uint oldCommissionFee,
-				        uint newCommissionFee
+				    uint newCommissionFee
 				    );
-
+  
 
 
   /**
@@ -74,8 +74,7 @@ contract eth2giftEscrow is Pausable, Ownable {
    * and sets verifier's fixed commission fee.
    * @param _commissionFee uint Verifier's fixed commission for each transfer
    */
-  constructor(uint _commissionFee
-	      ) public {
+  constructor(uint _commissionFee) public {
     commissionFee = _commissionFee;
   }
 
@@ -85,7 +84,7 @@ contract eth2giftEscrow is Pausable, Ownable {
   }
 
   function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
-    require(_value > commissionFee);
+    require(_value >= commissionFee);
 
     // can not override existing gift
     require(gifts[_transitAddress].status == Statuses.Empty);
@@ -93,13 +92,13 @@ contract eth2giftEscrow is Pausable, Ownable {
     // check that nft wasn't sold before
     NFT nft = NFT(_tokenAddress);
     require(nft.ownerOf(_tokenId) == sellers[_tokenAddress]);
-
+    
     return true;
   }
 
 
   function buyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress)
-          payable public  whenNotPaused returns (bool) {
+          payable public whenNotPaused returns (bool) {
 
     require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
@@ -111,7 +110,7 @@ contract eth2giftEscrow is Pausable, Ownable {
 				  amount,
 				  _tokenAddress,
 				  _tokenId,
-				                          Statuses.Deposited
+				  Statuses.Deposited
 				  );
 
     // accrue verifier's commission
