@@ -43,7 +43,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    xdescribe("Buying NFT", () =>  { 
+    describe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -137,7 +137,7 @@ describe('CryptoxmasEscrow', () => {
 
 	beforeEach(async () => {
 	    await buyNFT({
-		value: nftPrice,
+		value: withEthAmount,
 		tokenId: 1, 
 		transitAddress: transitWallet.address,
 		nftAddress: nft.address,
@@ -151,7 +151,10 @@ describe('CryptoxmasEscrow', () => {
 	    
 	    describe("on first cancel", () => {
 		let gift;
+		let buyerBalBefore;
+		
 		beforeEach(async () => {
+		    buyerBalBefore = await deployerWallet.provider.getBalance(escrow.address);
 		    await cancelGift({
 			transitAddress: transitWallet.address,
 			escrow,
@@ -168,21 +171,38 @@ describe('CryptoxmasEscrow', () => {
 		    expect(await nft.ownerOf(1)).to.eq(sellerWallet.address);
 		});
 
-		xit("it sends eth  back to buyer", async () => {
+		xit("it sends eth back to buyer", async () => {
+		    const escrowBal = await deployerWallet.provider.getBalance(escrow.address);
+		    const buyerBal = await deployerWallet.provider.getBalance(escrow.address);
+		    expect(escrowBal).to.eq(0);
+		    expect(buyerBal).to.be.above(buyerBalBefore);
+		});
+		
+		it("can't cancel twice", async () => {
+		    await expect(cancelGift({
+			transitAddress: transitWallet.address,
+			escrow,
+			wallet: buyerWallet
+		    })).to.be.reverted;
 		});
 	    });
-	    
-	    xit("can't cancel twice", async () => {
-		
-	    });
-	    
-
-	    xit("cannot cancel gift if not sender", async () => {
+	    	    
+	    it("cannot cancel gift if not sender", async () => {
+		await expect(cancelGift({
+		    transitAddress: deployerWallet.address,
+		    escrow,
+		    wallet: buyerWallet
+		})).to.be.reverted;
 	    });
 	});
 	
 	describe("not existing gift", () => { 
-	    xit("can't cancel ", async () => {
+	    it("can't cancel ", async () => {
+		await expect(cancelGift({
+		    transitAddress: deployerWallet.address,
+		    escrow,
+		    wallet: buyerWallet
+		})).to.be.reverted;		
 	    });
 	});
     });

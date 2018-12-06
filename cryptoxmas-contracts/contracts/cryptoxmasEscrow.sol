@@ -59,13 +59,6 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		    address recipient,
 		    uint amount
 		    );
-
-  event LogWithdrawCommission(uint commissionAmount);
-
-  event LogChangeFixedCommissionFee(
-				    uint oldCommissionFee,
-				    uint newCommissionFee
-				    );
   
 
 
