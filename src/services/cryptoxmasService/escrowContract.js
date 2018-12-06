@@ -1,5 +1,5 @@
 import Promise from "bluebird";
-import Eth2gift from "../../../cryptoxmas-contracts/build/eth2giftEscrow.json";
+import Eth2gift from "../../../cryptoxmas-contracts/build/cryptoxmasEscrow.json";
 import config from "../../../dapp-config.json";
 
 class EscrowContractService {
