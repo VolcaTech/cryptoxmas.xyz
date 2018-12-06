@@ -1,4 +1,4 @@
-import ipfsService from "./../services/ipfsService";
+import IpfsService from "./../services/ipfsService";
 import web3Service from "../services/web3Service";
 import {
   getDepositingTransfers,
@@ -72,8 +72,12 @@ export const buyGift = ({ message, amount, tokenId }) => {
     const senderAddress = state.web3Data.address;
 
     let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
-    let dataHash = (await ipfsService.files.add(dataBuffer))[0].hash;
+    let ipfsService = IpfsService.getIpfs();
 
+    let dataHash = (await ipfsService.add(dataBuffer))[0].hash;
+
+    
+      
     // TODO: Save hash
     console.log(dataHash);
 
