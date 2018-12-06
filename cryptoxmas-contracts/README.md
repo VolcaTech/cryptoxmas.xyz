@@ -1,4 +1,4 @@
-# Crypto Xmas Contracs
+# Crypto Xmas Contracts
 
 Contracts for the cryptoxmas.xyz. Includes:  
 - Escrow contract with buy and claim logic  
