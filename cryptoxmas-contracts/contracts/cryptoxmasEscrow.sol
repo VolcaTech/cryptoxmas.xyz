@@ -239,11 +239,10 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		    address _transitAddress,
 		    address _recipient,
 		    bytes _sig) public whenNotPaused returns (bool success) {
-    Gift memory gift = gifts[_transitAddress];
+    Gift storage gift = gifts[_transitAddress];
     
     // verifying signature
-    require(canClaim(_transitAddress,
-			_recipient, _sig));
+    require(canClaim(_transitAddress, _recipient, _sig));
 
     gift.status = Statuses.Claimed;
 

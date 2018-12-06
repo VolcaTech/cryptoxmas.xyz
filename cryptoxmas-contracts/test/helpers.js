@@ -39,8 +39,7 @@ export const claimGift = async ({ transitWallet, receiverWallet, escrow }) => {
 	[ receiverWallet.address, transitWallet.address]
     );
     
-    const signature = transitWallet.signMessage(utils.arrayify(messageHash));
-    
+    const signature = await transitWallet.signMessage(utils.arrayify(messageHash));
     const args = [transitWallet.address, receiverWallet.address, signature];
     const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);
     const tx = await receiverWallet.sendTransaction({

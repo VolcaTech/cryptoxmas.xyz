@@ -43,7 +43,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    describe("Buying NFT", () =>  { 
+    xdescribe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -133,7 +133,7 @@ describe('CryptoxmasEscrow', () => {
 
     });
 
-    describe("Cancelling", () =>  {
+    xdescribe("Cancelling", () =>  {
 
 	beforeEach(async () => {
 	    await buyNFT({
@@ -231,14 +231,15 @@ describe('CryptoxmasEscrow', () => {
 			escrow
 		    });	  
 		});
-
 		
 		
-		xit("token goes to receiver", async () => {
-		    
+		it("token goes to receiver", async () => {
+		    expect(await nft.ownerOf(1)).to.be.eq(receiverWallet.address);
 		});
 
-		xit("gift status updated to claimed", async () => {	    
+		it("gift status updated to claimed", async () => {
+		    const gift = await escrow.getGift(transitWallet.address);
+		    expect(gift.status).to.eq(2); // not claimed
 		});		
 		
 		xit("eth goes to receiver", async () => {
