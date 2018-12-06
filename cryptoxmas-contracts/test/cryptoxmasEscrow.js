@@ -29,7 +29,8 @@ describe('CryptoxmasEscrow', () => {
 	// deploy NFT token
 	nft = await deployContract(sellerWallet, BasicNFT, ["NFT Name", "NFT"]);
 	await nft.mint(sellerWallet.address, 1);
-
+	await nft.mint(sellerWallet.address, 2);
+	
 	// deploy escrow contract
 	nftPrice = utils.parseEther('0.05');
 	withEthAmount = utils.parseEther('0.1');
@@ -42,7 +43,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    xdescribe("Buying NFT", () =>  { 
+    describe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -73,7 +74,15 @@ describe('CryptoxmasEscrow', () => {
 		expect(escrowBal).to.eq(nftPrice);
 	    });
 
-	    xit("doesn't allow to override gift", async () => {
+	    it("doesn't allow to override gift", async () => {
+		await expect(buyNFT({
+		    value: nftPrice,
+		    tokenId: 2, 
+		    transitAddress: transitWallet.address,
+		    nftAddress: nft.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet
+		})).to.be.reverted;
 	    });
 
 	    
@@ -114,7 +123,7 @@ describe('CryptoxmasEscrow', () => {
 	    it("it reverts", async () => {		
 		await expect(buyNFT({
 		    value: nftPrice,
-		    tokenId: 2, 		    
+		    tokenId: 3, 		    
 		    transitAddress: transitWallet.address,
 		    nftAddress: nft.address,
 		    escrowAddress: escrow.address,
@@ -137,7 +146,7 @@ describe('CryptoxmasEscrow', () => {
 
     });
 
-    xdescribe("Cancelling", () =>  {
+    describe("Cancelling", () =>  {
 
 	beforeEach(async () => {
 	    await buyNFT({
@@ -153,51 +162,49 @@ describe('CryptoxmasEscrow', () => {
 	
 	describe("existing gift", () => {
 	    
-	    describe("on first cancel", () => {
-		let gift;
-		let buyerBalBefore;
-		
-		beforeEach(async () => {
-		    buyerBalBefore = await deployerWallet.provider.getBalance(escrow.address);
-		    await cancelGift({
-			transitAddress: transitWallet.address,
-			escrow,
-			wallet: buyerWallet
-		    });
-		    gift = await escrow.getGift(transitWallet.address);
+	    let gift;
+	    let buyerBalBefore;
+	    
+	    beforeEach(async () => {
+		buyerBalBefore = await deployerWallet.provider.getBalance(escrow.address);
+		await cancelGift({
+		    transitAddress: transitWallet.address,
+		    escrow,
+		    wallet: buyerWallet
 		});
-		
-		it("it changes gift status", async () => {
-		    expect(gift.status).to.eq(3); // cancelled
-		});
-
-		it("it sends NFT token back to seller", async () => {
-		    expect(await nft.ownerOf(1)).to.eq(sellerWallet.address);
-		});
-
-		xit("it sends eth back to buyer", async () => {
-		    const escrowBal = await deployerWallet.provider.getBalance(escrow.address);
-		    const buyerBal = await deployerWallet.provider.getBalance(escrow.address);
-		    expect(escrowBal).to.eq(0);
-		    expect(buyerBal).to.be.above(buyerBalBefore);
-		});
-		
-		it("can't cancel twice", async () => {
-		    await expect(cancelGift({
-			transitAddress: transitWallet.address,
-			escrow,
-			wallet: buyerWallet
-		    })).to.be.reverted;
-		});
+		gift = await escrow.getGift(transitWallet.address);
 	    });
-	    	    
-	    it("cannot cancel gift if not sender", async () => {
+	    
+	    it("it changes gift status", async () => {
+		expect(gift.status).to.eq(3); // cancelled
+	    });
+	    
+	    it("it sends NFT token back to seller", async () => {
+		expect(await nft.ownerOf(1)).to.eq(sellerWallet.address);
+	    });
+	    
+	    xit("it sends eth back to buyer", async () => {
+		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);
+		const buyerBal = await deployerWallet.provider.getBalance(escrow.address);
+		expect(escrowBal).to.eq(0);
+		expect(buyerBal).to.be.above(buyerBalBefore);
+	    });
+	    
+	    it("can't cancel twice", async () => {
 		await expect(cancelGift({
-		    transitAddress: deployerWallet.address,
+		    transitAddress: transitWallet.address,
 		    escrow,
 		    wallet: buyerWallet
 		})).to.be.reverted;
-	    });
+	    });	    	    
+	});
+	
+	it("cannot cancel gift if not sender", async () => {
+	    await expect(cancelGift({
+	    	transitAddress: deployerWallet.address,
+	    	escrow,
+	    	wallet: buyerWallet
+	    })).to.be.reverted;
 	});
 	
 	describe("not existing gift", () => { 
@@ -209,8 +216,26 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;		
 	    });
 	});
+	
+	describe("claimed gift", () => { 
+	    it("can't cancel ", async () => {
+		await claimGift({
+		    transitAddress: transitWallet.address,
+		    transitWallet,
+		    receiverAddress: transitWallet.address,
+		    relayerWallet: deployerWallet,
+		    escrow
+		});	  
+		
+		await expect(cancelGift({
+		    transitAddress: deployerWallet.address,
+		    escrow,
+		    wallet: buyerWallet
+		})).to.be.reverted;		
+	    });
+	});
     });
-
+    
     describe("Claiming", () =>  {
 	let receiverAddress;
 	beforeEach(async () => {
@@ -320,3 +345,4 @@ describe('CryptoxmasEscrow', () => {
 	});		
     });
 });
+
