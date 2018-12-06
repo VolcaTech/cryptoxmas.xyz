@@ -1,7 +1,7 @@
 const Promise = require("bluebird");
 const config = require("../config/app-config");
 const log  = require('./../libs/log')(module);
-const EscrowContract = require("../../../cryptoxmas-contracts/build/eth2giftEscrow");
+const EscrowContract = require("../../../cryptoxmas-contracts/build/cryptoxmasEscrow");
 
 const ethers = require('ethers');
 const provider = ethers.getDefaultProvider(config.get('ETHEREUM_NETWORK'));
