@@ -3,7 +3,7 @@ import {createMockProvider, deployContract, getWallets, solidity} from 'ethereum
 import {utils} from 'ethers';
 import BasicNFT from './../build/NFT';
 import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
-import { buyNFT, cancelGift } from './helpers';
+import { buyNFT, cancelGift, claimGift } from './helpers';
 
 chai.use(solidity);
 
@@ -207,10 +207,35 @@ describe('CryptoxmasEscrow', () => {
 	});
     });
 
-    xdescribe("Claiming", () =>  {
+    describe("Claiming", () =>  {
 	describe("pending gift", () => {
-	    describe("with correct signature ", () => { 
-		xit("token goes to receiver", async () => {	    
+
+	    beforeEach(async () => {
+		await buyNFT({
+		    value: withEthAmount,
+		    tokenId: 1, 
+		    transitAddress: transitWallet.address,
+		    nftAddress: nft.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet
+		});	  
+	    });
+	    
+
+	    
+	    describe("with correct signature ", () => {
+		beforeEach(async () => {
+		    await claimGift({
+			transitWallet,
+			receiverWallet,
+			escrow
+		    });	  
+		});
+
+		
+		
+		xit("token goes to receiver", async () => {
+		    
 		});
 
 		xit("gift status updated to claimed", async () => {	    

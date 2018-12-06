@@ -1,3 +1,5 @@
+pragma solidity ^0.4.25;
+
 import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol';
 import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Enumerable.sol';
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
@@ -17,7 +19,7 @@ contract NFT is ERC721Metadata,
     super._mint(_owner, _id);
   }
 
-  function mintBatch(address _owner, uint _from, uint _to) onlyOwner {
+  function mintBatch(address _owner, uint _from, uint _to) public onlyOwner {
     require(_to > _from);
     for (uint i = _from; i < _to; i++){
       mint(_owner, i);
