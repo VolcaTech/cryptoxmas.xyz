@@ -131,42 +131,6 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     return true;
   }
 
-  /**
-   * @dev Change verifier's fixed commission fee.
-   * Only owner can change commision fee.
-   * 
-   * @param _newCommissionFee uint New verifier's fixed commission
-   * @return True if success.
-   */
-  function changeFixedCommissionFee(uint _newCommissionFee)
-                              public
-                              whenNotPaused
-                              onlyOwner
-    returns(bool success)
-  {
-    uint oldCommissionFee = commissionFee;
-    commissionFee = _newCommissionFee;
-    emit LogChangeFixedCommissionFee(oldCommissionFee, commissionFee);
-    return true;
-  }
-
-
-  /**
-   * @dev Transfer accrued commission to verifier's address.
-   * @return True if success.
-   */
-  function withdrawCommission()
-                            public
-                            whenNotPaused
-    returns(bool success)
-  {
-    uint commissionToTransfer = commissionToWithdraw;
-    commissionToWithdraw = 0;
-    owner().transfer(commissionToTransfer); // owner is verifier
-
-    emit LogWithdrawCommission(commissionToTransfer);
-    return true;
-  }
 
   /**
    * @dev Get transfer details.
@@ -208,7 +172,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
    * @return True if success.
    */
   function cancelTransfer(address _transitAddress) public returns (bool success) {
-    Gift memory gift = gifts[_transitAddress];
+    Gift storage gift = gifts[_transitAddress];
 
     // only sender can cancel transfer;
     require(msg.sender == gift.sender);
@@ -220,7 +184,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
     // send nft
     NFT nft = NFT(gift.tokenAddress);
-    nft.transferFrom(address(this), msg.sender, gift.tokenId);
+    nft.transferFrom(address(this), sellers[gift.tokenAddress], gift.tokenId);
 
     // log cancel event
     emit LogCancel(_transitAddress, msg.sender, gift.tokenAddress, gift.tokenId);
