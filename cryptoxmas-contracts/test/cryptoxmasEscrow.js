@@ -72,6 +72,11 @@ describe('CryptoxmasEscrow', () => {
 		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
 		expect(escrowBal).to.eq(nftPrice);
 	    });
+
+	    xit("doesn't allow to override gift", async () => {
+	    });
+
+	    
 	});
 	
 	describe("with ETH for receiver", () => {
@@ -208,26 +213,24 @@ describe('CryptoxmasEscrow', () => {
 
     describe("Claiming", () =>  {
 	let receiverAddress;
-	describe("pending gift", () => {
-
-	    beforeEach(async () => {
-		receiverAddress = Wallet.createRandom().address;
-		
-		await buyNFT({
-		    value: withEthAmount,
-		    tokenId: 1, 
-		    transitAddress: transitWallet.address,
-		    nftAddress: nft.address,
-		    escrowAddress: escrow.address,
-		    buyerWallet
-		});	  
-	    });
+	beforeEach(async () => {
+	    receiverAddress = Wallet.createRandom().address;
 	    
-
-	    
+	    await buyNFT({
+		value: withEthAmount,
+		tokenId: 1, 
+		transitAddress: transitWallet.address,
+		nftAddress: nft.address,
+		escrowAddress: escrow.address,
+		buyerWallet
+	    });	  
+	});
+	
+	describe("deposited gift", () => {
 	    describe("with correct signature ", () => {
 		beforeEach(async () => {
 		    await claimGift({
+			transitAddress: transitWallet.address,
 			transitWallet,
 			receiverAddress,
 			relayerWallet: deployerWallet,
@@ -256,25 +259,63 @@ describe('CryptoxmasEscrow', () => {
 
 		xit("relayer is refunded for gas costs", () => {
 		});
+
+		it("can't claim the same gift twice", async () => {
+		    await expect(claimGift({
+			transitAddress: transitWallet.address,
+			transitWallet,
+			receiverAddress,
+			relayerWallet: deployerWallet,
+			escrow
+		    })).to.be.reverted;
+		});	    
+		
 	    });
 	    
 	    describe("with incorrect signature ", () => { 
-		xit("transaction reverts", async () => {
+		it("transaction reverts", async () => {
+		    await expect(claimGift({
+			transitAddress: transitWallet.address,
+			transitWallet: buyerWallet,
+			receiverAddress,
+			relayerWallet: deployerWallet,
+			escrow
+		    })).to.be.reverted;
 		});
 	    });
 	});
 
-	describe("claimed gift", () => {
-	    xit("can't claim the same gift twice", async () => {
-	    });	    
-	});
-
 	describe("cancelled gift", () => {
-	    xit("can't claim cancelled gift", async () => {
+
+	    beforeEach(async () => {
+		await claimGift({
+		    transitAddress: transitWallet.address,
+		    transitWallet,
+		    receiverAddress,
+		    relayerWallet: deployerWallet,
+		    escrow
+		});	  
+	    });
+	    
+	    it("can't claim cancelled gift", async () => {
+		await expect(claimGift({
+		    transitAddress: transitWallet.address,
+		    transitWallet: transitWallet,
+		    receiverAddress,
+		    relayerWallet: deployerWallet,
+		    escrow
+		})).to.be.reverted;		
 	    });	    
 	});
 	describe("not existing gift", () => {
-	    xit("it reverts", async () => {
+	    it("it reverts", async () => {
+		await expect(claimGift({
+		    transitAddress: buyerWallet.address,
+		    transitWallet: buyerWallet,
+		    receiverAddress,
+		    relayerWallet: deployerWallet,
+		    escrow
+		})).to.be.reverted;		
 	    });	    
 	});		
     });
