@@ -1,6 +1,6 @@
 import chai from 'chai';
-import {createMockProvider, deployContract, getWallets, solidity} from 'ethereum-waffle';
-import {utils} from 'ethers';
+import { createMockProvider, deployContract, getWallets, solidity } from 'ethereum-waffle';
+import { utils, Wallet } from 'ethers';
 import BasicNFT from './../build/NFT';
 import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
 import { buyNFT, cancelGift, claimGift } from './helpers';
@@ -18,14 +18,13 @@ describe('CryptoxmasEscrow', () => {
     let deployerWallet;
     let sellerWallet;
     let buyerWallet;
-    let receiverWallet;
     let nftPrice;
     let withEthAmount;
 
     
     beforeEach(async () => {
 	provider = createMockProvider();
-	[deployerWallet, sellerWallet, buyerWallet, receiverWallet, transitWallet] = await getWallets(provider);
+	[deployerWallet, sellerWallet, buyerWallet, transitWallet] = await getWallets(provider);
 
 	// deploy NFT token
 	nft = await deployContract(sellerWallet, BasicNFT, ["NFT Name", "NFT"]);
@@ -208,9 +207,12 @@ describe('CryptoxmasEscrow', () => {
     });
 
     describe("Claiming", () =>  {
+	let receiverAddress;
 	describe("pending gift", () => {
 
 	    beforeEach(async () => {
+		receiverAddress = Wallet.createRandom().address;
+		
 		await buyNFT({
 		    value: withEthAmount,
 		    tokenId: 1, 
@@ -227,22 +229,26 @@ describe('CryptoxmasEscrow', () => {
 		beforeEach(async () => {
 		    await claimGift({
 			transitWallet,
-			receiverWallet,
+			receiverAddress,
+			relayerWallet: deployerWallet,
 			escrow
 		    });	  
 		});
 		
 		
 		it("token goes to receiver", async () => {
-		    expect(await nft.ownerOf(1)).to.be.eq(receiverWallet.address);
+		    expect(await nft.ownerOf(1)).to.be.eq(receiverAddress);
 		});
 
 		it("gift status updated to claimed", async () => {
 		    const gift = await escrow.getGift(transitWallet.address);
-		    expect(gift.status).to.eq(2); // not claimed
+		    expect(gift.status).to.eq(2); // claimed
 		});		
 		
-		xit("eth goes to receiver", async () => {
+		it("eth goes to receiver", async () => {
+		    const gift = await escrow.getGift(transitWallet.address);
+		    const receiverBal = await deployerWallet.provider.getBalance(receiverAddress);
+		    expect(receiverBal).to.eq(gift.amount);
 		});
 		
 		xit("(NFT price - gas costs) goes to Giveth campaign", async () => {		    

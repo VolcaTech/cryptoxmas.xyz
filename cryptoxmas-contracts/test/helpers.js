@@ -32,22 +32,22 @@ export const cancelGift = async ({ transitAddress, escrow, wallet }) => {
 }
 
 
-export const claimGift = async ({ transitWallet, receiverWallet, escrow }) => {
+export const claimGift = async ({ transitWallet, receiverAddress, escrow, relayerWallet }) => {
 
     const messageHash = utils.solidityKeccak256(
 	['address', 'address'],
-	[ receiverWallet.address, transitWallet.address]
+	[ receiverAddress, transitWallet.address]
     );
     
     const signature = await transitWallet.signMessage(utils.arrayify(messageHash));
-    const args = [transitWallet.address, receiverWallet.address, signature];
+    const args = [transitWallet.address, receiverAddress, signature];
     const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);
-    const tx = await receiverWallet.sendTransaction({
+    const tx = await relayerWallet.sendTransaction({
 	to: escrow.address,
 	value: 0,
 	data
     });
 
-    const receipt = await receiverWallet.provider.getTransactionReceipt(tx.hash);
+    const receipt = await relayerWallet.provider.getTransactionReceipt(tx.hash);
     return { tx, receipt }; 
 }
