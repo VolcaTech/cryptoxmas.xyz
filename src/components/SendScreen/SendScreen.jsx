@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
+import TextInput from "./../common/TextInput";
 import NumberInput from "./../common/NumberInput";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
@@ -87,6 +88,7 @@ class SendScreen extends Component {
     const tokenId = props.match.params.tokenId;
 
     this.state = {
+      message: "",
       amount: 0.05,
       errorMessage: "",
       fetching: false,
@@ -119,6 +121,7 @@ class SendScreen extends Component {
   async _buyGift() {
     try {
       const transfer = await this.props.buyGift({
+        message: this.state.message,
         amount: this.state.amount,
         tokenId: this.state.tokenId
       });
@@ -224,6 +227,21 @@ class SendScreen extends Component {
             will be sent to charity
           </span>
         </div>
+        <TextInput
+          onChange={({ target }) =>
+            this.setState({
+              message: target.value,
+              errorMessage: ""
+            })
+          }
+          disabled={false}
+          style={{ touchInput: "manipulation" }}
+          placeholder="Wanna add message?"
+          type="text"
+          readOnly={false}
+          error={this.state.numberInputError}
+        />
+        <br />
         <NumberInput
           onChange={({ target }) =>
             this.setState({

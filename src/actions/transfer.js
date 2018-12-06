@@ -1,3 +1,4 @@
+import ipfsService from "./../services/ipfsService";
 import web3Service from "../services/web3Service";
 import {
   getDepositingTransfers,
@@ -64,11 +65,17 @@ export const subscribePendingTransfers = () => {
   };
 };
 
-export const buyGift = ({ amount, tokenId }) => {
+export const buyGift = ({ message, amount, tokenId }) => {
   return async (dispatch, getState) => {
     const state = getState();
     const networkId = state.web3Data.networkId;
     const senderAddress = state.web3Data.address;
+
+    let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
+    let dataHash = (await ipfsService.files.add(dataBuffer))[0].hash;
+
+    // TODO: Save hash
+    console.log(dataHash);
 
     console.log("here");
     const TOKEN_ADDRESS = "0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276"; // #TODO remove hard-code here
