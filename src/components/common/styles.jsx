@@ -96,5 +96,17 @@ export default {
   spinner: {
     width: 20,
     margin: "auto"
+  },
+  headerContainer: {
+    paddingTop: "30px",
+    textAlign: "center"
+  },
+  headerText: {
+    display: "inline",
+    marginLeft: 87.5,
+    fontFamily: "Inter UI Bold",
+    fontSize: 30,
+    color: "white",
+    textAlign: "right"
   }
 };
