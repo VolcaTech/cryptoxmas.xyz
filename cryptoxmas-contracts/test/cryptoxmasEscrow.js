@@ -58,7 +58,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    describe("Adding seller", () =>  {
+    xdescribe("Adding seller", () =>  {
 	it('can add seller', async () => {
 	    const sellerAddress = transitWallet.address;
 	    const tokenAddress = transitWallet2.address;
@@ -81,7 +81,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
     
-    describe("Buying NFT", () =>  { 
+    xdescribe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -208,7 +208,7 @@ describe('CryptoxmasEscrow', () => {
 
     });
 
-    xdescribe("Cancelling gift", () =>  {
+    describe("Cancelling gift", () =>  {
 
 	beforeEach(async () => {
 	    await buyNFT({
@@ -241,8 +241,8 @@ describe('CryptoxmasEscrow', () => {
 		expect(gift.status).to.eq(3); // cancelled
 	    });
 	    
-	    it("it sends NFT token back to seller", async () => {
-		expect(await nft.ownerOf(1)).to.eq(sellerWallet.address);
+	    it("it transfers NFT to buyer", async () => {
+		expect(await nft.ownerOf(1)).to.eq(buyerWallet.address);
 	    });
 	    
 	    it("it sends eth back to buyer", async () => {
@@ -279,7 +279,7 @@ describe('CryptoxmasEscrow', () => {
 	    });
 	});
 	
-	describe("claimed gift", () => { 
+	xdescribe("claimed gift", () => { 
 	    it("can't cancel ", async () => {
 		await claimGift({
 		    transitAddress: transitWallet.address,
