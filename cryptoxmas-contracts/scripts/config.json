@@ -1,4 +1,6 @@
 {
-    "network": "ropsten",
-    "jsonRpcUrl": "https://ropsten.infura.io"
+    "NETWORK": "ropsten",
+    "JSON_RPC_URL": "https://ropsten.infura.io",
+    "GIVETH_BRIDGE_ADDRESS": "0xC59dCE5CCC065A4b51A2321F857466A25ca49B40",
+    "GIVETH_CAMPAIGN_ID": 226
 }
