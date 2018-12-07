@@ -3,7 +3,6 @@ import { getEtherscanLink } from "./components";
 import { Row } from "react-bootstrap";
 import styles from "./styles";
 
-
 const TxErrorScreen = ({ transfer }) => {
   const etherscanLink = getEtherscanLink({
     txHash: transfer.txHash,
@@ -21,23 +20,14 @@ const TxErrorScreen = ({ transfer }) => {
             marginBottom: 55
           }}
         >
-          Something went wrong. Check details on 
-          <a
-            target="_blank"
-            href={etherscanLink}
-            style={{ textDecoration: "underline", color: "#4CD964", marginLeft: 7 }}
-          >
+          Something went wrong. Check details on
+          <a target="_blank" href={etherscanLink} style={styles.etherscanLink}>
             Etherscan
           </a>
         </div>
       </div>
       <img
-        style={{
-          display: "block",
-          margin: "auto",
-          height: 200,
-          width: 200
-        }}
+        style={styles.gifContainer}
         src={
           "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/boom.gif"
         }

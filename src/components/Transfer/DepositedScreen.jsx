@@ -1,8 +1,8 @@
 import React from "react";
 import { ShareButton } from "./components";
-import { Row } from "react-bootstrap";
 import LinkInput from "./../common/NumberInput";
 const HOST = "https://app.cryptoxmas.xyz";
+import styles from "./styles";
 
 const DepositedScreen = ({ transfer }) => {
   let shareLink;
@@ -15,44 +15,36 @@ const DepositedScreen = ({ transfer }) => {
 
   return (
     <div>
+      <div
+        style={{
+          ...styles.textContainer,
+          width: 320
+        }}
+      >
         <div
           style={{
-            width: 320,
-            margin: "auto",
-            marginTop: 50,
-            textAlign: "left"
+            ...styles.greenTitle,
+            marginBottom: 25
           }}
         >
-          <div
-            style={{
-              marginBottom: 25,
-              fontFamily: "Inter UI Medium",
-              fontSize: 30,
-              color: "#4CD964",
-              textAlign: "left"
-            }}
-          >
-            We generated a link
-          </div>
-          <div
-            style={{
-              marginBottom: 150,
-              fontFamily: "Inter UI Medium",
-              fontSize: 24,
-              color: "white",
-              textAlign: "left"
-            }}
-          >
-            Now you can send it to
-            <br />
-            anyone — just like a<br />
-            text message
-          </div>
+          We generated a link
         </div>
-        <div style={{ marginBottom: 20 }}>
-          <LinkInput value={shareLink} readOnly={true} />
+        <div
+          style={{
+            ...styles.whiteTitle,
+            marginBottom: 150
+          }}
+        >
+          Now you can send it to
+          <br />
+          anyone — just like a<br />
+          text message
         </div>
-        <ShareButton transfer={transfer} />
+      </div>
+      <div style={{ marginBottom: 20 }}>
+        <LinkInput value={shareLink} readOnly={true} />
+      </div>
+      <ShareButton transfer={transfer} />
     </div>
   );
 };
