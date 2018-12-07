@@ -27,6 +27,7 @@ describe('CryptoxmasEscrow', () => {
     let transitFee;
     let fakeTransitWallet;
     let messageHash = 'Qme2tDivU5aF5d7XGuqwoFGxddfGiFsmposUcdXegAvEth';
+    let tokenURI = "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/santa_zombie.png";
     
     beforeEach(async () => {
 	provider = createMockProvider();
@@ -38,6 +39,7 @@ describe('CryptoxmasEscrow', () => {
 	// deploy NFT token
 	nft = await deployContract(sellerWallet, BasicNFT, ["NFT Name", "NFT"]);
 	await nft.mint(sellerWallet.address, 1);
+	await nft.setTokenURI(1, tokenURI);
 	await nft.mint(sellerWallet.address, 2);
 	
 	// deploy mock of Giveth Bridge
@@ -54,7 +56,22 @@ describe('CryptoxmasEscrow', () => {
 	
 	// add Seller for this token
 	await escrow.addSeller(sellerWallet.address, nft.address, sellerNftPrice);
-	await nft.setApprovalForAll(escrow.address, true);	
+	await nft.setApprovalForAll(escrow.address, true);
+    });
+
+    describe('#getTokenSaleInfo', () => {
+	let token;	
+	beforeEach(async () => {
+	    token = await escrow.getTokenSaleInfo(nft.address, 1);
+	});
+
+	it("has valid price", () => {
+	    expect(token.price).to.be.eq(sellerNftPrice);
+	});
+	
+	it("has valid tokenURI", () => {
+	    expect(token.tokenURI).to.be.eq(tokenURI);
+	});
     });
 
     describe("Adding seller", () =>  {

@@ -199,7 +199,16 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 	    seller.nftPrice
 	    );
   }
-  
+
+  function getTokenSaleInfo(address _tokenAddress, uint _tokenId) public view returns (uint price, string tokenURI) {
+    NFT nft = NFT(_tokenAddress);
+    Seller memory seller = sellers[_tokenAddress];
+    
+    return (
+	    seller.nftPrice,
+	    nft.tokenURI(_tokenId)
+	    );
+  }
 
   /**
    * @dev Cancel gift and get sent ether back. Only gift buyer can
