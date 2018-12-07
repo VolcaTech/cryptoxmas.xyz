@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import ethers from 'ethers';
 import {getWallets, deployContract} from 'ethereum-waffle';
 import config from './config';
@@ -20,6 +22,12 @@ const main = async () => {
     // this.wallets = await getWallets(this.provider);
     // this.deployer = this.wallets[this.wallets.length - 1];
     console.log("deploying new contracts");
+
+    const imageUrl = "https://ipfs.io/ipfs/Qme2tDivU5aF5d7XGuqwoFGxddfGiFsmposUcdXegAvEth";
+
+    const deployerPK = process.env.DEPLOYER_PK;
+    console.log({deployerPK});
+    
     const contractConfig = {};
     
     contractConfig.ESCROW_CONTRACT = '0x0';
