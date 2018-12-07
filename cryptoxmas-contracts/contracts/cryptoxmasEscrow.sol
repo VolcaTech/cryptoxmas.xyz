@@ -16,22 +16,27 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   
 
   // fixed amount of wei accrued to verifier with each transfer
-  uint public nftPrice;
+  uint public minNftPrice;
   GivethBridge public givethBridge;
   uint64 givethReceiverId;
 
   // verifier's address
   enum Statuses { Empty, Deposited, Claimed, Cancelled }
 
+  struct Seller {
+    address seller;
+    uint nftPrice;
+  }
 
-  mapping (address => address) sellers;
+  mapping (address => Seller) sellers;
 
   struct Gift {
     address sender;
-    uint amount; // in wei
+    uint amount; // eth for receiver
     address tokenAddress;
     uint256 tokenId;
     Statuses status;
+    uint nftPrice; 
   }
 
   // Mappings of transitAddress => Transfer Struct
@@ -46,7 +51,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 	       address indexed tokenAddress,
 	       uint tokenId,
 	       uint amount,
-	       uint commission
+	       uint nftPrice
 	       );
 
   event LogCancel(
@@ -64,34 +69,50 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		 address recipient,
 		 uint amount
 		 );
+
+  event LogSellerAdded(
+		 address sellerAddress,
+		 address tokenAddress,
+		 uint nftPrice
+		 );
   
 
 
   /**
    * @dev Contructor that sets msg.sender as owner (verifier) in Ownable
    * and sets verifier's fixed commission fee.
-   * @param _nftPrice uint Verifier's fixed commission for each transfer
+   * @param _minNftPrice uint Verifier's fixed commission for each transfer
    */
-  constructor(uint _nftPrice, GivethBridge _givethBridge, uint64 _givethReceiverId) public {
-    nftPrice = _nftPrice;
+  constructor(uint _minNftPrice, GivethBridge _givethBridge, uint64 _givethReceiverId) public {
+    minNftPrice = _minNftPrice;
     givethBridge = _givethBridge;
     givethReceiverId = _givethReceiverId;
   }
 
 
-  function addSeller(address _sellerAddress, address _tokenAddress) public {
-    sellers[_tokenAddress] = _sellerAddress;
+  function addSeller(address _sellerAddress, address _tokenAddress, uint _sellerPrice) public {
+    // can't add seller with cheaper nft price that minNftPrice
+    require(_sellerPrice >= minNftPrice);
+
+    // can't override existing seller
+    require(sellers[_tokenAddress].seller == 0);
+
+    // store seller
+    sellers[_tokenAddress] = Seller(_sellerAddress, _sellerPrice);
+    emit LogSellerAdded( _sellerAddress,  _tokenAddress,  _sellerPrice);
+    
   }
 
   function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
-    require(_value >= nftPrice);
+    Seller memory seller = sellers[_tokenAddress];    
+    require(_value >= seller.nftPrice);
 
     // can not override existing gift
     require(gifts[_transitAddress].status == Statuses.Empty);
 
     // check that nft wasn't sold before
     NFT nft = NFT(_tokenAddress);
-    require(nft.ownerOf(_tokenId) == sellers[_tokenAddress]);
+    require(nft.ownerOf(_tokenId) == sellers[_tokenAddress].seller);
     
     return true;
   }
@@ -100,22 +121,25 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   function buyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress)
           payable public whenNotPaused returns (bool) {
 
+    Seller memory seller = sellers[_tokenAddress];
     require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
-    uint amount = msg.value.sub(nftPrice); //amount = msg.value - comission
-
+    uint amount = msg.value.sub(seller.nftPrice); //amount = msg.value - comission
+    
+    
     // saving transfer details
     gifts[_transitAddress] = Gift(
 				  msg.sender,
 				  amount,
 				  _tokenAddress,
 				  _tokenId,
-				  Statuses.Deposited
+				  Statuses.Deposited,
+				  seller.nftPrice
 				  );
 
-    // send nft
+    // transfer NFT from seller's address to this escrow contract
     NFT nft = NFT(_tokenAddress);
-    nft.transferFrom(sellers[_tokenAddress], address(this), _tokenId);
+    nft.transferFrom(sellers[_tokenAddress].seller, address(this), _tokenId);
 
     // log buy event
     emit LogBuy(
@@ -124,16 +148,11 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		_tokenAddress,
 		_tokenId,
 		amount,
-		nftPrice);
+		seller.nftPrice);
     return true;
   }
 
 
-  /**
-   * @dev Get transfer details.
-   * @param _transitAddress transit address assigned to transfer
-   * @return Transfer details (sender, amount, tokenId)
-   */
   function getGift(address _transitAddress) public view returns (
 	     address sender, // transfer sender
 	     uint amount,
@@ -156,6 +175,16 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   }
 
 
+  function getSeller(address _tokenAddress) public view returns (address sellerAddress, uint nftPrice) {
+    Seller memory seller = sellers[_tokenAddress];
+    
+    return (
+	    seller.seller,
+	    seller.nftPrice
+	    );
+  }
+  
+
   /**
    * @dev Cancel gift and get sent ether back. Only gift buyer can
    * cancel.
@@ -171,11 +200,11 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     gift.status = Statuses.Cancelled;
 
     // transfer ether to recipient's address
-    gift.sender.transfer(gift.amount);
+    gift.sender.transfer(gift.amount.add(gift.nftPrice));
 
     // send nft
     NFT nft = NFT(gift.tokenAddress);
-    nft.transferFrom(address(this), sellers[gift.tokenAddress], gift.tokenId);
+    nft.transferFrom(address(this), sellers[gift.tokenAddress].seller, gift.tokenId);
 
     // log cancel event
     emit LogCancel(_transitAddress, msg.sender, gift.tokenAddress, gift.tokenId);
@@ -263,13 +292,13 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
     // log withdraw event
     emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _recipient, gift.amount);
-
+    
     uint256 gasUsed = startingGas.sub(gasleft());
     
-    // refund gas cost to sender from nft price but not bigger than nft price
-    uint toRefund = gasUsed.add(49000).mul(tx.gasprice).min(nftPrice);
+    // refund gas cost to sender from nft price but not more than nft price
+    uint toRefund = gasUsed.add(49000).mul(tx.gasprice).min(gift.nftPrice);
     
-    uint toCharity = nftPrice.sub(toRefund);
+    uint toCharity = gift.nftPrice.sub(toRefund);
     if (toCharity > 0) {
       givethBridge.donateAndCreateGiver.value(toCharity)(gift.sender, givethReceiverId, 0, 0);
     }
