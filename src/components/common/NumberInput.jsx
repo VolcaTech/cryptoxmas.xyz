@@ -1,5 +1,6 @@
 import React from "react";
 import { FormControl } from "react-bootstrap";
+import styles from "./styles";
 
 class e2pInput extends React.Component {
   render() {
@@ -11,22 +12,7 @@ class e2pInput extends React.Component {
         value={this.props.value}
         type={this.props.type}
         readOnly={this.props.readOnly}
-        style={{
-          width: 300,
-          height: 50,
-          borderRadius: 12,
-          border: "2px solid #8B8B8B",
-          color: "black",
-          backgroundColor: this.props.backgroundColor,
-          fontSize: 20,
-          letterSpacing: 1.5,
-          textAlign: "center",
-          boxShadow: 0,
-          display: "block",
-          margin: "auto",
-          fontFamily: "Inter UI Medium",
-          WebkitBoxShadow: "none"
-        }}
+        style={styles.numberInput}
         placeholder={this.props.placeholder}
       />
     );
