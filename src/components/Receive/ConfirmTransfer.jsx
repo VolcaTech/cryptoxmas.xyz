@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { SpinnerOrError, Loader } from "./../common/Spinner";
 import { TransferScreen } from "../Transfer";
 import ConfirmLinkScreen from "./ConfirmLinkScreen";
 

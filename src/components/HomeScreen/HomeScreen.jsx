@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { buyGift } from "../../actions/transfer";
 import { Loader } from "./../common/Spinner";
 import cryptoxmasService from "./../../services/cryptoxmasService";
-
+import styles from "./styles";
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -27,45 +27,13 @@ class HomeScreen extends Component {
       <a style={{ display: "block" }} href={`/#/send/${tokenId}`} key={tokenId}>
         <div
           style={{
-            display: "block",
-            width: 170,
-            height: 170,
-            float: position,
-            backgroundColor: "white",
-            backgroundImage:
-              "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/nft_border.png)",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            borderRadius: 5,
-            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-            marginBottom: 30
+            ...styles.nftContainer,
+            float: position
           }}
         >
-          <span
-            style={{
-              float: "right",
-              margin: "8px 8px 0px 0px",
-              color: "#4CD964",
-              fontFamily: "Inter UI Bold",
-              fontSize: 14
-            }}
-          >
-            0.05 ETH
-          </span>
-          <img
-            style={{ display: 'block', margin: "auto", height: 115, width: 115 }}
-            src={metadata.image}
-          />
-          <div
-            style={{
-              textAlign: "center",
-              color: "black",
-              fontFamily: "Inter UI Bold",
-              fontSize: 14
-            }}
-          >
-            {metadata.name}
-          </div>
+          <span style={styles.nftPrice}>0.05 ETH</span>
+          <img style={styles.nftImage} src={metadata.image} />
+          <div style={styles.nftName}>{metadata.name}</div>
         </div>
       </a>
     );
@@ -74,101 +42,47 @@ class HomeScreen extends Component {
   render() {
     const column1 = this.state.tokens.filter((token, index) => index % 2 === 0);
     const column2 = this.state.tokens.filter((token, index) => index % 2 !== 0);
-      return (
-	  <Col xs={12} style={{paddingBottom: 30}}>
-      <Row>
-        <div
-          style={{
-            margin: "auto",
-            backgroundColor: "#474D5B",
-            height: window.innerHeight,
-            backgroundImage:
-              "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles_tree.png)",
-            backgroundPosition: "right top",
-            backgroundRepeat: "no-repeat"
-          }}
-        >
-            <div
-              style={{
-                width: 354,
-                margin: "auto",
-                marginTop: 50,
-                textAlign: "left"
-              }}
-            >
-              <div
-                style={{
-                  marginBottom: 25,
-                  fontFamily: "Inter UI Medium",
-                  fontSize: 30,
-                  color: "#4CD964",
-                  textAlign: "left"
-                }}
-              >
+    return (
+      <Col xs={12} style={{ paddingBottom: 30 }}>
+        <Row>
+          <div
+            style={{
+              height: window.innerHeight,
+              ...styles.homescreenContainer
+            }}
+          >
+            <div style={styles.homescreenTextContainer}>
+              <div style={styles.homescreenGreenTitle}>
                 Surprise your friend
                 <br />
                 with a Nifty & send
                 <br />
                 some Ether to charity
               </div>
-              <div
-                style={{
-                  marginBottom: 50,
-                  fontFamily: "Inter UI Regular",
-                  fontSize: 18,
-                  color: "#8B8B8B",
-                  textAlign: "left"
-                }}
-              >
+              <div style={styles.homescreenGreyText}>
                 *receiver doesn’t need a<br /> crypto wallet
               </div>
-              <div
-                style={{
-                  marginBottom: 40,
-                  fontFamily: "Inter UI Medium",
-                  fontSize: 24,
-                  color: "white",
-                  textAlign: "left"
-                }}
-              >
+              <div style={styles.homescreenWhiteTitle}>
                 First, choose a Nifty
               </div>
             </div>
-            <Col
-              xs={6}
-              sm={6}
-              lg={6}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end"
-              }}
-            >
+            <Col xs={6} sm={6} lg={6} style={styles.nftLeftColumn}>
               {this.state.fetching || this.state.errorMessage ? (
                 <Loader text="Getting tokens" />
               ) : (
                 <div>{column1.map(t => this._renderToken(t, "right"))}</div>
               )}
             </Col>
-            <Col
-              xs={6}
-              sm={6}
-              lg={6}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start"
-              }}
-            >
+            <Col xs={6} sm={6} lg={6} style={styles.nftRightColumn}>
               {this.state.fetching || this.state.errorMessage ? (
                 <Loader text="Getting tokens" />
               ) : (
                 <div>{column2.map(t => this._renderToken(t, "left"))}</div>
               )}
-        </Col>
-        </div>
-	  </Row>
-	      </Col>
+            </Col>
+          </div>
+        </Row>
+      </Col>
     );
   }
 }

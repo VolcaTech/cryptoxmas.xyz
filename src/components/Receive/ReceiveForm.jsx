@@ -8,37 +8,7 @@ import { SpinnerOrError, Loader, ButtonLoader } from "./../common/Spinner";
 import { getNetworkNameById } from "../../utils";
 const qs = require("querystring");
 import { claimGift } from "./../../actions/transfer";
-
-const styles = {
-  container: { alignContent: "center" },
-  titleContainer: {
-    textAlign: "center",
-    marginTop: 54,
-    marginBottom: 39
-  },
-  amountContainer: {
-    fontSize: 35,
-    fontFamily: "SF Display Bold",
-    textAlign: "center",
-    marginBottom: 38
-  },
-  amountNumber: { color: "#0099ff" },
-  amountSymbol: { color: "#999999" },
-  title: {
-    fontSize: 24,
-    fontFamily: "SF Display Bold"
-  },
-  numberInput: {
-    width: "78%",
-    margin: "auto",
-    marginBottom: 21
-  },
-  button: {
-    margin: "auto",
-    marginTop: 40
-  },
-  green: "#2bc64f"
-};
+import styles from "./styles";
 
 class ReceiveScreen extends Component {
   constructor(props) {
@@ -59,7 +29,9 @@ class ReceiveScreen extends Component {
 
   async componentDidMount() {
     try {
-      const gift = await cryptoxmasService.getGift(this.state.transitPrivateKey);
+      const gift = await cryptoxmasService.getGift(
+        this.state.transitPrivateKey
+      );
       this.setState({
         fetching: false,
         gift
@@ -113,44 +85,19 @@ class ReceiveScreen extends Component {
     if (this.state.gift.status !== "1") {
       return (
         <Row>
-          <div
-            style={{
-              width: 354,
-              margin: "auto",
-              marginTop: 50,
-              textAlign: "left"
-            }}
-          >
+          <div style={styles.textContainer}>
             <div
               style={{
-                marginBottom: 25,
-                fontFamily: "Inter UI Medium",
-                fontSize: 30,
-                color: "#4CD964",
-                textAlign: "left"
+                ...styles.greenTitle,
+                marginBottom: 25
               }}
             >
               Oops!
             </div>
-            <div
-              style={{
-                marginBottom: 55,
-                fontFamily: "Inter UI Medium",
-                fontSize: 24,
-                color: "white",
-                textAlign: "left"
-              }}
-            >
-              Link is already claimed
-            </div>
+            <div style={styles.whiteTitle}>Link is already claimed</div>
           </div>
           <img
-            style={{
-              display: "block",
-              margin: "auto",
-              height: 200,
-              width: 200
-            }}
+            style={styles.gifContainer}
             src={
               "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/boom.gif"
             }
@@ -159,16 +106,11 @@ class ReceiveScreen extends Component {
       );
     }
     return (
-      <div
-        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
-      >
+      <div style={styles.textContainer}>
         <div
           style={{
-            marginBottom: 45,
-            fontFamily: "Inter UI Medium",
-            fontSize: 30,
-            color: "#4CD964",
-            textAlign: "left"
+            ...styles.greenTitle,
+            marginBottom: 45
           }}
         >
           Your friend
@@ -184,7 +126,7 @@ class ReceiveScreen extends Component {
           <ButtonPrimary
             handleClick={this._onSubmit.bind(this)}
             disabled={this.state.fetching}
-            buttonColor={styles.green}
+            buttonColor="#2bc64f"
           >
             {this.state.claiming ? <ButtonLoader /> : "Claim"}
           </ButtonPrimary>
@@ -207,21 +149,7 @@ class ReceiveScreen extends Component {
       );
     }
 
-      return (
-	  <div>
-	  <div>
-            {this._renderForm()}
-	  </div>
-        <div
-          style={{
-            width: "100%",
-            margin: "auto",
-            position: "fixed",
-            bottom: 0
-          }}
-        />
-      </div>
-    );
+    return <div>{this._renderForm()}</div>;
   }
 }
 

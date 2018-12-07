@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import RetinaImage from "react-retina-image";
 const qs = require("querystring");
-import styles from "./styles";
+import styles from "./../styles";
 import wallets from "./wallets";
 import { getDeviceOS } from "../../../utils";
 import WalletSlider from "./WalletSlider";
@@ -80,18 +80,8 @@ class NoWalletScreen extends Component {
 
   _renderWithDeepLink(deepLink) {
     return (
-      <div
-        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
-      >
-        <div
-          style={{
-            marginBottom: 45,
-            fontFamily: "Inter UI Medium",
-            fontSize: 30,
-            color: "#4CD964",
-            textAlign: "left"
-          }}
-        >
+      <div style={styles.screenContainer}>
+        <div style={styles.greenTitle}>
           Your friend
           <br />
           sent you a gift
@@ -103,7 +93,7 @@ class NoWalletScreen extends Component {
         />
         <a
           href={deepLink}
-          style={{ ...styles.button, marginTop: 40 }}
+          style={{ ...styles.noWalletScreenButton, marginTop: 40 }}
           target="_blank"
         >
           {" "}
@@ -125,18 +115,8 @@ class NoWalletScreen extends Component {
 
     // #TODO add this screen
     return (
-      <div
-        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
-      >
-        <div
-          style={{
-            marginBottom: 45,
-            fontFamily: "Inter UI Medium",
-            fontSize: 30,
-            color: "#4CD964",
-            textAlign: "left"
-          }}
-        >
+      <div style={styles.screenContainer}>
+        <div style={styles.greenTitle}>
           How to use
           <br />
           {this.state.selectedWallet.name}
@@ -155,18 +135,8 @@ class NoWalletScreen extends Component {
 
   _renderForDesktop() {
     return (
-      <div
-        style={{ width: 354, margin: "auto", marginTop: 50, textAlign: "left" }}
-      >
-        <div
-          style={{
-            marginBottom: 45,
-            fontFamily: "Inter UI Medium",
-            fontSize: 30,
-            color: "#4CD964",
-            textAlign: "left"
-          }}
-        >
+      <div style={styles.screenContainer}>
+        <div style={styles.greenTitle}>
           You need Metamask to
           <br />
           send or receive gifts
@@ -178,7 +148,7 @@ class NoWalletScreen extends Component {
         />
         <a
           href={"https://metamask.io/"}
-          style={{ ...styles.button, marginTop: 40 }}
+          style={{ ...styles.noWalletScreenButton, marginTop: 40 }}
           target="_blank"
         >
           {" "}
@@ -198,22 +168,25 @@ class NoWalletScreen extends Component {
 const Instructions = ({ wallet }) => {
   const walletId = wallet.id;
   return (
-    <div style={styles.instructionsContainer}>
-      <div style={styles.instructionsText}>
+    <div style={styles.noWalletInstructionContainer}>
+      <div style={styles.noWalletInstructionText}>
         {" "}
         1. Download/Open{" "}
         <a
           href={wallets[walletId].walletURL}
-          style={{ ...styles.instructionsText, textDecoration: "underline" }}
+          style={{
+            ...styles.noWalletInstructionText,
+            textDecoration: "underline"
+          }}
         >
           {wallet.name}
         </a>
       </div>
-      <div style={styles.instructionsText}>
+      <div style={styles.noWalletInstructionText}>
         {" "}
         2. Create new or import existing wallet{" "}
       </div>
-      <div style={styles.instructionsText}>
+      <div style={styles.noWalletInstructionText}>
         {" "}
         3. Open the gift link in a DApp browser and follow simple instructions{" "}
       </div>

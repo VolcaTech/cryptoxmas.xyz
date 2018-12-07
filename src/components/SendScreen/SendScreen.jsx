@@ -8,77 +8,7 @@ import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
 import web3Service from "./../../services/web3Service";
 import cryptoxmasService from "../../services/cryptoxmasService";
-
-const styles = {
-  title: {
-    width: "90%",
-    height: 110,
-    display: "block",
-    margin: "auto",
-    fontSize: 24,
-    lineHeight: 1.4,
-    fontFamily: "SF Display Black",
-    textAlign: "center",
-    marginBottom: 10,
-    marginTop: 27
-  },
-  text1: {
-    width: "85%",
-    height: 68,
-    display: "block",
-    margin: "auto",
-    fontSize: 15,
-    lineHeight: "17px",
-    fontFamily: "SF Display Regular",
-    textAlign: "center",
-    marginBottom: 36
-  },
-  container: {
-    display: "flex",
-    margin: "auto",
-    flexDirection: "column",
-    justifyContent: "space-between"
-  },
-  numberInput: {
-    display: "block",
-    margin: "auto",
-    width: "78%",
-    height: 39,
-    marginBottom: 19,
-    marginTop: 19
-  },
-  sendButton: {
-    width: "78%",
-    display: "block",
-    margin: "auto",
-    marginTop: 20
-  },
-  spinner: {
-    height: 28,
-    textAlign: "center",
-    marginTop: 10
-  },
-  betaText: {
-    fontSize: 14,
-    fontFamily: "Inter UI Regular",
-    color: "#8B8B8B"
-  },
-  betaContainer: {
-    paddingTop: 15,
-    marginBottom: 50,
-    height: 28,
-    textAlign: "center"
-  },
-  betaBold: {
-    fontFamily: "SF Display Bold"
-  },
-  blue: "#0099ff",
-  blueOpacity: "#80ccff",
-  hiddenInput: {
-    height: 0,
-    overflow: "hidden"
-  }
-};
+import styles from "./styles";
 
 class SendScreen extends Component {
   constructor(props) {
@@ -103,7 +33,9 @@ class SendScreen extends Component {
 
   async componentDidMount() {
     try {
-      const token = await cryptoxmasService.getTokenMetadata(this.state.tokenId);
+      const token = await cryptoxmasService.getTokenMetadata(
+        this.state.tokenId
+      );
       this.setState({
         fetching: false,
         token
@@ -170,36 +102,11 @@ class SendScreen extends Component {
   }
 
   _renderForm() {
-      return (
-	  <div>
-        <div
-          style={{
-            width: 354,
-            margin: "auto",
-            marginTop: 50,
-            textAlign: "left"
-          }}
-        >
-          <div
-            style={{
-              marginBottom: 25,
-              fontFamily: "Inter UI Medium",
-              fontSize: 30,
-              color: "#4CD964",
-              textAlign: "left"
-            }}
-          >
-            Pack your gift
-          </div>
-          <div
-            style={{
-              marginBottom: 40,
-              fontFamily: "Inter UI Medium",
-              fontSize: 24,
-              color: "white",
-              textAlign: "left"
-            }}
-          >
+    return (
+      <div>
+        <div style={styles.sendscreenTitleContainer}>
+          <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
+          <div style={styles.sendscreenWhiteTitle}>
             Buy a Nifty and create your gift link!
           </div>
         </div>
@@ -207,17 +114,7 @@ class SendScreen extends Component {
           price={this.state.amount}
           url={this.state.token.image || ""}
         />
-        <div
-          style={{
-            width: 300,
-            margin: "auto",
-            marginBottom: 40,
-            fontFamily: "Inter UI Regular",
-            fontSize: 18,
-            color: "#8B8B8B",
-            textAlign: "left"
-          }}
-        >
+        <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
           <span style={{ textDecoration: "underline" }}>
@@ -250,8 +147,8 @@ class SendScreen extends Component {
               error={this.state.errorMessage}
             />
           ) : (
-            <div style={styles.betaContainer}>
-              <span style={styles.betaText}>
+            <div style={styles.infoTextContainer}>
+              <span style={styles.infoText}>
                 You will get a simple link, sendable
                 <br />
                 via any messenger
@@ -259,7 +156,7 @@ class SendScreen extends Component {
             </div>
           )}
         </div>
-	  </div>
+      </div>
     );
   }
 

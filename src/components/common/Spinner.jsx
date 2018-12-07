@@ -1,28 +1,5 @@
 import React from "react";
-
-const styles = {
-  loaderText: {
-    height: 40,
-    color: "#fff",
-    fontFamily: "SF Display Bold",
-    fontSize: 12,
-    letterSpacing: 1.45
-  },
-  error: {
-    color: "#E64437",
-    fontSize: 12,
-    fontFamily: "SF Display Regular"
-  },
-  spinnerOrErrorContainer: {
-    height: 28,
-    textAlign: "center",
-    paddingTop: 8
-  },
-  spinner: {
-    width: 20,
-    margin: "auto"
-  }
-};
+import styles from "./styles";
 
 const Spinner = () => (
   <div className="lds-spinner">
@@ -52,7 +29,7 @@ export const SpinnerOrError = ({ fetching, error }) => {
           <Spinner />
         </div>
       ) : (
-        <span style={styles.error}>{error}</span>
+        <span style={styles.spinnerError}>{error}</span>
       )}
     </div>
   );
@@ -64,7 +41,7 @@ export const Error = ({ fetching, error }) => {
   }
   return (
     <div style={styles.spinnerOrErrorContainer}>
-      <span style={styles.error}>{error}</span>
+      <span style={styles.spinnerError}>{error}</span>
     </div>
   );
 };
@@ -82,7 +59,12 @@ export const Loader = ({
         <div />
         <div />
       </div>
-      <div style={{ ...styles.loaderText, marginLeft: textLeftMarginOffset }}>
+      <div
+        style={{
+          ...styles.spinnerLoaderText,
+          marginLeft: textLeftMarginOffset
+        }}
+      >
         <div style={{ textAlign: "center" }}>{text}</div>
         <div style={{ marginTop: 10 }}>{instruction}</div>
       </div>
