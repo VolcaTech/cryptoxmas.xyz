@@ -41,6 +41,7 @@ describe('CryptoxmasEscrow', () => {
 	await nft.mint(sellerWallet.address, 1);
 	await nft.setTokenURI(1, tokenURI);
 	await nft.mint(sellerWallet.address, 2);
+	await nft.mint(sellerWallet.address, 5);
 	
 	// deploy mock of Giveth Bridge
 	givethBridgeMock = await deployContract(deployerWallet, GivethBridge, []);
@@ -53,6 +54,9 @@ describe('CryptoxmasEscrow', () => {
 	transitFee = utils.parseEther('0.01');
 	
 	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, [givethBridgeMock.address, 1]);	
+
+	// set unique price for tokenId 5 
+	await escrow.setUniquePrice(nft.address, 5, utils.parseEther('1'));
 	
 	// add Seller for this token
 	await escrow.addSeller(sellerWallet.address, nft.address, sellerNftPrice);
@@ -60,18 +64,31 @@ describe('CryptoxmasEscrow', () => {
     });
 
     describe('#getTokenSaleInfo', () => {
-	let token;	
-	beforeEach(async () => {
-	    token = await escrow.getTokenSaleInfo(nft.address, 1);
+	describe('rare token', () => { 
+	    let token;	
+	    beforeEach(async () => {
+		token = await escrow.getTokenSaleInfo(nft.address, 1);
+	    });
+	    
+	    it("has valid price", () => {
+		expect(token.price).to.be.eq(sellerNftPrice);
+	    });
+	    
+	    it("has valid tokenURI", () => {
+		expect(token.tokenURI).to.be.eq(tokenURI);
+	    });
 	});
 
-	it("has valid price", () => {
-	    expect(token.price).to.be.eq(sellerNftPrice);
-	});
-	
-	it("has valid tokenURI", () => {
-	    expect(token.tokenURI).to.be.eq(tokenURI);
-	});
+	describe('unique token', () => { 
+	    let token;	
+	    beforeEach(async () => {
+		token = await escrow.getTokenSaleInfo(nft.address, 5);
+	    });
+	    
+	    it("has valid price", () => {
+		expect(token.price).to.be.eq(utils.parseEther('1'));
+	    });	    
+	});	
     });
 
     describe("Adding seller", () =>  {
@@ -98,8 +115,8 @@ describe('CryptoxmasEscrow', () => {
     });
 
     
-    describe("Buying NFT", () =>  { 
-	describe("without ETH for receiver", () => {
+    describe("Buying NFT", () =>  {
+	describe("without claim ETH", () => {
 	    beforeEach(async () => {
 		await buyNFT({
 		    value: sellerNftPrice,
@@ -155,7 +172,7 @@ describe('CryptoxmasEscrow', () => {
 	});
 
 	
-	describe("with ETH for receiver", () => {
+	describe("with claim ETH", () => {
 	    beforeEach(async () => {
 		await buyNFT({
 		    value: withEthAmount,
@@ -197,6 +214,51 @@ describe('CryptoxmasEscrow', () => {
 	    });
 	});
 
+	describe("unique token with claim ETH", () => {
+	    beforeEach(async () => {
+		await buyNFT({
+		    value: utils.parseEther('2'),
+		    tokenId: 5, 
+		    transitAddress: transitWallet.address,
+		    nftAddress: nft.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet,
+		    messageHash
+		});
+	    });
+
+	    it('transfers token from seller to escrow', async () => {
+		expect(await nft.ownerOf(5)).to.be.eq(escrow.address);
+	    });
+
+	    it('it saves gift to escrow', async () => {
+		const gift = await escrow.getGift(transitWallet.address);
+		expect(gift.sender).to.eq(buyerWallet.address);
+		expect(gift.claimEth).to.eq(utils.parseEther('1'));
+		expect(gift.tokenAddress).to.eq(nft.address);
+		expect(gift.tokenId).to.eq(5);
+		expect(gift.status).to.eq(1); // not claimed
+		expect(gift.nftPrice).to.eq(utils.parseEther('1'));
+		expect(gift.msgHash).to.eq(messageHash); 		
+	    });
+
+	    it('does not transfer eth from buyer to escrow', async () => {
+		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
+		expect(escrowBal).to.eq(utils.parseEther('1'));
+	    });
+
+	    it('donates to charity', async () => {
+		const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
+		expect(givethBal).to.eq(utils.parseEther('0.99'));
+	    });
+
+	    it('sends transit fee', async () => {
+		const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
+		expect(transitBal).to.eq(utils.parseEther('0.01'));
+	    });	    	    
+	});
+
+	
 	
 	describe("when seller doesn't have NFT", () => {
 	    it("it reverts", async () => {		

@@ -7,7 +7,7 @@ export const genereteTransitWallet = (provider) => {
 
 export const buyNFT = async ({value, transitAddress, nftAddress, escrowAddress, buyerWallet, tokenId, messageHash=''}) => {
     const gasPrice = utils.parseEther('0.00011');
-    const gasLimit = 400000;
+    const gasLimit = 500000;
     const args = [nftAddress, tokenId, transitAddress, messageHash];
     const executeData = new utils.Interface(CryptoxmasEscrow.interface).functions.buyGift.encode(args);
     const transaction = {

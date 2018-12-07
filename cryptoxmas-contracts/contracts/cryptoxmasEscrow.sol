@@ -29,10 +29,12 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   struct Seller {
     address seller;
     uint nftPrice;
+    mapping (uint => uint) uniquePrices; // tokenId => price
   }
 
+  // tokenId 
   mapping (address => Seller) sellers;
-
+  
   struct Gift {
     address sender;
     uint claimEth; // eth for receiver
@@ -93,7 +95,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
 
   function addSeller(address _sellerAddress, address _tokenAddress, uint _sellerPrice) public onlyOwner {
-    // can't add seller with cheaper nft price that minNftPrice
+    // can't add seller with cheaper nft price that EPHEMERAL_ADDRESS_FEE
     require(_sellerPrice >= EPHEMERAL_ADDRESS_FEE);
     
     // can't override existing seller
@@ -124,9 +126,12 @@ contract CryptoxmasEscrow is Pausable, Ownable {
           payable public whenNotPaused returns (bool) {
 
     Seller memory seller = sellers[_tokenAddress];
+    
     require(canBuyGift(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
-    uint claimEth = msg.value.sub(seller.nftPrice); //amount = msg.value - comission
+
+    uint tokenPrice = _getTokenSalePrice( _tokenAddress, _tokenId);       
+    uint claimEth = msg.value.sub(tokenPrice); //amount = msg.value - comission
     
     
     // saving transfer details
@@ -137,7 +142,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 				  _tokenAddress,
 				  _tokenId,
 				  Statuses.Deposited,
-				  seller.nftPrice,
+				  tokenPrice,
 				  _msgHash
 				  );
 
@@ -148,7 +153,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     // transfer ETH to relayer to fund claim txs
     _transitAddress.transfer(EPHEMERAL_ADDRESS_FEE);
     
-    uint donation = seller.nftPrice.sub(EPHEMERAL_ADDRESS_FEE);
+    uint donation = tokenPrice.sub(EPHEMERAL_ADDRESS_FEE);
     if (donation > 0) {
       givethBridge.donateAndCreateGiver.value(donation)(msg.sender, givethReceiverId, 0, 0);
     }
@@ -160,7 +165,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 		_tokenAddress,
 		_tokenId,
 		claimEth,
-		seller.nftPrice);
+		tokenPrice);
     return true;
   }
 
@@ -202,14 +207,37 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
   function getTokenSaleInfo(address _tokenAddress, uint _tokenId) public view returns (uint price, string tokenURI) {
     NFT nft = NFT(_tokenAddress);
-    Seller memory seller = sellers[_tokenAddress];
+    price = _getTokenSalePrice(_tokenAddress, _tokenId);
     
     return (
-	    seller.nftPrice,
+	    price,
 	    nft.tokenURI(_tokenId)
 	    );
   }
 
+  function _getTokenSalePrice(address _tokenAddress, uint _tokenId) internal view returns (uint price) {
+    Seller storage seller = sellers[_tokenAddress];
+    uint uniquePrice = seller.uniquePrices[_tokenId];
+    // return unique or standard price (if no unique price for this token)
+    if (uniquePrice >= EPHEMERAL_ADDRESS_FEE) {
+      price = uniquePrice;
+    } else {
+      price = seller.nftPrice;
+    }
+
+    return price;
+  }
+  
+  function setUniquePrice(address _tokenAddress, uint _tokenId, uint _price ) public returns (bool success) {
+    // can't set nft price that less that EPHEMERAL_ADDRESS_FEE
+    require(_price >= EPHEMERAL_ADDRESS_FEE);
+
+    Seller storage seller = sellers[_tokenAddress];
+    seller.uniquePrices[_tokenId] = _price;
+    
+    return true;
+  }
+  
   /**
    * @dev Cancel gift and get sent ether back. Only gift buyer can
    * cancel.
@@ -266,8 +294,8 @@ contract CryptoxmasEscrow is Pausable, Ownable {
       _receiver.transfer(gift.claimEth);
     }
 
-    /* // log withdraw event */
-    /* emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth); */
+    // log withdraw event
+    emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth);
     
     return true;
   }
