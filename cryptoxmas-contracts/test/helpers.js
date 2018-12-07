@@ -1,5 +1,9 @@
-import {utils} from 'ethers';
+import {utils, Wallet} from 'ethers';
 import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
+
+export const genereteTransitWallet = (provider) => {
+    return new Wallet(Wallet.createRandom().privateKey, provider);
+}
 
 export const buyNFT = async ({value, transitAddress, nftAddress, escrowAddress, buyerWallet, tokenId}) => {
     const gasPrice = utils.parseEther('0.00011');
@@ -32,19 +36,13 @@ export const cancelGift = async ({ transitAddress, escrow, wallet }) => {
 }
 
 
-export const claimGift = async ({ transitAddress, transitWallet, receiverAddress, escrow, relayerWallet }) => {
-    const gasPrice = utils.parseUnits('9', 'gwei');
-    const gasLimit = 400000;
+export const claimGift = async ({ transitWallet, receiverAddress, escrow }) => {
+    const gasPrice = utils.parseUnits('10', 'gwei');
+    const gasLimit = 200000;
 
-    const messageHash = utils.solidityKeccak256(
-	['address', 'address'],
-	[ receiverAddress, transitAddress]
-    );
-    
-    const signature = await transitWallet.signMessage(utils.arrayify(messageHash));
-    const args = [transitAddress, receiverAddress, signature];
+    const args = [receiverAddress];
     const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);
-    const tx = await relayerWallet.sendTransaction({
+    const tx = await transitWallet.sendTransaction({
 	to: escrow.address,
 	value: 0,
 	data,
@@ -52,6 +50,6 @@ export const claimGift = async ({ transitAddress, transitWallet, receiverAddress
 	gasLimit
     });
 
-    const receipt = await relayerWallet.provider.getTransactionReceipt(tx.hash);
+    const receipt = await transitWallet.provider.getTransactionReceipt(tx.hash);
     return { tx, receipt }; 
 }

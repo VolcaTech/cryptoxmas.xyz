@@ -4,7 +4,7 @@ import { utils, Wallet } from 'ethers';
 import BasicNFT from './../build/NFT';
 import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
 import GivethBridge from './../build/GivethBridge';
-import { buyNFT, cancelGift, claimGift } from './helpers';
+import { buyNFT, cancelGift, claimGift, genereteTransitWallet } from './helpers';
 
 chai.use(solidity);
 
@@ -25,13 +25,14 @@ describe('CryptoxmasEscrow', () => {
     let transitWallet2;
     let sellerNftPrice;
     let transitFee;
+    let fakeTransitWallet;
     
     beforeEach(async () => {
 	provider = createMockProvider();
-	[deployerWallet, sellerWallet, buyerWallet] = await getWallets(provider);
+	[deployerWallet, sellerWallet, buyerWallet, fakeTransitWallet] = await getWallets(provider);
 
-	transitWallet = Wallet.createRandom();
-	transitWallet2 = Wallet.createRandom(); 
+	transitWallet = genereteTransitWallet(provider);
+	transitWallet2 = genereteTransitWallet(provider);
 	
 	// deploy NFT token
 	nft = await deployContract(sellerWallet, BasicNFT, ["NFT Name", "NFT"]);
@@ -58,7 +59,7 @@ describe('CryptoxmasEscrow', () => {
 	
     });
 
-    xdescribe("Adding seller", () =>  {
+    describe("Adding seller", () =>  {
 	it('can add seller', async () => {
 	    const sellerAddress = transitWallet.address;
 	    const tokenAddress = transitWallet2.address;
@@ -80,8 +81,9 @@ describe('CryptoxmasEscrow', () => {
 	});
 	
     });
+
     
-    xdescribe("Buying NFT", () =>  { 
+    describe("Buying NFT", () =>  { 
 	describe("without ETH for receiver", () => {
 	    beforeEach(async () => {
 		await buyNFT({
@@ -121,8 +123,7 @@ describe('CryptoxmasEscrow', () => {
 	    it('sends transit fee', async () => {
 		const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
 		expect(transitBal).to.eq(utils.parseEther('0.01'));
-	    });
-	    
+	    });	    
 	    
 	    it("doesn't allow to override gift", async () => {
 		await expect(buyNFT({
@@ -134,9 +135,8 @@ describe('CryptoxmasEscrow', () => {
 		    buyerWallet
 		})).to.be.reverted;
 	    });
-
-	    
 	});
+
 	
 	describe("with ETH for receiver", () => {
 	    beforeEach(async () => {
@@ -178,8 +178,8 @@ describe('CryptoxmasEscrow', () => {
 		const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
 		expect(transitBal).to.eq(utils.parseEther('0.01'));
 	    });
-
 	});
+
 	
 	describe("when seller doesn't have NFT", () => {
 	    it("it reverts", async () => {		
@@ -193,6 +193,8 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;
 	    });
 	});
+
+	
 	describe("with less ETH than NFT price", () => {		
 	    it("it reverts", async () => {
 		await expect(buyNFT({
@@ -208,8 +210,8 @@ describe('CryptoxmasEscrow', () => {
 
     });
 
+    
     describe("Cancelling gift", () =>  {
-
 	beforeEach(async () => {
 	    await buyNFT({
 		value: withEthAmount,
@@ -220,10 +222,8 @@ describe('CryptoxmasEscrow', () => {
 		buyerWallet
 	    });	  
 	});
-
 	
-	describe("existing gift", () => {
-	    
+	describe("existing gift", () => {	    
 	    let gift;
 	    let buyerBalBefore;
 	    
@@ -260,6 +260,7 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;
 	    });	    	    
 	});
+
 	
 	it("cannot cancel gift if not sender", async () => {
 	    await expect(cancelGift({
@@ -268,6 +269,7 @@ describe('CryptoxmasEscrow', () => {
 	    	wallet: buyerWallet
 	    })).to.be.reverted;
 	});
+
 	
 	describe("not existing gift", () => { 
 	    it("can't cancel ", async () => {
@@ -278,27 +280,27 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;		
 	    });
 	});
+
 	
-	xdescribe("claimed gift", () => { 
+	describe("claimed gift", () => { 
 	    it("can't cancel ", async () => {
 		await claimGift({
-		    transitAddress: transitWallet.address,
 		    transitWallet,
 		    receiverAddress: transitWallet.address,
-		    relayerWallet: deployerWallet,
 		    escrow
 		});	  
 		
 		await expect(cancelGift({
-		    transitAddress: deployerWallet.address,
+		    transitAddress: transitWallet.address,
 		    escrow,
 		    wallet: buyerWallet
 		})).to.be.reverted;		
 	    });
 	});
     });
+
     
-    xdescribe("Claiming gift", () =>  {
+    describe("Claiming gift", () =>  {
 	let receiverAddress;
 	beforeEach(async () => {
 	    receiverAddress = Wallet.createRandom().address;
@@ -313,24 +315,20 @@ describe('CryptoxmasEscrow', () => {
 	    });	   
 	});
 	
+
 	describe("deposited gift", () => {
-	    describe("with correct signature ", () => {
-		let relayerBalBefore;
-		
+	    describe("with claim ETH ", () => {
 		beforeEach(async () => {
-		    relayerBalBefore = await deployerWallet.provider.getBalance(deployerWallet.address);
 		    await claimGift({
-			transitAddress: transitWallet.address,
 			transitWallet,
 			receiverAddress,
-			relayerWallet: deployerWallet,
 			escrow
 		    });	  
 		});
 		
-		
 		it("token goes to receiver", async () => {
-		    expect(await nft.ownerOf(1)).to.be.eq(receiverAddress);
+		    const tokenOwner = await nft.ownerOf(1);
+		    expect(tokenOwner).to.be.eq(receiverAddress);
 		});
 
 		it("gift status updated to claimed", async () => {
@@ -341,35 +339,20 @@ describe('CryptoxmasEscrow', () => {
 		it("eth goes to receiver", async () => {
 		    const gift = await escrow.getGift(transitWallet.address);
 		    const receiverBal = await deployerWallet.provider.getBalance(receiverAddress);
-		    expect(receiverBal).to.eq(gift.amount);
+		    expect(receiverBal).to.eq(gift.claimEth);
 		});
-		
-		it("(NFT price - gas costs) goes to Giveth campaign", async () => {
-		    const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
-		    expect(givethBal).to.be.above(utils.parseEther('0.04'));		    
-		});
-
-		it("relayer is refunded for gas costs", async () => {
-		    const relayerBal = await deployerWallet.provider.getBalance(deployerWallet.address);
-		    const diff = relayerBalBefore.sub(relayerBal);
-		    const diffFormatted = utils.formatEther(diff);
-		    expect(Math.abs(Number(diffFormatted))).to.be.below(0.001);
-		});
-
-		
+				
 		it("can't claim the same gift twice", async () => {
 		    await expect(claimGift({
-			transitAddress: transitWallet.address,
 			transitWallet,
 			receiverAddress,
-			relayerWallet: deployerWallet,
 			escrow
 		    })).to.be.reverted;
 		});	    
-		
 	    });
 
-	    describe("without extra Ether", () => {
+	    
+	    describe("without claim ETH", () => {
 		let relayerBalBefore;
 		
 		beforeEach(async () => {
@@ -381,12 +364,9 @@ describe('CryptoxmasEscrow', () => {
 			escrowAddress: escrow.address,
 			buyerWallet
 		    });	  		    
-		    relayerBalBefore = await deployerWallet.provider.getBalance(deployerWallet.address);
 		    await claimGift({
-			transitAddress: transitWallet2.address,
 			transitWallet: transitWallet2,
 			receiverAddress,
-			relayerWallet: deployerWallet,
 			escrow
 		    });	  
 		});
@@ -396,51 +376,34 @@ describe('CryptoxmasEscrow', () => {
 		    const receiverBal = await deployerWallet.provider.getBalance(receiverAddress);
 		    expect(receiverBal).to.eq(0);
 		});
-
-	    });
-	    
-	    describe("with incorrect signature ", () => { 
-		it("transaction reverts", async () => {
-		    await expect(claimGift({
-			transitAddress: transitWallet.address,
-			transitWallet: buyerWallet,
-			receiverAddress,
-			relayerWallet: deployerWallet,
-			escrow
-		    })).to.be.reverted;
-		});
-	    });
+	    });	    
 	});
 
+	
 	describe("cancelled gift", () => {
-
 	    beforeEach(async () => {
 		await claimGift({
-		    transitAddress: transitWallet.address,
 		    transitWallet,
 		    receiverAddress,
-		    relayerWallet: deployerWallet,
 		    escrow
 		});	  
 	    });
 	    
 	    it("can't claim cancelled gift", async () => {
 		await expect(claimGift({
-		    transitAddress: transitWallet.address,
-		    transitWallet: transitWallet,
+		    transitWallet,
 		    receiverAddress,
-		    relayerWallet: deployerWallet,
 		    escrow
 		})).to.be.reverted;		
 	    });	    
 	});
+
+	
 	describe("not existing gift", () => {
 	    it("it reverts", async () => {
 		await expect(claimGift({
-		    transitAddress: buyerWallet.address,
-		    transitWallet: buyerWallet,
+		    transitWallet: fakeTransitWallet,
 		    receiverAddress,
-		    relayerWallet: deployerWallet,
 		    escrow
 		})).to.be.reverted;		
 	    });	    

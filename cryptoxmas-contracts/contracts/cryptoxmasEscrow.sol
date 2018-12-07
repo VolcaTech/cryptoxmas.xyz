@@ -241,20 +241,20 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     // is deposited and wasn't claimed or cancelled before
     require(gift.status == Statuses.Deposited);
 
-    // update gift status
+    /* // update gift status */
     gift.status = Statuses.Claimed;
     
-    // send nft
+    /* // send nft */
     NFT nft = NFT(gift.tokenAddress);
     nft.transferFrom(address(this), _receiver, gift.tokenId);
     
-    // transfer ether to receiver's address
-    if (gift.claimEth > 0) { 
+    /* // transfer ether to receiver's address */
+    if (gift.claimEth > 0) {
       _receiver.transfer(gift.claimEth);
     }
 
-    // log withdraw event
-    emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth);
+    /* // log withdraw event */
+    /* emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth); */
     
     return true;
   }
