@@ -5,7 +5,7 @@ export const buyNFT = async ({value, transitAddress, nftAddress, escrowAddress, 
     const gasPrice = utils.parseEther('0.00011');
     const gasLimit = 400000;
     const args = [nftAddress, tokenId, transitAddress];
-    const executeData = new utils.Interface(CryptoxmasEscrow.interface).functions.buyGiftLink.encode(args);
+    const executeData = new utils.Interface(CryptoxmasEscrow.interface).functions.buyGift.encode(args);
     const transaction = {
 	value,
 	to: escrowAddress,

@@ -16,9 +16,12 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   
 
   // fixed amount of wei accrued to verifier with each transfer
-  uint public minNftPrice;
   GivethBridge public givethBridge;
-  uint64 givethReceiverId;
+  uint64 public givethReceiverId;
+
+  // commission to fund paying gas for claim transactions
+  // leftover eth will be donated to charity
+  uint public EPHEMERAL_ADDRESS_FEE = 0.01 ether; 
 
   // verifier's address
   enum Statuses { Empty, Deposited, Claimed, Cancelled }
@@ -32,7 +35,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
   struct Gift {
     address sender;
-    uint amount; // eth for receiver
+    uint claimEth; // eth for receiver
     address tokenAddress;
     uint256 tokenId;
     Statuses status;
@@ -50,7 +53,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 	       address indexed sender,
 	       address indexed tokenAddress,
 	       uint tokenId,
-	       uint amount,
+	       uint claimEth,
 	       uint nftPrice
 	       );
 
@@ -66,8 +69,8 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		 address indexed sender,
 		 address indexed tokenAddress,
 		 uint tokenId,
-		 address recipient,
-		 uint amount
+		 address receiver,
+		 uint claimEth
 		 );
 
   event LogSellerAdded(
@@ -77,33 +80,31 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		 );
   
 
-
   /**
    * @dev Contructor that sets msg.sender as owner (verifier) in Ownable
    * and sets verifier's fixed commission fee.
-   * @param _minNftPrice uint Verifier's fixed commission for each transfer
    */
-  constructor(uint _minNftPrice, GivethBridge _givethBridge, uint64 _givethReceiverId) public {
-    minNftPrice = _minNftPrice;
+  constructor(GivethBridge _givethBridge,
+	      uint64 _givethReceiverId) public {
     givethBridge = _givethBridge;
     givethReceiverId = _givethReceiverId;
   }
 
 
-  function addSeller(address _sellerAddress, address _tokenAddress, uint _sellerPrice) public {
+  function addSeller(address _sellerAddress, address _tokenAddress, uint _sellerPrice) public onlyOwner {
     // can't add seller with cheaper nft price that minNftPrice
-    require(_sellerPrice >= minNftPrice);
-
+    require(_sellerPrice >= EPHEMERAL_ADDRESS_FEE);
+    
     // can't override existing seller
     require(sellers[_tokenAddress].seller == 0);
 
     // store seller
     sellers[_tokenAddress] = Seller(_sellerAddress, _sellerPrice);
     emit LogSellerAdded( _sellerAddress,  _tokenAddress,  _sellerPrice);
-    
+   
   }
 
-  function canBuyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
+  function canBuyGift(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
     Seller memory seller = sellers[_tokenAddress];    
     require(_value >= seller.nftPrice);
 
@@ -118,19 +119,20 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   }
 
 
-  function buyGiftLink(address _tokenAddress, uint _tokenId, address _transitAddress)
+  function buyGift(address _tokenAddress, uint _tokenId, address _transitAddress)
           payable public whenNotPaused returns (bool) {
 
     Seller memory seller = sellers[_tokenAddress];
-    require(canBuyGiftLink(_tokenAddress, _tokenId, _transitAddress, msg.value));
+    require(canBuyGift(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
-    uint amount = msg.value.sub(seller.nftPrice); //amount = msg.value - comission
+    uint claimEth = msg.value.sub(seller.nftPrice); //amount = msg.value - comission
     
     
     // saving transfer details
+
     gifts[_transitAddress] = Gift(
 				  msg.sender,
-				  amount,
+				  claimEth,
 				  _tokenAddress,
 				  _tokenId,
 				  Statuses.Deposited,
@@ -139,15 +141,23 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
     // transfer NFT from seller's address to this escrow contract
     NFT nft = NFT(_tokenAddress);
-    nft.transferFrom(sellers[_tokenAddress].seller, address(this), _tokenId);
+    nft.transferFrom(seller.seller, address(this), _tokenId);
 
+    // transfer ETH to relayer to fund claim txs
+    _transitAddress.transfer(EPHEMERAL_ADDRESS_FEE);
+    
+    uint donation = seller.nftPrice.sub(EPHEMERAL_ADDRESS_FEE);
+    if (donation > 0) {
+      givethBridge.donateAndCreateGiver.value(donation)(msg.sender, givethReceiverId, 0, 0);
+    }
+    
     // log buy event
     emit LogBuy(
 		_transitAddress,
 		msg.sender,
 		_tokenAddress,
 		_tokenId,
-		amount,
+		claimEth,
 		seller.nftPrice);
     return true;
   }
@@ -155,22 +165,24 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
   function getGift(address _transitAddress) public view returns (
 	     address sender, // transfer sender
-	     uint amount,
+	     uint claimEth,
 	     address tokenAddress,
 	     uint256 tokenId,
 	     Statuses status,
-	     string tokenURI) {
+	     string tokenURI,
+	     uint nftPrice) {
     Gift memory gift = gifts[_transitAddress];
     
     NFT nft = NFT(gift.tokenAddress);
 
     return (
 	    gift.sender,
-	    gift.amount,
+	    gift.claimEth,
 	    gift.tokenAddress,
 	    gift.tokenId,
 	    gift.status,
-	    nft.tokenURI(gift.tokenId)
+	    nft.tokenURI(gift.tokenId),
+	    gift.nftPrice
 	    );
   }
 
@@ -199,12 +211,12 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 
     gift.status = Statuses.Cancelled;
 
-    // transfer ether to recipient's address
-    gift.sender.transfer(gift.amount.add(gift.nftPrice));
+    // transfer ether to receiver's address
+    gift.sender.transfer(gift.claimEth);
 
-    // send nft
+    // send nft to buyer
     NFT nft = NFT(gift.tokenAddress);
-    nft.transferFrom(address(this), sellers[gift.tokenAddress].seller, gift.tokenId);
+    nft.transferFrom(address(this), msg.sender, gift.tokenId);
 
     // log cancel event
     emit LogCancel(_transitAddress, msg.sender, gift.tokenAddress, gift.tokenId);
@@ -212,100 +224,37 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     return true;
   }
 
+  
   /**
-   * @dev Verify that address is signed with correct verification private key.
-   * @param _transitAddress transit address assigned to gift
-   * @param _recipient address Signed address.
-   * @param _sig ECDSA signature parameter v.
-   * @return True if signature is correct.
-   */
-  function verifySignature(
-			   address _transitAddress,
-			   address _recipient,
-			   bytes _sig ) public pure returns(bool success) {
-
-    // hash signed by receiver using transit private key
-    bytes32 hash = keccak256(abi.encodePacked(_recipient,
-					      _transitAddress));
-    
-    address signer = hash.toEthSignedMessageHash().recover(_sig);
-    return signer == _transitAddress;
-  }
-
-
-  /**
-   * @dev Verify that address is signed with correct verification private key.
-   * @param _transitAddress transit address assigned to transfer
-   * @param _recipient address Signed address.
-   * @param _sig ECDSA signature
-   * @return True if signature is correct.
-   */
-  function canClaim(
-		       address _transitAddress,
-		       address _recipient,
-		       bytes _sig) public constant returns(bool success)  {
-
-    Gift memory gift = gifts[_transitAddress];
-
-    // verifying signature
-    require(verifySignature(_transitAddress, _recipient, _sig));
-
-    // wasn't withdrawn before
-    require(gift.status == Statuses.Deposited);
-
-    return true;
-  }
-
-
-
-  /**
-   * @dev Claim gift to recipient's address if it is correctly signed
+   * @dev Claim gift to receiver's address if it is correctly signed
    * with private key for verification public key assigned to gift.
    * 
-   * @param _transitAddress transit address assigned to transfer
-   * @param _recipient address Signed address.
-   * @param _sig ECDSA signature
+   * @param _receiver address Signed address.
    * @return True if success.
    */
-  function claimGift(
-		    address _transitAddress,
-		    address _recipient,
-		    bytes _sig) public whenNotPaused returns (bool success) {
+  function claimGift(address _receiver) public whenNotPaused returns (bool success) {
 
-    uint256 startingGas = gasleft();
+    address _transitAddress = msg.sender;
     
     Gift storage gift = gifts[_transitAddress];
-    
-    // verifying signature
-    require(canClaim(_transitAddress, _recipient, _sig));
 
+    // is deposited and wasn't claimed or cancelled before
+    require(gift.status == Statuses.Deposited);
+
+    // update gift status
     gift.status = Statuses.Claimed;
-
+    
     // send nft
     NFT nft = NFT(gift.tokenAddress);
-    nft.transferFrom(address(this), _recipient, gift.tokenId);
-
-    // transfer ether to recipient's address
-    if (gift.amount > 0) { 
-      _recipient.transfer(gift.amount);
+    nft.transferFrom(address(this), _receiver, gift.tokenId);
+    
+    // transfer ether to receiver's address
+    if (gift.claimEth > 0) { 
+      _receiver.transfer(gift.claimEth);
     }
 
     // log withdraw event
-    emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _recipient, gift.amount);
-    
-    uint256 gasUsed = startingGas.sub(gasleft());
-    
-    // refund gas cost to sender from nft price but not more than nft price
-    uint toRefund = gasUsed.add(49000).mul(tx.gasprice).min(gift.nftPrice);
-    
-    uint toCharity = gift.nftPrice.sub(toRefund);
-    if (toCharity > 0) {
-      givethBridge.donateAndCreateGiver.value(toCharity)(gift.sender, givethReceiverId, 0, 0);
-    }
-    
-    if (toRefund > 0) {
-      msg.sender.transfer(toRefund);
-    }
+    emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth);
     
     return true;
   }

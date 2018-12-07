@@ -16,7 +16,7 @@ contract GivethBridge is Pausable {
   event DonateAndCreateGiver(address giver, uint64 receiverId, address token, uint amount);
   event EscapeFundsCalled(address token, uint amount);
 
-  function GivethBridge() public 
+  constructor() public 
   {
     tokenWhitelist[0] = true; // enable eth transfers
   }
