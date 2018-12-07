@@ -129,13 +129,11 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     
     require(canBuyGift(_tokenAddress, _tokenId, _transitAddress, msg.value));
 
-
     uint tokenPrice = _getTokenSalePrice( _tokenAddress, _tokenId);       
     uint claimEth = msg.value.sub(tokenPrice); //amount = msg.value - comission
     
     
     // saving transfer details
-
     gifts[_transitAddress] = Gift(
 				  msg.sender,
 				  claimEth,
@@ -171,7 +169,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
 
   function _makeDonation(address _giver, uint _value) internal returns (bool success) {
-    bytes memory _data =  abi.encodePacked(0x1870c10f, // function signature
+    bytes memory _data = abi.encodePacked(0x1870c10f, // function signature
 					   bytes32(_giver),
 					   bytes32(givethReceiverId),
 					   bytes32(0),
