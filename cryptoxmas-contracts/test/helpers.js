@@ -33,6 +33,8 @@ export const cancelGift = async ({ transitAddress, escrow, wallet }) => {
 
 
 export const claimGift = async ({ transitAddress, transitWallet, receiverAddress, escrow, relayerWallet }) => {
+    const gasPrice = utils.parseUnits('9', 'gwei');
+    const gasLimit = 400000;
 
     const messageHash = utils.solidityKeccak256(
 	['address', 'address'],
@@ -45,7 +47,9 @@ export const claimGift = async ({ transitAddress, transitWallet, receiverAddress
     const tx = await relayerWallet.sendTransaction({
 	to: escrow.address,
 	value: 0,
-	data
+	data,
+	gasPrice,
+	gasLimit
     });
 
     const receipt = await relayerWallet.provider.getTransactionReceipt(tx.hash);

@@ -1,23 +1,24 @@
 pragma solidity ^0.4.25;
 
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
+import 'openzeppelin-solidity/contracts/math/Math.sol';
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
 import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
 import './NFT.sol';
+import './GivethBridge.sol';
 
 
 contract cryptoxmasEscrow is Pausable, Ownable {
   using SafeMath for uint256;
+  using Math for uint256;  
   using ECDSA for bytes32;
   
 
   // fixed amount of wei accrued to verifier with each transfer
   uint public nftPrice;
-
-
-  // verifier's address
-  address public verifier;
+  GivethBridge public givethBridge;
+  uint64 givethReceiverId;
 
   // verifier's address
   enum Statuses { Empty, Deposited, Claimed, Cancelled }
@@ -45,24 +46,24 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 	       address indexed tokenAddress,
 	       uint tokenId,
 	       uint amount,
-	         uint commission
+	       uint commission
 	       );
 
   event LogCancel(
 		  address indexed transitAddress,
 		  address indexed sender,
 		  address indexed tokenAddress,
-		    uint tokenId
+		  uint tokenId
 		  );
 
   event LogClaim(
-		    address indexed transitAddress,
-		    address indexed sender,
-		    address indexed tokenAddress,
-		    uint tokenId,
-		    address recipient,
-		    uint amount
-		    );
+		 address indexed transitAddress,
+		 address indexed sender,
+		 address indexed tokenAddress,
+		 uint tokenId,
+		 address recipient,
+		 uint amount
+		 );
   
 
 
@@ -71,8 +72,10 @@ contract cryptoxmasEscrow is Pausable, Ownable {
    * and sets verifier's fixed commission fee.
    * @param _nftPrice uint Verifier's fixed commission for each transfer
    */
-  constructor(uint _nftPrice) public {
+  constructor(uint _nftPrice, GivethBridge _givethBridge, uint64 _givethReceiverId) public {
     nftPrice = _nftPrice;
+    givethBridge = _givethBridge;
+    givethReceiverId = _givethReceiverId;
   }
 
 
@@ -239,6 +242,9 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 		    address _transitAddress,
 		    address _recipient,
 		    bytes _sig) public whenNotPaused returns (bool success) {
+
+    uint256 startingGas = gasleft();
+    
     Gift storage gift = gifts[_transitAddress];
     
     // verifying signature
@@ -251,11 +257,27 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     nft.transferFrom(address(this), _recipient, gift.tokenId);
 
     // transfer ether to recipient's address
-    _recipient.transfer(gift.amount);
+    if (gift.amount > 0) { 
+      _recipient.transfer(gift.amount);
+    }
 
     // log withdraw event
     emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _recipient, gift.amount);
 
+    uint256 gasUsed = startingGas.sub(gasleft());
+    
+    // refund gas cost to sender from nft price but not bigger than nft price
+    uint toRefund = gasUsed.add(49000).mul(tx.gasprice).min(nftPrice);
+    
+    uint toCharity = nftPrice.sub(toRefund);
+    if (toCharity > 0) {
+      givethBridge.donateAndCreateGiver.value(toCharity)(gift.sender, givethReceiverId, 0, 0);
+    }
+    
+    if (toRefund > 0) {
+      msg.sender.transfer(toRefund);
+    }
+    
     return true;
   }
 
