@@ -1,5 +1,5 @@
 import {utils, Wallet} from 'ethers';
-import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
+import CryptoxmasEscrow from './../build/CryptoxmasEscrow';
 
 export const genereteTransitWallet = (provider) => {
     return new Wallet(Wallet.createRandom().privateKey, provider);

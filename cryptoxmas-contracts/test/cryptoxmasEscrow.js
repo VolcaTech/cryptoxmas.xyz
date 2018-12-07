@@ -2,7 +2,7 @@ import chai from 'chai';
 import { createMockProvider, deployContract, getWallets, solidity } from 'ethereum-waffle';
 import { utils, Wallet } from 'ethers';
 import BasicNFT from './../build/NFT';
-import CryptoxmasEscrow from './../build/cryptoxmasEscrow';
+import CryptoxmasEscrow from './../build/CryptoxmasEscrow';
 import GivethBridge from './../build/GivethBridge';
 import { buyNFT, cancelGift, claimGift, genereteTransitWallet } from './helpers';
 
