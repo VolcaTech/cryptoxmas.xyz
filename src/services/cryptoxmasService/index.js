@@ -1,6 +1,6 @@
 const Wallet = require("ethereumjs-wallet");
 import EscrowContract from "./escrowContract";
-import ServerApi from "./serverApi";
+//import ServerApi from "./serverApi";
 import { signReceiverAddress } from "./utils";
 import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
@@ -10,7 +10,7 @@ class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
     this.nftService = new NFTService();
-    this.server = new ServerApi();
+    //this.server = new ServerApi();
   }
 
   setup(web3) {
@@ -20,7 +20,8 @@ class CryptoxmasService {
     this.network = network;
     this.escrowContract.setup({ web3, network });
     this.nftService.setup({ web3, network });
-    this.server.setup(network);
+      //this.server.setup(network);
+      this.server = {};
   }
 
   getGiftsForSale() {

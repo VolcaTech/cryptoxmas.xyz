@@ -1,5 +1,5 @@
 import Promise from "bluebird";
-import Eth2gift from "../../../cryptoxmas-contracts/build/cryptoxmasEscrow.json";
+import CryptoxmasEscrow from "../../../cryptoxmas-contracts/build/CryptoxmasEscrow.json";
 import config from "../../../dapp-config.json";
 
 class EscrowContractService {
@@ -9,14 +9,14 @@ class EscrowContractService {
 
     // init contract object
     this.contract = web3.eth
-      .contract(JSON.parse(Eth2gift.interface))
+      .contract(JSON.parse(CryptoxmasEscrow.interface))
       .at(contractAddress);
     Promise.promisifyAll(this.contract, { suffix: "Promise" });
   }
 
   buyGift(tokenAddress, tokenId, transitAddress, amount) {
     const weiAmount = this.web3.toWei(amount, "ether");
-    return this.contract.buyGiftLinkPromise(
+    return this.contract.buyGiftPromise(
       this.web3.toHex(tokenAddress),
       this.web3.toHex(tokenId),
       this.web3.toHex(transitAddress),
