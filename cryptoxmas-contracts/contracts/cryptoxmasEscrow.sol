@@ -6,7 +6,7 @@ import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
 import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
 import './NFT.sol';
-import './GivethBridge.sol';
+//import './GivethBridge.sol';
 
 
 contract CryptoxmasEscrow is Pausable, Ownable {
@@ -16,7 +16,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   
 
   // fixed amount of wei accrued to verifier with each transfer
-  GivethBridge public givethBridge;
+  address public givethBridge;
   uint64 public givethReceiverId;
 
   // commission to fund paying gas for claim transactions
@@ -87,7 +87,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
    * @dev Contructor that sets msg.sender as owner (verifier) in Ownable
    * and sets verifier's fixed commission fee.
    */
-  constructor(GivethBridge _givethBridge,
+  constructor(address _givethBridge,
 	      uint64 _givethReceiverId) public {
     givethBridge = _givethBridge;
     givethReceiverId = _givethReceiverId;
@@ -155,7 +155,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     
     uint donation = tokenPrice.sub(EPHEMERAL_ADDRESS_FEE);
     if (donation > 0) {
-      givethBridge.donateAndCreateGiver.value(donation)(msg.sender, givethReceiverId, 0, 0);
+      _makeDonation(msg.sender, donation);
     }
     
     // log buy event
@@ -170,6 +170,18 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   }
 
 
+  function _makeDonation(address _giver, uint _value) internal returns (bool success) {
+    bytes memory _data =  abi.encodePacked(0x1870c10f, // function signature
+					   bytes32(_giver),
+					   bytes32(givethReceiverId),
+					   bytes32(0),
+					   bytes32(0));
+    // make donation tx
+    success = givethBridge.call.value(_value)(_data);
+    return success;
+  }
+
+  
   function getGift(address _transitAddress) public view returns (
 	     address sender, // transfer sender
 	     uint claimEth,
