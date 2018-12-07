@@ -19,10 +19,11 @@ contract NFT is ERC721Metadata,
     super._mint(_owner, _id);
   }
 
-  function mintBatch(address _owner, uint _from, uint _to) public onlyOwner {
+  function mintBatch(address _owner, uint _from, uint _to, string uri) public onlyOwner {
     require(_to > _from);
     for (uint i = _from; i < _to; i++){
       mint(_owner, i);
+      super._setTokenURI(i, uri);
     }
   }
   
