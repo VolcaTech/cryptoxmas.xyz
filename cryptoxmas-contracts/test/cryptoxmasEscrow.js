@@ -26,6 +26,7 @@ describe('CryptoxmasEscrow', () => {
     let sellerNftPrice;
     let transitFee;
     let fakeTransitWallet;
+    let messageHash = 'Qme2tDivU5aF5d7XGuqwoFGxddfGiFsmposUcdXegAvEth';
     
     beforeEach(async () => {
 	provider = createMockProvider();
@@ -44,19 +45,16 @@ describe('CryptoxmasEscrow', () => {
 	
 	
 	// deploy escrow contract
-	minNftPrice = utils.parseEther('0.01');
-	
+	minNftPrice = utils.parseEther('0.01');	
 	sellerNftPrice = utils.parseEther('0.1'); 	
 	withEthAmount = utils.parseEther('1.1');
 	transitFee = utils.parseEther('0.01');
 	
-	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, [givethBridgeMock.address, 1]);
-	
+	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, [givethBridgeMock.address, 1]);	
 	
 	// add Seller for this token
 	await escrow.addSeller(sellerWallet.address, nft.address, sellerNftPrice);
-	await nft.setApprovalForAll(escrow.address, true);
-	
+	await nft.setApprovalForAll(escrow.address, true);	
     });
 
     describe("Adding seller", () =>  {
@@ -92,7 +90,8 @@ describe('CryptoxmasEscrow', () => {
 		    transitAddress: transitWallet.address,
 		    nftAddress: nft.address,
 		    escrowAddress: escrow.address,
-		    buyerWallet
+		    buyerWallet,
+		    messageHash
 		});
 	    });
 
@@ -107,7 +106,8 @@ describe('CryptoxmasEscrow', () => {
 		expect(gift.tokenAddress).to.eq(nft.address);
 		expect(gift.tokenId).to.eq(1);
 		expect(gift.status).to.eq(1); // not claimed
-		expect(gift.nftPrice).to.eq(utils.parseEther('0.1')); 
+		expect(gift.nftPrice).to.eq(utils.parseEther('0.1'));
+		expect(gift.msgHash).to.eq(messageHash); 		
 	    });
 
 	    it('does not transfer eth from buyer to escrow', async () => {

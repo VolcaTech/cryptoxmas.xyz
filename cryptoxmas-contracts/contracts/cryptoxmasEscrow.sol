@@ -9,7 +9,7 @@ import './NFT.sol';
 import './GivethBridge.sol';
 
 
-contract cryptoxmasEscrow is Pausable, Ownable {
+contract CryptoxmasEscrow is Pausable, Ownable {
   using SafeMath for uint256;
   using Math for uint256;  
   using ECDSA for bytes32;
@@ -39,7 +39,8 @@ contract cryptoxmasEscrow is Pausable, Ownable {
     address tokenAddress;
     uint256 tokenId;
     Statuses status;
-    uint nftPrice; 
+    uint nftPrice;
+    string msgHash; // ifps message hash
   }
 
   // Mappings of transitAddress => Transfer Struct
@@ -119,7 +120,7 @@ contract cryptoxmasEscrow is Pausable, Ownable {
   }
 
 
-  function buyGift(address _tokenAddress, uint _tokenId, address _transitAddress)
+  function buyGift(address _tokenAddress, uint _tokenId, address _transitAddress, string _msgHash)
           payable public whenNotPaused returns (bool) {
 
     Seller memory seller = sellers[_tokenAddress];
@@ -136,7 +137,8 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 				  _tokenAddress,
 				  _tokenId,
 				  Statuses.Deposited,
-				  seller.nftPrice
+				  seller.nftPrice,
+				  _msgHash
 				  );
 
     // transfer NFT from seller's address to this escrow contract
@@ -170,7 +172,8 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 	     uint256 tokenId,
 	     Statuses status,
 	     string tokenURI,
-	     uint nftPrice) {
+	     uint nftPrice,
+	     string msgHash) {
     Gift memory gift = gifts[_transitAddress];
     
     NFT nft = NFT(gift.tokenAddress);
@@ -182,7 +185,8 @@ contract cryptoxmasEscrow is Pausable, Ownable {
 	    gift.tokenId,
 	    gift.status,
 	    nft.tokenURI(gift.tokenId),
-	    gift.nftPrice
+	    gift.nftPrice,
+	    gift.msgHash
 	    );
   }
 
