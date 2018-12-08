@@ -1,6 +1,8 @@
 export default {
   textContainer: {
     width: 354,
+    display: "flex",
+    flexDirection: "column",
     margin: "auto",
     marginTop: 50,
     textAlign: "left"
@@ -18,11 +20,11 @@ export default {
     textAlign: "left"
   },
   greyText: {
-    marginBottom: 40,
     fontFamily: "Inter UI Regular",
     fontSize: 18,
     color: "#8B8B8B",
-    textAlign: "left"
+    textAlign: "left",
+    marginBottom: 40,
   },
   gifContainer: {
     display: "block",
@@ -32,7 +34,7 @@ export default {
   },
   etherscanLink: {
     textDecoration: "underline",
-    color: "#4CD964",
+    color: "#8B8B8B",
     marginLeft: 7
   },
   shareLinkContainer: {

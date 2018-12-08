@@ -42,7 +42,8 @@ export default {
   infoText: {
     fontSize: 14,
     fontFamily: "Inter UI Regular",
-    color: "#8B8B8B"
+    color: "#8B8B8B",
+    textAlign: "center"
   },
   infoTextContainer: {
     paddingTop: 15,
