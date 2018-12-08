@@ -10,3 +10,4 @@ build_webpack/
 
 server/src/config/app-config.json
 server/node_modules
+cryptoxmas-contracts/.env
