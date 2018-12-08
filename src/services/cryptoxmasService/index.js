@@ -1,9 +1,8 @@
 import EscrowContract from "./escrowContract";
-//import { signReceiverAddress } from "./utils";
 import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
-import { Wallet } from 'ethers';
+import { Wallet, providers } from 'ethers';
 
 
 class CryptoxmasService {
@@ -19,7 +18,6 @@ class CryptoxmasService {
     this.network = network;
     this.escrowContract.setup({ web3, network });
     this.nftService.setup({ web3, network });
-      this.server = {};
   }
 
   getGiftsForSale() {
@@ -31,7 +29,7 @@ class CryptoxmasService {
   }
 
   async getGift(transitPK) {
-    const transitAddress = this._getAddressFromPrivateKey(transitPK);
+    const transitAddress = new Wallet(transitPK).address;
 
     const _parse = async g => {
       const tokenURI = g[5].toString();
@@ -80,23 +78,11 @@ class CryptoxmasService {
 	return { txHash, transitPrivateKey, transferId, transitAddress };
   }
 
-  _getAddressFromPrivateKey(privateKey) {
-    return (
-      "0x" +
-      Wallet.fromPrivateKey(new Buffer(privateKey, "hex"))
-        .getAddress()
-        .toString("hex")
-    );
-  }
-
-  cancelTransfer(transitAddress, contractVersion) {
-    return this.escrowContract.cancel(transitAddress, contractVersion);
-  }
-
-  async claimGift({ transitPrivateKey, receiverAddress }) {
-      
-      
-    //return { txHash: result.txHash, amount: result.amount, transferId };
+    async claimGift({ transitPrivateKey, receiverAddress }) {
+	const provider = new providers.JsonRpcProvider(config[this.network].JSON_RPC_URL);
+	const transitWallet = new Wallet(transitPrivateKey, provider);	
+	const tx = await this.escrowContract.claimGift({transitWallet, receiverAddress});
+	return { txHash: tx.hash, transferId: transitWallet.address };
   }
 }
 

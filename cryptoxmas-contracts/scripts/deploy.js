@@ -7,8 +7,6 @@ import NFT from '../build/NFT';
 import { deployContract, storeData, waitForTransactionReceipt } from './helpers';
 
 const deploy = async () => {
-
-
     
     console.log("Deploying contracts for ", config.NETWORK);
     const provider = new providers.JsonRpcProvider(config.JSON_RPC_URL);
@@ -76,6 +74,7 @@ const deploy = async () => {
     deployedConfig.ESCROW_CONTRACT = escrow.address;
     deployedConfig.NFT_ADDRESS = nft.address;
     deployedConfig.SELLER_ADDRESS = deployerAddress;
+    deployedConfig.JSON_RPC_URL = config.JSON_RPC_URL;
 
     const dappConfig = {};
     dappConfig[config.NETWORK] = deployedConfig;

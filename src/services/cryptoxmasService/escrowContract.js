@@ -1,16 +1,18 @@
 import Promise from "bluebird";
+import {utils, Wallet} from 'ethers';
 import CryptoxmasEscrow from "../../../cryptoxmas-contracts/build/CryptoxmasEscrow.json";
 import config from "../../../dapp-config.json";
+
 
 class EscrowContractService {
   setup({ web3, network }) {
     this.web3 = web3;
-    const contractAddress = config[network].ESCROW_CONTRACT;
+    this.contractAddress = config[network].ESCROW_CONTRACT;
 
     // init contract object
     this.contract = web3.eth
       .contract(JSON.parse(CryptoxmasEscrow.interface))
-      .at(contractAddress);
+      .at(this.contractAddress);
     Promise.promisifyAll(this.contract, { suffix: "Promise" });
   }
 
@@ -26,15 +28,28 @@ class EscrowContractService {
         value: weiAmount
         //gas: 110000
       }
-    );
+    );      
   }
 
-  cancel(transitAddress) {
-    return this.contract.cancelTransferPromise(transitAddress, {
-      from: this.web3.eth.accounts[0],
-      gas: 100000
-    });
-  }
+    async claimGift({ transitWallet, receiverAddress }) {
+	const gasPrice = utils.parseUnits('10', 'gwei');
+	const gasLimit = 200000;
+	
+	const args = [receiverAddress];
+	const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);
+	const tx = await transitWallet.sendTransaction({
+	    to: this.contractAddress,
+	    value: 0,
+	    data,
+	    gasPrice,
+	    gasLimit
+	});
+	console.log({tx});
+	return tx; 
+    }
+    
+
+    
 }
 
 export default EscrowContractService;
