@@ -3,6 +3,7 @@ import TokenImage from "./../common/TokenImage";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import ReactCardFlip from "react-card-flip";
 import { getEtherscanLink } from "./components";
+import QuestionButton from "./../common/QuestionButton";
 import styles from "./styles";
 
 class CompletedReceivedScreen extends React.Component {
@@ -68,23 +69,7 @@ class CompletedReceivedScreen extends React.Component {
             <div style={{ marginBottom: 2 }}>
               <span style={{ color: "#4CD964" }}>0.05 ETH </span>
               <span style={{ textDecoration: "underline" }}>to charity</span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 25,
-                  height: 25,
-                  borderRadius: 12.5,
-                  color: "#474D5B",
-                  backgroundColor: "#8B8B8B",
-                  textAlign: "center",
-                  fontFamily: "SF Display Bold",
-                  fontSize: 16,
-                  lineHeight: "26px",
-                  marginLeft: 5
-                }}
-              >
-                ?
-              </span>
+              <QuestionButton/>
             </div>
             Details on
             <a
