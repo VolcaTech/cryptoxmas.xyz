@@ -19,21 +19,20 @@ export class TransferComponent extends Component {
       return <TxErrorScreen transfer={transfer} />;
     }
 
-    // switch (transfer.status) {
-    //   case "depositing":
-    //   case "receiving":
-    //     return <PendingTxScreen transfer={transfer} />;
-    //   case "deposited":
-    //     return <DepositedScreen transfer={transfer} />;
-    //   case "received":
-    //     return <CompletedReceivedScreen transfer={transfer} />;
-    //   case "cancelled":
-    //     return <CancelledTransferScreen />;
-    //   default: {
-    //     alert("Unknown status: " + transfer.status);
-    //   }
-    // }
-    return <CompletedReceivedScreen transfer={transfer} />;
+    switch (transfer.status) {
+      case "depositing":
+      case "receiving":
+        return <PendingTxScreen transfer={transfer} />;
+      case "deposited":
+        return <DepositedScreen transfer={transfer} />;
+      case "received":
+        return <CompletedReceivedScreen transfer={transfer} />;
+      case "cancelled":
+        return <CancelledTransferScreen />;
+      default: {
+        alert("Unknown status: " + transfer.status);
+      }
+    }
   }
 }
 const TransferScreen = props => <TransferComponent {...props} />;
