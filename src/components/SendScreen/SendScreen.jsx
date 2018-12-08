@@ -27,7 +27,8 @@ class SendScreen extends Component {
       phoneError: false,
       phoneOrLinkActive: false,
       tokenId,
-      token: {}
+      token: {},
+      cardMessage: ""
     };
   }
 
@@ -102,6 +103,13 @@ class SendScreen extends Component {
   }
 
   _renderForm() {
+    let messageInputHeight = 50;
+    if (this.state.cardMessage.length) {
+      messageInputHeight = 100;
+    }
+    if (this.state.cardMessage.length > 60) {
+        messageInputHeight = 50 + (this.state.cardMessage.length / 20) * 25;
+      }
     return (
       <div>
         <div style={styles.sendscreenTitleContainer}>
@@ -136,6 +144,25 @@ class SendScreen extends Component {
           readOnly={false}
           error={this.state.numberInputError}
         />
+        <div style={{ marginTop: 20 }}>
+          <NumberInput
+            onChange={({ target }) =>
+              this.setState({
+                cardMessage: target.value
+              })
+            }
+            componentClass="textarea"
+            rows={3}
+            height={messageInputHeight}
+            disabled={false}
+            placeholder="Add gift message?"
+            type="text"
+            readOnly={false}
+            error={this.state.numberInputError}
+            maxLength={300}
+            textAlign={this.state.cardMessage ? "left" : "center"}
+          />
+        </div>
         <div style={styles.sendButton}>
           <ButtonPrimary handleClick={this._onSubmit.bind(this)}>
             {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
