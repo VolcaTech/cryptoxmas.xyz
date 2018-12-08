@@ -22,12 +22,20 @@ To test:
 yarn test
 ```
 
-### Deploying new Escrow contract guide
+### Deploying new Escrow contract guide and NFT tokens
 
-- Deploy Escrow contract (`cryptoxmasEscrow.sol`) with standart price for NFT using Remix browser to the network of your choice.
-- Add seller using 'addSeller' method of the escrow contract. Seller is the address that has NFTs for sale.
-- As a seller of NFTs, approve escrow contract to distribute tokens on your behalf using `setApprovalForAll` method
-- Update `./dapp-config.json` and `cryptoxmas-server/src/app-config.json` accordingly
+- Edit `./scripts/config.js` to include network params you need (currently configured for Ropsten).  
+- Add private key which has some ETH of chosen network to `cryptoxmas-contracts/.env` file:  
+```
+DEPLOYMENT_PK=0x000
+```
+- To deploy NFT contracts, Escrow contracts, run:  
+```
+yarn deploy
+```
+This will deploy Escrow Contract, NFT contract with some tokens ready for sale.
+The script will also generate configs for front-end in `cryptoxmas-contracts/scripts/contract-config.json`.
+Copy this file to `../dapp-config.json` and you'll be able to run you local website with these contract.
 
 ## License
 GPL-3 Liscense 
