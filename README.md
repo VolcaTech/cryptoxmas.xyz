@@ -52,8 +52,8 @@ npm i && npm run start
 This will install libs and open web app at localhost:3000.  
 By default web app is configured to work with our smart-contracts currently deployed on Ropsten.  
   
-If you want to update play with smart-contracts - [see here](https://github.com/VolcaTech/cryptoxmas.xyz/blob/master/cryptoxmas-contracts).  
-Please update `dapp-config.json` to configure web app to use your smart-contracts.
+If you want to play with smart-contracts - [see here](https://github.com/VolcaTech/cryptoxmas.xyz/blob/master/cryptoxmas-contracts).  
+If you want to configure web app to use your smart-contracts, please update `dapp-config.json` accordingly.
 
 ## Join us
 
