@@ -41,9 +41,9 @@ class CompletedReceivedScreen extends React.Component {
                   key="front"
                 />
                 <TokenImage
-                  message="I’m a big proponent of onboarding users into the world of consumer crypto"
-                  hidePrice={true}
-                  key="back"
+                   message={gift.message}
+                   hidePrice={true}
+                   key="back"
                 />
               </ReactCardFlip>
             </div>

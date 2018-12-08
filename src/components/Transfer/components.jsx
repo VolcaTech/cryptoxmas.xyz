@@ -15,23 +15,7 @@ export const getEtherscanLink = ({ txHash, networkId }) => {
   return etherscanLink;
 };
 
-export const ShareButton = ({ transfer }) => {
-  let shareLink;
-    const host = `${window.location.protocol}//${window.location.host}`;
-    shareLink = `${host}/#/r?pk=${transfer.transitPrivateKey}`;
-
-  if (transfer.networkId !== "1") {
-    shareLink += `&n=${transfer.networkId}`;
-  }
-
-  // get current wallet id
-  const web3 = web3Service.getWeb3();
-  const currentWalletId = getCurrentWalletId(web3);
-
-  if (currentWalletId !== "other") {
-    shareLink += `&w=${currentWalletId}`;
-  }
-
+export const ShareButton = ({ transfer, shareLink }) => {    
   return (
     <div style={styles.shareLinkContainer}>
       <ButtonPrimary

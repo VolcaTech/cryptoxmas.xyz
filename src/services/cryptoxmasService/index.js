@@ -27,9 +27,23 @@ class CryptoxmasService {
     return this.nftService.getMetadata(tokenId);
   }
 
+    // fetch gift information from blockchain
   async getGift(transitPK) {
     const transitAddress = new Wallet(transitPK).address;
 
+      const _getMessageFromIPFS = async (msgHash) => {
+	  let msg = '';
+	  if (msgHash && msgHash !== '0x0') {
+	      console.log("fetching msg...");
+	      const uri = `https://ipfs.io/ipfs/${msgHash}`;
+	      const res = await fetch(uri).then(res => res.json());
+	      if (res && res.message) {
+		  msg = res.message;
+	      }
+	  }
+	  return msg;
+      };
+      
     const _parse = async g => {
       const tokenURI = g[5].toString();
       const tokenId = g[3].toString();
@@ -37,7 +51,10 @@ class CryptoxmasService {
         tokenId,
         tokenURI
       );
-
+	const msgHash = g[7].toString();
+	const message = await _getMessageFromIPFS(msgHash);
+	
+	
       return {
           transitAddress,
           sender: g[0],
@@ -45,7 +62,8 @@ class CryptoxmasService {
           tokenAddress: g[2],
           tokenId,
           status: g[4].toString(),
-	  msgHash: g[7].toString(),
+	  msgHash,
+	  message,
           image,
           name,
           description
