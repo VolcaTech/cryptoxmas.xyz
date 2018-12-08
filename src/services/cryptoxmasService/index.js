@@ -1,16 +1,13 @@
-const Wallet = require("ethereumjs-wallet");
 import EscrowContract from "./escrowContract";
-import ServerApi from "./serverApi";
-import { signReceiverAddress } from "./utils";
 import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
+import { Wallet, providers } from "ethers";
 
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
     this.nftService = new NFTService();
-    this.server = new ServerApi();
   }
 
   setup(web3) {
@@ -20,7 +17,6 @@ class CryptoxmasService {
     this.network = network;
     this.escrowContract.setup({ web3, network });
     this.nftService.setup({ web3, network });
-    this.server.setup(network);
   }
 
   getGiftsForSale() {
@@ -32,7 +28,7 @@ class CryptoxmasService {
   }
 
   async getGift(transitPK) {
-    const transitAddress = this._getAddressFromPrivateKey(transitPK);
+    const transitAddress = new Wallet(transitPK).address;
 
     const _parse = async g => {
       const tokenURI = g[5].toString();
@@ -66,12 +62,12 @@ class CryptoxmasService {
   }
 
   async buyGift({ tokenAddress, tokenId, amountToPay }) {
-    const wallet = Wallet.generate();
-    const transitAddress = wallet.getChecksumAddressString();
-    const transitPrivateKey = wallet.getPrivateKeyString().substring(2);
+    const wallet = Wallet.createRandom();
+    const transitAddress = wallet.address;
+    const transitPrivateKey = wallet.privateKey.substring(2);
     const transferId = this._generateTransferIdForLink(transitAddress);
 
-    // 3. send deposit to smart contract
+    // // 3. send deposit to smart contract
     const txHash = await this.escrowContract.buyGift(
       tokenAddress,
       tokenId,
@@ -81,41 +77,16 @@ class CryptoxmasService {
     return { txHash, transitPrivateKey, transferId, transitAddress };
   }
 
-  _getAddressFromPrivateKey(privateKey) {
-    return (
-      "0x" +
-      Wallet.fromPrivateKey(new Buffer(privateKey, "hex"))
-        .getAddress()
-        .toString("hex")
-    );
-  }
-
-  cancelTransfer(transitAddress, contractVersion) {
-    return this.escrowContract.cancel(transitAddress, contractVersion);
-  }
-
   async claimGift({ transitPrivateKey, receiverAddress }) {
-    const transitAddress = this._getAddressFromPrivateKey(transitPrivateKey);
-    const transferId = this._generateTransferIdForLink(transitAddress);
-
-    const { v, r, s } = signReceiverAddress({
-      address: receiverAddress,
-      transitPrivateKey
-    });
-
-    const result = await this.server.confirmLinkTx(
-      transitAddress,
-      receiverAddress,
-      v,
-      r,
-      s
+    const provider = new providers.JsonRpcProvider(
+      config[this.network].JSON_RPC_URL
     );
-
-    if (!result.success) {
-      throw new Error(result.errorMessage || "Server error on withdrawal!");
-    }
-
-    return { txHash: result.txHash, amount: result.amount, transferId };
+    const transitWallet = new Wallet(transitPrivateKey, provider);
+    const tx = await this.escrowContract.claimGift({
+      transitWallet,
+      receiverAddress
+    });
+    return { txHash: tx.hash, transferId: transitWallet.address };
   }
 }
 

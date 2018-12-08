@@ -5,34 +5,7 @@ const HOST = "https://app.cryptoxmas.xyz";
 const shareIcon = require("../../../public/images/share_icon.png");
 import { getCurrentWalletId } from "../../utils";
 import web3Service from "./../../services/web3Service";
-
-const styles = {
-  checkTransaction: {
-    color: "#000000",
-    fontSize: 15,
-    fontFamily: "SF Display Regular"
-  },
-  etherscanLink: {
-    fontSize: 14,
-    color: "#33aeff",
-    fontFamily: "SF Display Bold"
-  },
-  email: {
-    fontSize: 15,
-    color: "#000000",
-    fontFamily: "SF Display Regular"
-  },
-  shareLinkContainer: {
-    display: "block",
-    margin: "auto"
-  },
-  shareIcon: {
-    position: "absolute",
-    marginLeft: 20,
-    marginTop: 3,
-    width: 22.5
-  }
-};
+import styles from "./styles";
 
 export const getEtherscanLink = ({ txHash, networkId }) => {
   let subdomain = "";

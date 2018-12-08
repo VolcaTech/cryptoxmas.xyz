@@ -8,6 +8,8 @@ import {
 import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
 import { updateBalance } from "./web3";
+import { getNetworkNameById } from "../utils";
+import config from "../../dapp-config.json";
 
 const createTransfer = payload => {
   return {
@@ -70,26 +72,23 @@ export const buyGift = ({ message, amount, tokenId }) => {
     const state = getState();
     const networkId = state.web3Data.networkId;
     const senderAddress = state.web3Data.address;
+    const network = getNetworkNameById(networkId).toLowerCase();
+    const tokenAddress = config[network].NFT_ADDRESS;
 
     let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
     let ipfsService = IpfsService.getIpfs();
-
     let dataHash = (await ipfsService.add(dataBuffer))[0].hash;
-
-    
       
     // TODO: Save hash
     console.log(dataHash);
 
-    console.log("here");
-    const TOKEN_ADDRESS = "0x49f33ab1c4b159ac16c35ca7ebf25cd06a265276"; // #TODO remove hard-code here
     const {
       txHash,
       transitPrivateKey,
       transferId,
       transitAddress
     } = await cryptoxmasService.buyGift({
-      tokenAddress: TOKEN_ADDRESS,
+      tokenAddress,
       tokenId,
       amountToPay: amount,
       senderAddress
