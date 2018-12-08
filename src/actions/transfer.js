@@ -73,7 +73,7 @@ export const buyGift = ({ amount, tokenId }) => {
     const senderAddress = state.web3Data.address;
     const network = getNetworkNameById(networkId).toLowerCase();
     const tokenAddress = config[network].NFT_ADDRESS;
-      
+
     const {
       txHash,
       transitPrivateKey,

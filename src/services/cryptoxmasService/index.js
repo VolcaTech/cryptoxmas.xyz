@@ -2,8 +2,7 @@ import EscrowContract from "./escrowContract";
 import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
-import { Wallet, providers } from 'ethers';
-
+import { Wallet, providers } from "ethers";
 
 class CryptoxmasService {
   constructor() {
@@ -62,27 +61,32 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
-    async buyGift({ tokenAddress, tokenId, amountToPay }) {
-	const wallet = Wallet.createRandom();
-	const transitAddress = wallet.address;
-	const transitPrivateKey = wallet.privateKey.substring(2);
-	const transferId = this._generateTransferIdForLink(transitAddress);
-	
-	// // 3. send deposit to smart contract
-	const txHash = await this.escrowContract.buyGift(
-	    tokenAddress,
-	    tokenId,
-	    transitAddress,
-	    amountToPay
-	);
-	return { txHash, transitPrivateKey, transferId, transitAddress };
+  async buyGift({ tokenAddress, tokenId, amountToPay }) {
+    const wallet = Wallet.createRandom();
+    const transitAddress = wallet.address;
+    const transitPrivateKey = wallet.privateKey.substring(2);
+    const transferId = this._generateTransferIdForLink(transitAddress);
+
+    // // 3. send deposit to smart contract
+    const txHash = await this.escrowContract.buyGift(
+      tokenAddress,
+      tokenId,
+      transitAddress,
+      amountToPay
+    );
+    return { txHash, transitPrivateKey, transferId, transitAddress };
   }
 
-    async claimGift({ transitPrivateKey, receiverAddress }) {
-	const provider = new providers.JsonRpcProvider(config[this.network].JSON_RPC_URL);
-	const transitWallet = new Wallet(transitPrivateKey, provider);	
-	const tx = await this.escrowContract.claimGift({transitWallet, receiverAddress});
-	return { txHash: tx.hash, transferId: transitWallet.address };
+  async claimGift({ transitPrivateKey, receiverAddress }) {
+    const provider = new providers.JsonRpcProvider(
+      config[this.network].JSON_RPC_URL
+    );
+    const transitWallet = new Wallet(transitPrivateKey, provider);
+    const tx = await this.escrowContract.claimGift({
+      transitWallet,
+      receiverAddress
+    });
+    return { txHash: tx.hash, transferId: transitWallet.address };
   }
 }
 

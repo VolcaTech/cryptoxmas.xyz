@@ -8,6 +8,4 @@ build_webpack/
 */.DS_Store
 */*/.DS_Store
 
-server/src/config/app-config.json
-server/node_modules
 cryptoxmas-contracts/.env
