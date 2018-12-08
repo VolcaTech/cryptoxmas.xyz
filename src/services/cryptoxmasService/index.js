@@ -39,21 +39,23 @@ class CryptoxmasService {
       );
 
       return {
-        transitAddress,
-        sender: g[0],
-        amount: this.web3.fromWei(g[1], "ether").toString(),
-        tokenAddress: g[2],
-        tokenId,
-        status: g[4].toString(),
-        image,
-        name,
-        description
+          transitAddress,
+          sender: g[0],
+          amount: this.web3.fromWei(g[1], "ether").toString(),
+          tokenAddress: g[2],
+          tokenId,
+          status: g[4].toString(),
+	  msgHash: g[7].toString(),
+          image,
+          name,
+          description
       };
     };
     const result = await this.escrowContract.contract.getGiftPromise(
       transitAddress
     );
-    const parsed = await _parse(result);
+      const parsed = await _parse(result);
+      console.log({parsed, result});
     return parsed;
   }
 
@@ -61,7 +63,7 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
-  async buyGift({ tokenAddress, tokenId, amountToPay }) {
+    async buyGift({ tokenAddress, tokenId, amountToPay, msgHash }) {
     const wallet = Wallet.createRandom();
     const transitAddress = wallet.address;
     const transitPrivateKey = wallet.privateKey.substring(2);
@@ -69,10 +71,11 @@ class CryptoxmasService {
 
     // // 3. send deposit to smart contract
     const txHash = await this.escrowContract.buyGift(
-      tokenAddress,
-      tokenId,
-      transitAddress,
-      amountToPay
+	tokenAddress,
+	tokenId,
+	transitAddress,
+	amountToPay,
+	msgHash
     );
     return { txHash, transitPrivateKey, transferId, transitAddress };
   }

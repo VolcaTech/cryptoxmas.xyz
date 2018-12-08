@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
+import TextInput from "./../common/TextInput";
 import NumberInput from "./../common/NumberInput";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
@@ -52,6 +53,7 @@ class SendScreen extends Component {
   async _buyGift() {
     try {
       const transfer = await this.props.buyGift({
+        message: this.state.cardMessage,
         amount: this.state.amount,
         tokenId: this.state.tokenId
       });
