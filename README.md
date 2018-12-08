@@ -3,25 +3,26 @@
 
 ## Send Christmas Nifty tokens & Support Venezuelans
 
-Send Christmas Nifty token, and a Ether Christmas Gift to your friends and family via a simple shareable link. Using the [Volca's "claim link" technology](https://volca.tech/), your friend only needs to click the link, and does not need to have an Ethereum wallet in advance.  
+Send NFT Christmas Cards, and a Ether Christmas Gift to your friends and family via a simple shareable link. Using the [Volca's "claim link" technology](https://volca.tech/), your friend only needs to click the link, and does not need to have an Ethereum wallet in advance.  
 
 ![Send](/public/cryptoxmas_repo_cover.png)
 
 ## Donations managed decentralized with Giveth
 
-All proceeds, excluding gas cost for the Nifty token creation, is donated via the decentralized charity platform [Giveth](https://giveth.io/) to a transparent and traceable charity campaign distributing food to Venezuelans in need.  
+Proceeds from the NFT sales, excluding gas costs, are donated via the decentralized charity platform [Giveth](https://giveth.io/) to a transparent charity campaign distributing food to Venezuelans in need.  
 
 ## How it works
 
 1) Head to cryptoxmas.xyz
-2) Pick and buy a Nifty token you like
-3) A fee is transferred to the Giveth Venezuela campaign
-4) Share the link with the friend you want to surprise
+2) Pick and buy a NFT Christmas card.
+3) The NFT fee is transferred to our charity campaign
+3) Add Ether & a message to the card if you want
+4) We create a link, containing ETH & NFT
+5) Your friend opens the link and claims the ETH & NFT
 
+Any token which is not claimed, can be claimed back by the sender at any time.
 
-## Not happy with your present? 
-
-All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenSea](https://opensea.io/).
+Not happy with your card? All NFT tokens can be traded on [OpenSea](https://opensea.io/).
 
 ## Non-custodian escrow via eth2.io
 
@@ -30,9 +31,9 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 
 ![Send](/public/buy_flow_server-less.png)
 
-1. Sender buys Christmas Card (NFT) by sending ETH an escrow Smart Contract. (Optionally sender can add more ETH for receiver)
+1. Sender buys Christmas Card (NFT) by sending ETH to an escrow Smart Contract. (Optionally sender can add more ETH for receiver)
 2. Escrow Smart Contract transfers NFT from seller to the escrow
-3. Smart contract sends small amount (0.01 eth) to ephemeral account, rest of NFT price to Giveth campaign as a donation and leaves ETH above the NFT price for receiver to claim in escrow. 
+3. Smart Contract sends small amount (0.01 eth) to ephemeral account, rest of NFT price to Giveth campaign as a donation and leaves ETH above the NFT price for receiver to claim in escrow. 
 4. Sender shares claim link, which contains private key for ephemeral account, with receiver
 
 
