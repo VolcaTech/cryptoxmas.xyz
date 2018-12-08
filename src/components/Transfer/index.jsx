@@ -6,7 +6,6 @@ import CompletedReceivedScreen from "./CompletedReceivedScreen";
 import PendingTxScreen from "./PendingTxScreen";
 import CancelledTransferScreen from "./CancelledTransferScreen";
 import TxErrorScreen from "./TxErrorScreen";
-import { Row, Col } from "react-bootstrap";
 
 export class TransferComponent extends Component {
   render() {
@@ -20,25 +19,24 @@ export class TransferComponent extends Component {
       return <TxErrorScreen transfer={transfer} />;
     }
 
-    switch (transfer.status) {
-      case "depositing":
-      case "receiving":
-        return <PendingTxScreen transfer={transfer} />;
-      case "deposited":
-        return <DepositedScreen transfer={transfer} />;
-      case "received":
-        return <CompletedReceivedScreen transfer={transfer} />;
-      case "cancelled":
-        return <CancelledTransferScreen />;
-      default: {
-        alert("Unknown status: " + transfer.status);
-      }
-    }
+    // switch (transfer.status) {
+    //   case "depositing":
+    //   case "receiving":
+    //     return <PendingTxScreen transfer={transfer} />;
+    //   case "deposited":
+    //     return <DepositedScreen transfer={transfer} />;
+    //   case "received":
+    //     return <CompletedReceivedScreen transfer={transfer} />;
+    //   case "cancelled":
+    //     return <CancelledTransferScreen />;
+    //   default: {
+    //     alert("Unknown status: " + transfer.status);
+    //   }
+    // }
+    return <CompletedReceivedScreen transfer={transfer} />;
   }
 }
-const TransferScreen = props => (
-    <TransferComponent {...props} />    
-);
+const TransferScreen = props => <TransferComponent {...props} />;
 
 const mapStateToProps = (state, props) => {
   const transferId = props.match.params.transferId;

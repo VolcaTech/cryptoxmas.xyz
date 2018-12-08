@@ -5,9 +5,6 @@ export default {
     width: 300,
     height: 50,
     borderRadius: 12,
-    borderColor: "#4CD964",
-    backgroundColor: "#4CD964",
-    color: "#fff",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     fontSize: 20,
     fontFamily: "Inter UI Medium"
