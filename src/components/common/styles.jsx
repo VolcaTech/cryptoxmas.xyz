@@ -97,7 +97,7 @@ export default {
   },
   headerContainer: {
     paddingTop: "30px",
-    textAlign: "center"
+    textAlign: "center",
   },
   headerText: {
     display: "inline",
