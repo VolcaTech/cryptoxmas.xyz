@@ -74,13 +74,12 @@ export const buyGift = ({ message, amount, tokenId }) => {
     const senderAddress = state.web3Data.address;
     const network = getNetworkNameById(networkId).toLowerCase();
     const tokenAddress = config[network].NFT_ADDRESS;
-
-    let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
-    let ipfsService = IpfsService.getIpfs();
-    let msgHash = (await ipfsService.add(dataBuffer))[0].hash;
-      
-    // TODO: Save hash
-    console.log(msgHash);
+      let msgHash = '';
+      if (message) { 
+	  let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
+	  let ipfsService = IpfsService.getIpfs();
+	  msgHash = (await ipfsService.add(dataBuffer))[0].hash;
+      }
 
     const {
       txHash,
