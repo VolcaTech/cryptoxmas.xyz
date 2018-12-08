@@ -42,7 +42,7 @@ const DepositedScreen = ({ transfer }) => {
       <div style={{ marginBottom: 20 }}>
         <LinkInput value={shareLink} readOnly={true} />
       </div>
-      <ShareButton transfer={transfer} />
+      <ShareButton transfer={transfer} shareLink={shareLink} />
     </div>
   );
 };

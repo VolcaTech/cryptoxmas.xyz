@@ -1,15 +1,15 @@
-import Promise from "bluebird";
 import ipfsClient from "ipfs-http-client";
-import { getTransactionReceiptMined, detectNetwork } from "../utils";
 
-const IpfsService = () => {
-  let ipfs = ipfsClient('ipfs.infura.io', '5001', { protocol: 'https' });
+class IpfsService {
+  constructor() {
+    this.ipfs = ipfsClient("ipfs.infura.io", "5001", { protocol: "https" });
+  }
 
-    
-  // api
-  return {
-    getIpfs: () => ipfs
-  };
-};
+  async saveMessage(message) {
+    let dataBuffer = Buffer.from(JSON.stringify({ message }));
+    const msgHash = (await this.ipfs.add(dataBuffer))[0].hash;
+    return msgHash;
+  }
+}
 
-export default IpfsService();
+export default new IpfsService();
