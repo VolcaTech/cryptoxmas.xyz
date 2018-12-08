@@ -2,13 +2,7 @@ import React from "react";
 import RetinaImage from "react-retina-image";
 import styles from "./styles";
 
-const TokenImage = ({
-  url,
-  price = null,
-  message = "",
-  hidePrice = false,
-  name = ""
-}) => {
+const TokenImage = ({ url, price = null }) => {
   let shownPrice;
   if (price) {
     shownPrice = price + " ETH";
@@ -22,19 +16,14 @@ const TokenImage = ({
 
   return (
     <div style={styles.tokenBorder}>
-      <div style={styles.tokenPrice}> {!hidePrice ? shownPrice : ""}</div>
+      <div style={styles.tokenPrice}> {shownPrice}</div>
       {url ? (
-        <div>
-          <RetinaImage
-            className="img-responsive"
-            style={styles.tokenImage}
-            src={url}
-          />
-          <span style={styles.tokenName}>{name}</span>
-        </div>
-      ) : (
-        <div style={styles.message}>{message}</div>
-      )}
+        <RetinaImage
+          className="img-responsive"
+          style={styles.tokenImage}
+          src={url}
+        />
+      ) : null}
     </div>
   );
 };

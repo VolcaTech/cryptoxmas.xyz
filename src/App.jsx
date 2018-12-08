@@ -18,14 +18,14 @@ import UnsupportedNetwork from "./components/NotConnectedScreens/UnsupportedNetw
 import HomeScreen from "./components/HomeScreen/HomeScreen.jsx";
 import Footer from "./components/common/poweredByVolca";
 
+
 const styles = {
   background: {
     margin: "auto",
-    backgroundPosition: "top",
+    backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundImage:
-      "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)",
-    backgroundColor: "#474D5B"
+      "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)"
   }
 };
 
@@ -51,7 +51,7 @@ class App extends Component {
 
   _renderStaticRouter() {
     return (
-      <div style={{ backgroundColor: "#474D5B", height: window.innerHeight }}>
+      <div style={{ backgroundColor: "#474D5B", height: window.innerHeight  }}>
         <Header />
         <Router>
           <div style={styles.background}>
@@ -83,10 +83,10 @@ class App extends Component {
     }
 
     return (
-      <div style={styles.background}>
+      <div style={{ backgroundColor: "#474D5B" }}>
         <Header />
         <Router>
-          <div>
+          <div style={styles.background}>
             <Switch>
               <Route
                 exact
@@ -110,14 +110,18 @@ class App extends Component {
                 }}
               />
               <Route component={HomeScreen} />
-            </Switch>
-            <Col xs={12}>
-              <Row>
-                <Footer />
-              </Row>
-            </Col>
-          </div>
+        </Switch>
+	    <Col xs={12}>	    
+	    <Row>
+
+            <Footer />
+
+	</Row>
+	</Col>
+	    </div>
         </Router>
+
+	    
       </div>
     );
   }

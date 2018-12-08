@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Row } from "react-bootstrap";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
-import TextInput from "./../common/TextInput";
 import NumberInput from "./../common/NumberInput";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
@@ -18,7 +18,6 @@ class SendScreen extends Component {
 
     this.state = {
       amount: 0.05,
-      addedEther: 0,
       errorMessage: "",
       fetching: false,
       buttonDisabled: false,
@@ -28,8 +27,7 @@ class SendScreen extends Component {
       phoneError: false,
       phoneOrLinkActive: false,
       tokenId,
-      token: {},
-      cardMessage: ""
+      token: {}
     };
   }
 
@@ -53,7 +51,6 @@ class SendScreen extends Component {
   async _buyGift() {
     try {
       const transfer = await this.props.buyGift({
-        message: this.state.cardMessage,
         amount: this.state.amount,
         tokenId: this.state.tokenId
       });
@@ -105,15 +102,6 @@ class SendScreen extends Component {
   }
 
   _renderForm() {
-    let messageInputHeight = 50;
-    let nftPrice = 0.05;
-    let claimFee = 0.01;
-    if (this.state.cardMessage.length) {
-      messageInputHeight = 100;
-    }
-    if (this.state.cardMessage.length > 60) {
-      messageInputHeight = 50 + (this.state.cardMessage.length / 20) * 25;
-    }
     return (
       <div>
         <div style={styles.sendscreenTitleContainer}>
@@ -122,7 +110,10 @@ class SendScreen extends Component {
             Buy a Nifty and create your gift link!
           </div>
         </div>
-        <TokenImage price={nftPrice} url={this.state.token.image || ""} />
+        <TokenImage
+          price={this.state.amount}
+          url={this.state.token.image || ""}
+        />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
@@ -133,8 +124,7 @@ class SendScreen extends Component {
         <NumberInput
           onChange={({ target }) =>
             this.setState({
-              amount: parseFloat(target.value) + nftPrice + claimFee,
-              addedEther: parseFloat(target.value),
+              amount: parseFloat(target.value) + 0.05,
               numberInputError: false,
               errorMessage: ""
             })
@@ -146,25 +136,6 @@ class SendScreen extends Component {
           readOnly={false}
           error={this.state.numberInputError}
         />
-        <div style={{ marginTop: 20 }}>
-          <NumberInput
-            onChange={({ target }) =>
-              this.setState({
-                cardMessage: target.value
-              })
-            }
-            componentClass="textarea"
-            rows={3}
-            height={messageInputHeight}
-            disabled={false}
-            placeholder="Add gift message?"
-            type="text"
-            readOnly={false}
-            error={this.state.numberInputError}
-            maxLength={300}
-            textAlign={this.state.cardMessage ? "left" : "center"}
-          />
-        </div>
         <div style={styles.sendButton}>
           <ButtonPrimary handleClick={this._onSubmit.bind(this)}>
             {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
@@ -178,25 +149,12 @@ class SendScreen extends Component {
           ) : (
             <div style={styles.infoTextContainer}>
               <span style={styles.infoText}>
-                ETH is securely held on the escrow Smart
+                You will get a simple link, sendable
                 <br />
-                Contract until the receiver claims it
+                via any messenger
               </span>
             </div>
           )}
-        </div>
-        <div style={styles.sendscreenGreyText}>
-          <span style={{ fontFamily: "Inter UI Bold" }}>
-            Total: {this.state.amount} ETH
-          </span>
-          {this.state.addedEther ? (
-            <div>Receiver will get: {this.state.addedEther} ETH</div>
-          ) : (
-            <br />
-          )}
-          <span>Donation: {nftPrice} ETH</span>
-          <br />
-          <span>Claim fee: {claimFee} ETH</span>
         </div>
       </div>
     );
