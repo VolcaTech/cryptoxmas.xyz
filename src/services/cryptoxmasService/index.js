@@ -1,16 +1,15 @@
-const Wallet = require("ethereumjs-wallet");
 import EscrowContract from "./escrowContract";
-//import ServerApi from "./serverApi";
-import { signReceiverAddress } from "./utils";
+//import { signReceiverAddress } from "./utils";
 import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
+import { Wallet } from 'ethers';
+
 
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
     this.nftService = new NFTService();
-    //this.server = new ServerApi();
   }
 
   setup(web3) {
@@ -20,7 +19,6 @@ class CryptoxmasService {
     this.network = network;
     this.escrowContract.setup({ web3, network });
     this.nftService.setup({ web3, network });
-      //this.server.setup(network);
       this.server = {};
   }
 
@@ -66,20 +64,20 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
-  async buyGift({ tokenAddress, tokenId, amountToPay }) {
-    const wallet = Wallet.generate();
-    const transitAddress = wallet.getChecksumAddressString();
-    const transitPrivateKey = wallet.getPrivateKeyString().substring(2);
-    const transferId = this._generateTransferIdForLink(transitAddress);
-
-    // 3. send deposit to smart contract
-    const txHash = await this.escrowContract.buyGift(
-      tokenAddress,
-      tokenId,
-      transitAddress,
-      amountToPay
-    );
-    return { txHash, transitPrivateKey, transferId, transitAddress };
+    async buyGift({ tokenAddress, tokenId, amountToPay }) {
+	const wallet = Wallet.createRandom();
+	const transitAddress = wallet.address;
+	const transitPrivateKey = wallet.privateKey.substring(2);
+	const transferId = this._generateTransferIdForLink(transitAddress);
+	
+	// // 3. send deposit to smart contract
+	const txHash = await this.escrowContract.buyGift(
+	    tokenAddress,
+	    tokenId,
+	    transitAddress,
+	    amountToPay
+	);
+	return { txHash, transitPrivateKey, transferId, transitAddress };
   }
 
   _getAddressFromPrivateKey(privateKey) {
@@ -96,27 +94,9 @@ class CryptoxmasService {
   }
 
   async claimGift({ transitPrivateKey, receiverAddress }) {
-    const transitAddress = this._getAddressFromPrivateKey(transitPrivateKey);
-    const transferId = this._generateTransferIdForLink(transitAddress);
-
-    const { v, r, s } = signReceiverAddress({
-      address: receiverAddress,
-      transitPrivateKey
-    });
-
-    const result = await this.server.confirmLinkTx(
-      transitAddress,
-      receiverAddress,
-      v,
-      r,
-      s
-    );
-
-    if (!result.success) {
-      throw new Error(result.errorMessage || "Server error on withdrawal!");
-    }
-
-    return { txHash: result.txHash, amount: result.amount, transferId };
+      
+      
+    //return { txHash: result.txHash, amount: result.amount, transferId };
   }
 }
 
