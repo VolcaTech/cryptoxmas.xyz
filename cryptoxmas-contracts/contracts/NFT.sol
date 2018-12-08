@@ -11,32 +11,14 @@ contract NFT is ERC721Metadata,
   
   constructor(string name, string symbol) public ERC721Metadata(name, symbol){
   }
-  
-  function mint(
-		address _owner,
-		uint256 _id
+    
+  function mintWithTokenURI(
+		uint256 _id,			    
+		string _uri
 		) onlyOwner public {
-    super._mint(_owner, _id);
-  }
-
-  function mintBatch(address _owner, uint _from, uint _to, string uri) public onlyOwner {
-    require(_to > _from);
-    for (uint i = _from; i < _to; i++){
-      mint(_owner, i);
-      super._setTokenURI(i, uri);
-    }
+    super._mint(owner(), _id);
+    super._setTokenURI(_id, _uri);
   }
   
-  function burn(
-		address _owner,
-		uint256 _tokenId
-		) onlyOwner external {
-    super._burn(_owner, _tokenId);
-  }
-  
-  
-  function setTokenURI(uint256 tokenId, string uri) public {
-    super._setTokenURI(tokenId, uri);
-  }  
 }
 
