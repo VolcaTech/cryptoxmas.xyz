@@ -11,7 +11,8 @@
 	"lint": "eslint test && solium -d contracts",
 	"build": "waffle .waffle.json",
 	"deploy": "babel-node scripts/deploy.js",
-	"clean": "rm -fr ./node_modules && rm -fr ./build"
+	"clean": "rm -fr ./node_modules && rm -fr ./build",
+	"mint:tokens": "babel-node scripts/mintTokens.js"
     },
     "devDependencies": {
 	"babel-cli": "^6.26.0",
