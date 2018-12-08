@@ -1,3 +1,4 @@
+import IpfsService from "./../services/ipfsService";
 import web3Service from "../services/web3Service";
 import {
   getDepositingTransfers,
@@ -66,13 +67,19 @@ export const subscribePendingTransfers = () => {
   };
 };
 
-export const buyGift = ({ amount, tokenId }) => {
+export const buyGift = ({ message, amount, tokenId }) => {
   return async (dispatch, getState) => {
     const state = getState();
     const networkId = state.web3Data.networkId;
     const senderAddress = state.web3Data.address;
     const network = getNetworkNameById(networkId).toLowerCase();
     const tokenAddress = config[network].NFT_ADDRESS;
+      let msgHash = '';
+      if (message) { 
+	  let dataBuffer = Buffer.from(JSON.stringify({ message: message }));
+	  let ipfsService = IpfsService.getIpfs();
+	  msgHash = (await ipfsService.add(dataBuffer))[0].hash;
+      }
 
     const {
       txHash,
@@ -83,7 +90,8 @@ export const buyGift = ({ amount, tokenId }) => {
       tokenAddress,
       tokenId,
       amountToPay: amount,
-      senderAddress
+	senderAddress,
+	msgHash
     });
     const id = `${transferId}-out`;
 

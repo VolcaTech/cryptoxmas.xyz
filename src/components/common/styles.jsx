@@ -5,23 +5,18 @@ export default {
     width: 300,
     height: 50,
     borderRadius: 12,
-    borderColor: "#4CD964",
-    backgroundColor: "#4CD964",
-    color: "#fff",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     fontSize: 20,
     fontFamily: "Inter UI Medium"
   },
   numberInput: {
     width: 300,
-    height: 50,
     borderRadius: 12,
     border: "2px solid #8B8B8B",
     color: "black",
     backgroundColor: "white",
     fontSize: 20,
     letterSpacing: 1.5,
-    textAlign: "center",
     boxShadow: 0,
     display: "block",
     margin: "auto",
@@ -57,6 +52,23 @@ export default {
     marginTop: 0,
     width: 220,
     height: 220
+  },
+  tokenName: {
+    display: "block",
+    textAlign: "center",
+    fontFamily: "Inter UI Bold",
+    fontSize: 18
+  },
+  message: {
+    display: "flex",
+    alignItems: "center",
+    margin: "auto",
+    marginTop: -10,
+    height: 230,
+    width: 240,
+    fontFamily: "Inter UI Medium",
+    fontSize: 24,
+    textAlign: "center"
   },
   footerContainer: {
     width: "100%",

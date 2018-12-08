@@ -12,8 +12,15 @@ class e2pInput extends React.Component {
         value={this.props.value}
         type={this.props.type}
         readOnly={this.props.readOnly}
-        style={styles.numberInput}
+        style={{
+          ...styles.numberInput,
+          height: this.props.height || 50,
+          textAlign: this.props.textAlign || "center"
+        }}
         placeholder={this.props.placeholder}
+        componentClass={this.props.componentClass}
+        rows={this.props.rows}
+        maxLength={this.props.maxLength}
       />
     );
   }
