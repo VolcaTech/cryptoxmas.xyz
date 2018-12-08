@@ -38,10 +38,10 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 
 ### Receiving flow
 
+![Receive](/public/claim_flow_server-less.png)
+
 1. Receiver submits claim transaction with the private key in the claim link.
 2. The escrow Smart Contract transfers the Christmas Card (NFT) and optional ether to the receiver’s address
-
-![Receive](/public/claim_flow_server-less.png)
 
 ### Video demo 
 * [Receiving demo](https://twitter.com/dobrokhvalov/status/1071440314169208834)
