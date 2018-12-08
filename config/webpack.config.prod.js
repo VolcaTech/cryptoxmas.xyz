@@ -130,7 +130,7 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [paths.appSrc, paths.appNodeModules  + '/ipfs-http-client'],
         loader: 'babel',
       },
       // The notation here is somewhat confusing.

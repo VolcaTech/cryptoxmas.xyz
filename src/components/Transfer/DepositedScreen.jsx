@@ -1,18 +1,16 @@
 import React from "react";
 import { ShareButton } from "./components";
 import LinkInput from "./../common/NumberInput";
-const HOST = "https://app.cryptoxmas.xyz";
 import styles from "./styles";
 
 const DepositedScreen = ({ transfer }) => {
   let shareLink;
-
-  shareLink = `${HOST}/#/r?pk=${transfer.transitPrivateKey}`;
-
+    const host = `${window.location.protocol}//${window.location.host}`;
+    shareLink = `${host}/#/r?pk=${transfer.transitPrivateKey}`;
   if (transfer.networkId !== "1") {
     shareLink += `&n=${transfer.networkId}`;
   }
-
+    
   return (
     <div>
       <div
@@ -44,7 +42,7 @@ const DepositedScreen = ({ transfer }) => {
       <div style={{ marginBottom: 20 }}>
         <LinkInput value={shareLink} readOnly={true} />
       </div>
-      <ShareButton transfer={transfer} />
+      <ShareButton transfer={transfer} shareLink={shareLink} />
     </div>
   );
 };
