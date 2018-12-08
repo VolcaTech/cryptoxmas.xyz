@@ -6,7 +6,6 @@ import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
 import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
 import './NFT.sol';
-//import './GivethBridge.sol';
 
 
 contract CryptoxmasEscrow is Pausable, Ownable {

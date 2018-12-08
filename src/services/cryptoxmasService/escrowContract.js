@@ -1,5 +1,5 @@
 import Promise from "bluebird";
-import {utils, Wallet} from 'ethers';
+import { utils } from "ethers";
 import CryptoxmasEscrow from "../../../cryptoxmas-contracts/build/CryptoxmasEscrow.json";
 import config from "../../../dapp-config.json";
 
@@ -19,37 +19,35 @@ class EscrowContractService {
   buyGift(tokenAddress, tokenId, transitAddress, amount) {
     const weiAmount = this.web3.toWei(amount, "ether");
     return this.contract.buyGiftPromise(
-	this.web3.toHex(tokenAddress),
-	this.web3.toHex(tokenId),
-	this.web3.toHex(transitAddress),
-	this.web3.toHex(""),
+      this.web3.toHex(tokenAddress),
+      this.web3.toHex(tokenId),
+      this.web3.toHex(transitAddress),
+      this.web3.toHex(""),
       {
         from: this.web3.eth.accounts[0],
         value: weiAmount
         //gas: 110000
       }
-    );      
+    );
   }
 
-    async claimGift({ transitWallet, receiverAddress }) {
-	const gasPrice = utils.parseUnits('10', 'gwei');
-	const gasLimit = 200000;
-	
-	const args = [receiverAddress];
-	const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);
-	const tx = await transitWallet.sendTransaction({
-	    to: this.contractAddress,
-	    value: 0,
-	    data,
-	    gasPrice,
-	    gasLimit
-	});
-	console.log({tx});
-	return tx; 
-    }
-    
+  async claimGift({ transitWallet, receiverAddress }) {
+    const gasPrice = utils.parseUnits("10", "gwei");
+    const gasLimit = 200000;
 
-    
+    const args = [receiverAddress];
+    const data = new utils.Interface(
+      CryptoxmasEscrow.interface
+    ).functions.claimGift.encode(args);
+    const tx = await transitWallet.sendTransaction({
+      to: this.contractAddress,
+      value: 0,
+      data,
+      gasPrice,
+      gasLimit
+    });
+    return tx;
+  }
 }
 
 export default EscrowContractService;
