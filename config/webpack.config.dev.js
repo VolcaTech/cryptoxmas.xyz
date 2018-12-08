@@ -121,11 +121,11 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       },
-	// Process JS with Babel.
-	{
+      // Process JS with Babel.
+      {
         test: /\.(js|jsx)$/,
-          include: [paths.appSrc, paths.appNodeModules  + '/ipfs-http-client'],
-          loader: ['babel'] ,
+        include: paths.appSrc,
+        loader: 'babel',
         query: {
 
           // This is a feature of `babel-loader` for webpack (not Babel itself).

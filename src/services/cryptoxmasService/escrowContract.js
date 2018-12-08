@@ -16,13 +16,13 @@ class EscrowContractService {
     Promise.promisifyAll(this.contract, { suffix: "Promise" });
   }
 
-    buyGift(tokenAddress, tokenId, transitAddress, amount, msgHash) {
+  buyGift(tokenAddress, tokenId, transitAddress, amount) {
     const weiAmount = this.web3.toWei(amount, "ether");
     return this.contract.buyGiftPromise(
       this.web3.toHex(tokenAddress),
       this.web3.toHex(tokenId),
       this.web3.toHex(transitAddress),
-      msgHash,
+      this.web3.toHex(""),
       {
         from: this.web3.eth.accounts[0],
         value: weiAmount

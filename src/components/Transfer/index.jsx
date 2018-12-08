@@ -6,6 +6,7 @@ import CompletedReceivedScreen from "./CompletedReceivedScreen";
 import PendingTxScreen from "./PendingTxScreen";
 import CancelledTransferScreen from "./CancelledTransferScreen";
 import TxErrorScreen from "./TxErrorScreen";
+import { Row, Col } from "react-bootstrap";
 
 export class TransferComponent extends Component {
   render() {
@@ -35,7 +36,9 @@ export class TransferComponent extends Component {
     }
   }
 }
-const TransferScreen = props => <TransferComponent {...props} />;
+const TransferScreen = props => (
+    <TransferComponent {...props} />    
+);
 
 const mapStateToProps = (state, props) => {
   const transferId = props.match.params.transferId;
