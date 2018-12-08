@@ -53,6 +53,23 @@ export default {
     width: 220,
     height: 220
   },
+  tokenName: {
+    display: "block",
+    textAlign: "center",
+    fontFamily: "Inter UI Bold",
+    fontSize: 18
+  },
+  message: {
+    display: "flex",
+    alignItems: "center",
+    margin: "auto",
+    marginTop: -10,
+    height: 230,
+    width: 240,
+    fontFamily: "Inter UI Medium",
+    fontSize: 24,
+    textAlign: "center"
+  },
   footerContainer: {
     width: "100%",
     textAlign: "center",
@@ -94,7 +111,7 @@ export default {
   },
   headerContainer: {
     paddingTop: "30px",
-    textAlign: "center",
+    textAlign: "center"
   },
   headerText: {
     display: "inline",
