@@ -38,10 +38,8 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 
 ![Receive](/public/claim_flow_server-less.png)
 
-### Video demos of Eth2.io
-
-* [Sending demo](https://www.youtube.com/watch?v=FeqQyFrmptA)
-* [Receiving demo](https://www.youtube.com/watch?v=qp3kkXKIHP8)
+### Video demo 
+* [Receiving demo](https://twitter.com/dobrokhvalov/status/1071440314169208834)
 
 ## Deploy locally
 
