@@ -30,15 +30,16 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 
 ![Send](/public/buy_flow_server-less.png)
 
-- 1. The sender buys Christmas Card (NFT) by sending ETH an escrow Smart Contract. (Optionally sender can add more ETH for receiver)
-- 2. Escrow Smart Contract transfers NFT from seller's to the escrow
-- 3. Smart contract sends small amount (0.01 eth) to ephemeral account, rest of NFT price to Giveth campaign as a donation and leaves ETH above the NFT price for receiver to claim in escrow. 
-- 4. Sender shares claim link, which contains private key for ephemeral account, with receiver
+1. Sender buys Christmas Card (NFT) by sending ETH an escrow Smart Contract. (Optionally sender can add more ETH for receiver)
+2. Escrow Smart Contract transfers NFT from seller to the escrow
+3. Smart contract sends small amount (0.01 eth) to ephemeral account, rest of NFT price to Giveth campaign as a donation and leaves ETH above the NFT price for receiver to claim in escrow. 
+4. Sender shares claim link, which contains private key for ephemeral account, with receiver
 
 
 ### Receiving flow
 
-- The receiver claims Christmas Nifty token and optional Ether. The escrow Smart Contract transfers the Christmas Nifty token from the website's address to the receiver’s address
+1. Receiver submits claim transaction with the private key in the claim link.
+2. The escrow Smart Contract transfers the Christmas Card (NFT) and optional ether to the receiver’s address
 
 ![Receive](/public/claim_flow_server-less.png)
 
