@@ -30,13 +30,13 @@ All Crypto Christmas Nifty token, with or without Ether, can be traded on [OpenS
 
 - The sender buys Christmas Nifty token by sending ETH covering the tx fee and donation fee to an escrow Smart Contract.
 
-![Send](/public/cryptoxmas_send_flow.png)
+![Send](/public/buy_flow_server-less.png)
 
 ### Receiving flow
 
 - The receiver claims Christmas Nifty token and optional Ether. The escrow Smart Contract transfers the Christmas Nifty token from the website's address to the receiver’s address
 
-![Receive](/public/cryptoxmas_claim_flow.png)
+![Receive](/public/claim_flow_server-less.png)
 
 ### Video demos of Eth2.io
 
