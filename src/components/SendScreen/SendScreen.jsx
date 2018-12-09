@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TokenImage from "./../common/TokenImage";
 import { buyGift } from "../../actions/transfer";
-import TextInput from "./../common/TextInput";
 import NumberInput from "./../common/NumberInput";
 import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
+import QuestionButton from "./../common/QuestionButton";
+import CharityPopUp from "./../common/CharityPopUp";
 import web3Service from "./../../services/web3Service";
 import cryptoxmasService from "../../services/cryptoxmasService";
 import styles from "./styles";
@@ -29,7 +30,8 @@ class SendScreen extends Component {
       phoneOrLinkActive: false,
       tokenId,
       token: {},
-      cardMessage: ""
+      cardMessage: "",
+      charityPopupShown: false
     };
   }
 
@@ -117,6 +119,13 @@ class SendScreen extends Component {
     return (
       <div>
         <div style={styles.sendscreenTitleContainer}>
+          {this.state.charityPopupShown ? (
+            <CharityPopUp
+              handleClick={() => this.setState({ charityPopupShown: false })}
+            />
+          ) : (
+            ""
+          )}
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
           <div style={styles.sendscreenWhiteTitle}>
             Buy a Nifty and create your gift link!
@@ -126,9 +135,15 @@ class SendScreen extends Component {
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
-          <span style={{ textDecoration: "underline" }}>
-            will be sent to charity
-          </span>
+          <div
+            style={{ display: "inline" }}
+            onClick={() => this.setState({ charityPopupShown: true })}
+          >
+            <span style={{ textDecoration: "underline" }}>
+              will be sent to charity
+            </span>
+            <QuestionButton />
+          </div>
         </div>
         <NumberInput
           onChange={({ target }) =>
