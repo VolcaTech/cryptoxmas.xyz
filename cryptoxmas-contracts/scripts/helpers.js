@@ -2,7 +2,7 @@ import { ContractFactory, Contract } from 'ethers';
 import fs from 'fs';
 
 const defaultDeployOptions = {
-    gasLimit: 2000000,
+    gasLimit: 4000000,
     gasPrice: 9000000000
 };
 
