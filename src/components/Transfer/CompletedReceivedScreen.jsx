@@ -5,12 +5,14 @@ import ReactCardFlip from "react-card-flip";
 import { getEtherscanLink } from "./components";
 import QuestionButton from "./../common/QuestionButton";
 import CharityPopUp from "./../common/CharityPopUp";
+import WhatsNextPopUp from "./../common/WhatsNextPopUp";
 import styles from "./styles";
 
 class CompletedReceivedScreen extends React.Component {
   state = {
     isFlipped: false,
-    charityPopupShown: false
+    charityPopupShown: false,
+    whatsNextPopupShown: false
   };
 
   render() {
@@ -56,6 +58,13 @@ class CompletedReceivedScreen extends React.Component {
             ) : (
               ""
             )}
+            {this.state.whatsNextPopupShown ? (
+                <WhatsNextPopUp
+                  handleClick={() => this.setState({ whatsNextPopupShown: false })}
+                />
+              ) : (
+                ""
+              )}
           </div>
           <ButtonPrimary
             handleClick={() =>
@@ -95,7 +104,7 @@ class CompletedReceivedScreen extends React.Component {
             </a>
           </div>
           <div style={{ marginTop: 40 }}>
-            <ButtonPrimary>So what's next</ButtonPrimary>
+            <ButtonPrimary handleClick={() => this.setState({whatsNextPopupShown: true})}>So what's next</ButtonPrimary>
           </div>
         </div>
       </div>

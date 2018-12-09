@@ -19,13 +19,11 @@ const CharityPopUp = ({ handleClick }) => {
         className="img-responsive"
         style={{ margin: "auto", marginTop: 30, marginBottom: 15 }}
         src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/airdropven.png"
-        onClick={() => this.setState({ charityPopupShown: false })}
       />
       <RetinaImage
         className="img-responsive"
         style={{ margin: "auto" }}
         src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/btcven.png"
-        onClick={() => this.setState({ charityPopupShown: false })}
       />
       <div style={styles.popUpBottomText}>
         Follow the campaign progress on our{" "}
