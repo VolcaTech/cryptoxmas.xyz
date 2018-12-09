@@ -25,7 +25,11 @@ describe('CryptoxmasEscrow', () => {
     let transitFee;
     let fakeTransitWallet;
     let messageHash = 'Qme2tDivU5aF5d7XGuqwoFGxddfGiFsmposUcdXegAvEth';
-    let tokenURI = "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/santa_zombie.png";
+    let tokenUri1 = "https://ipfs.infura.io/ipfs/QmbLR9VpdRKL6nb13BFJmDXYBjCdMvGyoP69VRdJoEZgP8";
+    let tokenUri2 = "https://ipfs.infura.io/ipfs/QmZPiwDLeDaaPp5jatbDUAftxnNGrdEDomhDSLmk2ztB23";
+    let tokenUri3 =  "https://ipfs.infura.io/ipfs/QmeW9VoBpLUh2fHV4k6Dm8sgf5RTgmht1VGBGMLYb2GFbu";
+    let rareCategory;
+    let uniqueCategory;
     
     beforeEach(async () => {
 	provider = createMockProvider();
@@ -35,7 +39,7 @@ describe('CryptoxmasEscrow', () => {
 	transitWallet2 = genereteTransitWallet(provider);
 
 	// deploy escrow contract	
-	minNftPrice = utils.parseEther('0.01');	
+	minNftPrice = utils.parseEther('0.05');	
 	withEthAmount = utils.parseEther('1.1');
 	transitFee = utils.parseEther('0.01');
 	
@@ -53,7 +57,25 @@ describe('CryptoxmasEscrow', () => {
 	// nft contract created by the escrow contract 
 	const nftAddress = await escrow.nft();
 	nft = new Contract(nftAddress, BasicNFT.interface, provider);
-	
+
+	// add token categories
+	rareCategory = {
+	    tokenUri: tokenUri1,
+	    categoryId: 0,
+	    maxQnty: 10,
+	    price: minNftPrice
+	};
+
+	uniqueCategory = {
+	    tokenUri: tokenUri2,
+	    categoryId: 1,
+	    maxQnty: 1,
+	    price: utils.parseEther('1')
+	};
+
+	// add token categories for sale
+	await escrow.addTokenCategory(rareCategory.tokenUri, rareCategory.categoryId, rareCategory.maxQnty, rareCategory.price);
+	await escrow.addTokenCategory(uniqueCategory.tokenUri, uniqueCategory.categoryId, uniqueCategory.maxQnty, uniqueCategory.price);
     });
 
     describe("Deploying escrow", () => {
@@ -61,6 +83,10 @@ describe('CryptoxmasEscrow', () => {
 	    expect(await escrow.EPHEMERAL_ADDRESS_FEE()).to.be.eq(transitFee);
 	});
 
+	it("has correct claiming min token price", async () => {
+	    expect(await escrow.MIN_PRICE()).to.be.eq(minNftPrice);
+	});
+	
 	it("has correct initial tokens counter", async () => {
 	    expect(await escrow.tokensCounter()).to.be.eq(0);
 	});
@@ -84,6 +110,38 @@ describe('CryptoxmasEscrow', () => {
 	it("escrow is the owner of NFT", async () => {
 	    expect(await nft.owner()).to.be.eq(escrow.address);
 	});	
+    });
+
+    describe("Token categories", () => {
+	
+	it("has added rare token category", async () => {
+	    const cat = await escrow.getTokenCategory(rareCategory.tokenUri);
+	    expect(cat.categoryId).to.be.eq(rareCategory.categoryId);
+	    expect(cat.minted).to.be.eq(0);
+	    expect(cat.maxQnty).to.be.eq(rareCategory.maxQnty);
+	    expect(cat.price).to.be.eq(rareCategory.price);	    
+	});
+
+	it("has added unique token category", async () => {
+	    const cat = await escrow.getTokenCategory(uniqueCategory.tokenUri);
+	    expect(cat.categoryId).to.be.eq(uniqueCategory.categoryId);
+	    expect(cat.minted).to.be.eq(0);
+	    expect(cat.maxQnty).to.be.eq(uniqueCategory.maxQnty);
+	    expect(cat.price).to.be.eq(uniqueCategory.price);	    
+	});
+
+	
+	xit("can't add category with price less than MIN_PRICE", () => {
+		
+	});
+	
+	xit("can't override existing token category", () => {
+		
+	});
+	
+	xit("only owner can add token category", () => {
+	    
+	});
     });
     
     xdescribe("Buying NFT", () =>  {

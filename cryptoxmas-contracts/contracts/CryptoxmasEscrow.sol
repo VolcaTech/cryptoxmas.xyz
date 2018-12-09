@@ -17,7 +17,8 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   NFT public nft; 
   
   // commission to fund paying gas for claim transactions
-  uint public EPHEMERAL_ADDRESS_FEE = 0.01 ether; 
+  uint public EPHEMERAL_ADDRESS_FEE = 0.01 ether;
+  uint public MIN_PRICE = 0.05 ether; // minimum token price
   uint public tokensCounter; // minted tokens counter
   
   /* GIFT */
@@ -95,6 +96,23 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 	    category.maxQnty,
 	    category.price);
   }
+
+  function addTokenCategory(string _tokenUri, CategoryId _categoryId, uint _maxQnty, uint _price)
+    public onlyOwner returns (bool success) {
+
+    // price should be more than MIN_PRICE
+    require(_price >= MIN_PRICE);
+	    
+    // can't override existing category
+    require(tokenCategories[_tokenUri].price == 0);
+    
+    tokenCategories[_tokenUri] = TokenCategory(_categoryId,
+					       0, // zero tokens minted initially
+					       _maxQnty,
+					       _price);
+    return true;
+  }
+
   
   function canBuyGift(string _tokenUri, address _transitAddress, uint _value) public view returns (bool) {
     // can not override existing gift
