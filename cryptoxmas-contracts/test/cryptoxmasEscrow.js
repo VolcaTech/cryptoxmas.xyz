@@ -130,18 +130,13 @@ describe('CryptoxmasEscrow', () => {
 	    expect(cat.price).to.be.eq(uniqueCategory.price);	    
 	});
 
-	
-	xit("can't add category with price less than MIN_PRICE", () => {
-		
+	it("can't add category with price less than MIN_PRICE", async () => {
+	    await expect(escrow.addTokenCategory(tokenUri3, rareCategory.categoryId, rareCategory.maxQnty, utils.parseEther('0.001'))).to.be.reverted;
 	});
 	
-	xit("can't override existing token category", () => {
-		
-	});
-	
-	xit("only owner can add token category", () => {
-	    
-	});
+	it("can't override existing token category", async () => {
+	    await expect(escrow.addTokenCategory(rareCategory.tokenUri, rareCategory.categoryId, rareCategory.maxQnty, rareCategory.price)).to.be.reverted;		
+	});	
     });
     
     xdescribe("Buying NFT", () =>  {
