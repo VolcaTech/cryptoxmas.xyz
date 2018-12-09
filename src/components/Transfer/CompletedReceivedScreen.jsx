@@ -4,11 +4,13 @@ import ButtonPrimary from "./../common/ButtonPrimary";
 import ReactCardFlip from "react-card-flip";
 import { getEtherscanLink } from "./components";
 import QuestionButton from "./../common/QuestionButton";
+import CharityPopUp from "./../common/CharityPopUp";
 import styles from "./styles";
 
 class CompletedReceivedScreen extends React.Component {
   state = {
-    isFlipped: false
+    isFlipped: false,
+    charityPopupShown: false
   };
 
   render() {
@@ -41,12 +43,19 @@ class CompletedReceivedScreen extends React.Component {
                   key="front"
                 />
                 <TokenImage
-                   message={gift.message}
-                   hidePrice={true}
-                   key="back"
+                  message={gift.message}
+                  hidePrice={true}
+                  key="back"
                 />
               </ReactCardFlip>
             </div>
+            {this.state.charityPopupShown ? (
+              <CharityPopUp
+                handleClick={() => this.setState({ charityPopupShown: false })}
+              />
+            ) : (
+              ""
+            )}
           </div>
           <ButtonPrimary
             handleClick={() =>
@@ -68,8 +77,13 @@ class CompletedReceivedScreen extends React.Component {
             With this gift your friend sent
             <div style={{ marginBottom: 2 }}>
               <span style={{ color: "#4CD964" }}>0.05 ETH </span>
-              <span style={{ textDecoration: "underline" }}>to charity</span>
-              <QuestionButton/>
+              <div
+                style={{ display: "inline" }}
+                onClick={() => this.setState({ charityPopupShown: true })}
+              >
+                <span style={{ textDecoration: "underline" }}>to charity</span>
+                <QuestionButton />
+              </div>
             </div>
             Details on
             <a
