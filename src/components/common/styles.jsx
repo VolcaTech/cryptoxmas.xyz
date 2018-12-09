@@ -110,12 +110,15 @@ export default {
     margin: "auto"
   },
   headerContainer: {
-    paddingTop: "30px",
-    textAlign: "center"
+    paddingTop: "19px",
+    textAlign: "center",
+    width: 354,
+    margin: "auto",
+    display: "flex",
+    alignItems: "center"
   },
   headerText: {
     display: "inline",
-    marginLeft: 87.5,
     fontFamily: "Inter UI Bold",
     fontSize: 30,
     color: "white",

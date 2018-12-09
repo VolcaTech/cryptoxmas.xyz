@@ -29,7 +29,6 @@ export default {
     textAlign: "left"
   },
   sendButton: {
-    width: "78%",
     display: "block",
     margin: "auto",
     marginTop: 20

@@ -5,20 +5,15 @@ import styles from "./styles";
 
 const DepositedScreen = ({ transfer }) => {
   let shareLink;
-    const host = `${window.location.protocol}//${window.location.host}`;
-    shareLink = `${host}/#/r?pk=${transfer.transitPrivateKey}`;
+  const host = `${window.location.protocol}//${window.location.host}`;
+  shareLink = `${host}/#/r?pk=${transfer.transitPrivateKey}`;
   if (transfer.networkId !== "1") {
     shareLink += `&n=${transfer.networkId}`;
   }
-    
+
   return (
     <div>
-      <div
-        style={{
-          ...styles.textContainer,
-          width: 320
-        }}
-      >
+      <div style={styles.textContainer}>
         <div
           style={{
             ...styles.greenTitle,
@@ -40,7 +35,7 @@ const DepositedScreen = ({ transfer }) => {
         </div>
       </div>
       <div style={{ marginBottom: 20 }}>
-        <LinkInput value={shareLink} readOnly={true} />
+        <LinkInput value={shareLink} readOnly={false} />
       </div>
       <ShareButton transfer={transfer} shareLink={shareLink} />
     </div>
