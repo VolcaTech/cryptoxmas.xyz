@@ -4,6 +4,24 @@ Contracts for the cryptoxmas.xyz. Includes:
 - Escrow contract with buy and claim logic  
 - NFT token (ERC721 Enumerable + Mintable)  
 
+## Non-custodian escrow  
+### Sending flow  
+
+![Send](/public/buy_flow_server-less.png)
+
+1. Sender buys Christmas Card (NFT) by sending ETH to an escrow Smart Contract. (Optionally sender can add more ETH for receiver)
+2. Escrow Smart Contract transfers NFT from seller to the escrow
+3. Smart Contract sends small amount (0.01 eth) to ephemeral account, rest of NFT price to Giveth campaign as a donation and leaves ETH above the NFT price for receiver to claim in escrow.
+4. Sender shares claim link, which contains private key for ephemeral account, with receiver
+
+
+### Receiving flow
+
+![Receive](/public/claim_flow_server-less.png)
+
+1. Receiver submits claim transaction with the private key in the claim link.
+2. The escrow Smart Contract transfers the Christmas Card (NFT) and optional ether to the receiver’s address
+
 
 ## Building contracts
 
