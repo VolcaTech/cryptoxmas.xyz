@@ -51,7 +51,6 @@ describe('CryptoxmasEscrow', () => {
 	const tokenSymbol = "TST";
 	
 	const escrowArgs =  [givethBridgeMock.address, givethCampaignId, tokenName, tokenSymbol ];
-		
 	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, escrowArgs);
 
 	// nft contract created by the escrow contract 
@@ -113,7 +112,6 @@ describe('CryptoxmasEscrow', () => {
     });
 
     describe("Token categories", () => {
-	
 	it("has added rare token category", async () => {
 	    const cat = await escrow.getTokenCategory(rareCategory.tokenUri);
 	    expect(cat.categoryId).to.be.eq(rareCategory.categoryId);
@@ -162,7 +160,6 @@ describe('CryptoxmasEscrow', () => {
 		    messageHash
 		})).to.be.reverted;
 	    });
-
 	    
 	    it("Can't buy token with less ETH than category price", async () => {
 		await expect(buyNFT({
@@ -425,7 +422,6 @@ describe('CryptoxmasEscrow', () => {
 	    });	    	    
 	});
 
-	
 	it("cannot cancel gift if not sender", async () => {
 	    await expect(cancelGift({
 	    	transitAddress: deployerWallet.address,
@@ -433,7 +429,6 @@ describe('CryptoxmasEscrow', () => {
 	    	wallet: buyerWallet
 	    })).to.be.reverted;
 	});
-
 	
 	describe("not existing gift", () => { 
 	    it("can't cancel ", async () => {
@@ -444,7 +439,6 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;		
 	    });
 	});
-
 	
 	describe("claimed gift", () => { 
 	    it("can't cancel ", async () => {
@@ -462,7 +456,6 @@ describe('CryptoxmasEscrow', () => {
 	    });
 	});
     });
-
     
     describe("Claiming gift", () =>  {
 	let receiverAddress;
@@ -513,7 +506,6 @@ describe('CryptoxmasEscrow', () => {
 		    })).to.be.reverted;
 		});	    
 	    });
-
 	    
 	    describe("without claim ETH", () => {
 		let relayerBalBefore;
@@ -541,7 +533,6 @@ describe('CryptoxmasEscrow', () => {
 		});
 	    });	    
 	});
-
 	
 	describe("cancelled gift", () => {
 	    beforeEach(async () => {
@@ -560,7 +551,6 @@ describe('CryptoxmasEscrow', () => {
 		})).to.be.reverted;		
 	    });	    
 	});
-
 	
 	describe("not existing gift", () => {
 	    it("it reverts", async () => {
