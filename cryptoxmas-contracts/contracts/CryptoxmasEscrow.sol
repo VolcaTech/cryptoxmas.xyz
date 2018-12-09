@@ -147,7 +147,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
     // increment counters
     tokenCategories[_tokenUri].minted = tokenCategories[_tokenUri].minted.add(1);
-    tokensCounter = tokensCounter;
+    tokensCounter = tokensCounter.add(1);
     
     // saving gift details
     gifts[_transitAddress] = Gift(

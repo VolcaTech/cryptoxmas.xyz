@@ -139,8 +139,9 @@ describe('CryptoxmasEscrow', () => {
 	});	
     });
     
-    describe("Buying NFT", () =>  {
-	describe("without claim ETH", () => {
+    describe("Buying", () =>  {
+
+	describe("Common", () => {
 	    beforeEach(async () => {
 		await buyNFT({
 		    value: rareCategory.price,
@@ -151,6 +152,28 @@ describe('CryptoxmasEscrow', () => {
 		    messageHash
 		});
 	    });
+
+	    it("Fails to buy token of Not exisiting category", async () => {		
+		await expect(buyNFT({
+		    value: rareCategory.price,
+		    tokenUri: rareCategory.tokenUri,
+		    transitAddress: transitWallet.address,		    
+		    escrowAddress: escrow.address,
+		    buyerWallet,
+		    messageHash
+		})).to.be.reverted;
+	    });
+
+	    
+	    it("Can't buy token with less ETH than category price", async () => {
+		await expect(buyNFT({
+		    value: utils.parseEther('0.04'),
+		    tokenUri: rareCategory.tokenUri,
+		    transitAddress: transitWallet.address,
+		    escrowAddress: escrow.address,
+		    buyerWallet
+		})).to.be.reverted;		
+	    });		
 
 	    it('it saves gift to escrow', async () => {
 		const gift = await escrow.getGift(transitWallet.address);
@@ -163,40 +186,28 @@ describe('CryptoxmasEscrow', () => {
 		expect(gift.msgHash).to.eq(messageHash); 		
 	    });
 
-	    xit('it mints new token', async () => {
-		expect(await nft.ownerOf(1)).to.be.eq(escrow.address);		
+	    it('it mints new token', async () => {		
+		expect(await nft.ownerOf(1)).to.be.eq(escrow.address);
+		expect(await nft.tokenURI(1)).to.be.eq(rareCategory.tokenUri);				
+	    });
+	    	    
+	    it("it should update tokensCounter", async () => {
+		expect(await escrow.tokensCounter()).to.be.eq(1);
+
+		// buy one more nft
+		await buyNFT({
+		    value: rareCategory.price,
+		    tokenUri: rareCategory.tokenUri,
+		    transitAddress: Wallet.createRandom().address,		    
+		    escrowAddress: escrow.address,
+		    buyerWallet,
+		    messageHash
+		});
+
+		expect(await escrow.tokensCounter()).to.be.eq(2);
 	    });
 	    
-	    
-	    xit("it should update tokensCounter", async () => {
-
-	    });
-
- 	    xit("it should update minted counter for category", async () => {
-
-	    });
-
- 	    xit("it should update minted counter for category", async () => {
-
-	    });
-
-
-	    it('does not transfer eth from buyer to escrow', async () => {
-		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
-		expect(escrowBal).to.eq(0);
-	    });
-
-	    it('donates to charity', async () => {
-		const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
-		expect(givethBal).to.eq(utils.parseEther('0.04'));
-	    });
-
-	    it('sends transit fee', async () => {
-		const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
-		expect(transitBal).to.eq(utils.parseEther('0.01'));
-	    });	    
-	    
-	    xit("doesn't allow to override gift", async () => {
+	    it("doesn't allow to override gift", async () => {
 		await expect(buyNFT({
 		    value: rareCategory.price,
 		    tokenUri: rareCategory.tokenUri,
@@ -206,123 +217,90 @@ describe('CryptoxmasEscrow', () => {
 		    messageHash
 		})).to.be.reverted;
 	    });
+
+	    
+	});
+	
+	describe("Rare Category NFT", () => {
+	    describe("without ETH for receiver", () => {	    
+		beforeEach(async () => {
+		    await buyNFT({
+			value: rareCategory.price,
+			tokenUri: rareCategory.tokenUri,
+			transitAddress: transitWallet.address,		    
+			escrowAddress: escrow.address,
+			buyerWallet,
+			messageHash
+		    });
+		});
+
+ 		it("it should update minted counter for category", async () => {
+		    let cat = await escrow.getTokenCategory(rareCategory.tokenUri);
+		    expect(await cat.minted).to.be.eq(1);
+
+		    // buy one more nft
+		    await buyNFT({
+			value: rareCategory.price,
+			tokenUri: rareCategory.tokenUri,
+			transitAddress: Wallet.createRandom().address,		    
+			escrowAddress: escrow.address,
+			buyerWallet,
+			messageHash
+		    });
+
+		    cat = await escrow.getTokenCategory(rareCategory.tokenUri);		
+		    expect(await cat.minted).to.be.eq(2);
+		});
+ 		
+		it('does not transfer eth from buyer to escrow', async () => {
+		    const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
+		    expect(escrowBal).to.eq(0);
+		});
+
+		it('donates to charity', async () => {
+		    const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
+		    expect(givethBal).to.eq(utils.parseEther('0.04'));
+		});
+
+		it('sends transit fee', async () => {
+		    const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
+		    expect(transitBal).to.eq(utils.parseEther('0.01'));
+		});	    
+	    });
+
+	    describe("with ETH for receiver", () => {	    
+		beforeEach(async () => {
+		    await buyNFT({
+			value: utils.parseEther('1.05'),
+			tokenUri: rareCategory.tokenUri,
+			transitAddress: transitWallet.address,		    
+			escrowAddress: escrow.address,
+			buyerWallet,
+			messageHash
+		    });
+		});
+
+		it('donates to charity', async () => {
+		    const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
+		    expect(givethBal).to.eq(utils.parseEther('0.04'));
+		});
+
+		it('sends transit fee', async () => {
+		    const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
+		    expect(transitBal).to.eq(utils.parseEther('0.01'));
+		});	    
+		
+		it('does keeps eth in escrow for receiver', async () => {
+		    const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
+		    expect(escrowBal).to.eq(utils.parseEther('1'));
+		});
+	    });
+	    
 	});
 
-	
-	// describe("with claim ETH", () => {
-	//     beforeEach(async () => {
-	// 	await buyNFT({
-	// 	    value: withEthAmount,
-	// 	    tokenId: 1, 		    
-	// 	    transitAddress: transitWallet.address,
-	// 	    nftAddress: nft.address,
-	// 	    escrowAddress: escrow.address,
-	// 	    buyerWallet
-	// 	});
-	//     });
-
-	//     it('transfers token from seller to escrow', async () => {
-	// 	expect(await nft.ownerOf(1)).to.be.eq(escrow.address);
-	//     });
-
-	//     it('it saves gift to escrow', async () => {
-	// 	const gift = await escrow.getGift(transitWallet.address);
-	// 	expect(gift.sender).to.eq(buyerWallet.address);
-	// 	expect(gift.claimEth).to.eq(utils.parseEther('1'));
-	// 	expect(gift.tokenAddress).to.eq(nft.address);
-	// 	expect(gift.tokenId).to.eq(1);
-	// 	expect(gift.status).to.eq(1); // not claimed
-	// 	expect(gift.nftPrice).to.eq(utils.parseEther('0.1'));
-	//     });
-
-	//     it('transfers eth from buyer to escrow', async () => {
-	// 	const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
-	// 	expect(escrowBal).to.eq(utils.parseEther('1'));
-	//     });
-
-	//     it('donates to charity', async () => {
-	// 	const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
-	// 	expect(givethBal).to.eq(utils.parseEther('0.09'));
-	//     });
-
-	//     it('sends transit fee', async () => {
-	// 	const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
-	// 	expect(transitBal).to.eq(utils.parseEther('0.01'));
-	//     });
-	// });
-
-	// describe("unique token with claim ETH", () => {
-	//     beforeEach(async () => {
-	// 	await buyNFT({
-	// 	    value: utils.parseEther('2'),
-	// 	    tokenId: 5, 
-	// 	    transitAddress: transitWallet.address,
-	// 	    nftAddress: nft.address,
-	// 	    escrowAddress: escrow.address,
-	// 	    buyerWallet,
-	// 	    messageHash
-	// 	});
-	//     });
-
-	//     it('transfers token from seller to escrow', async () => {
-	// 	expect(await nft.ownerOf(5)).to.be.eq(escrow.address);
-	//     });
-
-	//     it('it saves gift to escrow', async () => {
-	// 	const gift = await escrow.getGift(transitWallet.address);
-	// 	expect(gift.sender).to.eq(buyerWallet.address);
-	// 	expect(gift.claimEth).to.eq(utils.parseEther('1'));
-	// 	expect(gift.tokenAddress).to.eq(nft.address);
-	// 	expect(gift.tokenId).to.eq(5);
-	// 	expect(gift.status).to.eq(1); // not claimed
-	// 	expect(gift.nftPrice).to.eq(utils.parseEther('1'));
-	// 	expect(gift.msgHash).to.eq(messageHash); 		
-	//     });
-
-	//     it('does not transfer eth from buyer to escrow', async () => {
-	// 	const escrowBal = await deployerWallet.provider.getBalance(escrow.address);		
-	// 	expect(escrowBal).to.eq(utils.parseEther('1'));
-	//     });
-
-	//     it('donates to charity', async () => {
-	// 	const givethBal = await deployerWallet.provider.getBalance(givethBridgeMock.address);
-	// 	expect(givethBal).to.eq(utils.parseEther('0.99'));
-	//     });
-
-	//     it('sends transit fee', async () => {
-	// 	const transitBal = await deployerWallet.provider.getBalance(transitWallet.address);
-	// 	expect(transitBal).to.eq(utils.parseEther('0.01'));
-	//     });	    	    
-	// });
 
 	
 	
-	xdescribe("Not exisiting category", () => {
-	    it("it reverts", async () => {		
-		await expect(buyNFT({
-		    value: sellerNftPrice,
-		    tokenId: 3, 		    
-		    transitAddress: transitWallet.address,
-		    nftAddress: nft.address,
-		    escrowAddress: escrow.address,
-		    buyerWallet
-		})).to.be.reverted;
-	    });
-	});
-
-	
-	xdescribe("with less ETH than NFT price", () => {		
-	    it("it reverts", async () => {
-		await expect(buyNFT({
-		    value: utils.parseEther('0.04'),
-		    tokenId: 2, 		    
-		    transitAddress: transitWallet.address,
-		    nftAddress: nft.address,
-		    escrowAddress: escrow.address,
-		    buyerWallet
-		})).to.be.reverted;		
-	    });
-	});		
 
     });
 
