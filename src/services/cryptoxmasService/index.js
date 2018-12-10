@@ -3,8 +3,8 @@ import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
 import { Wallet, providers } from "ethers";
-import mintedTokensJson from '../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json';
-import { utils } from 'ethers';
+import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
+import { utils } from "ethers";
 
 class CryptoxmasService {
   constructor() {
@@ -21,15 +21,15 @@ class CryptoxmasService {
     this.nftService.setup({ web3, network });
   }
 
-    getCardsForSale() {
-	const cardsDct = mintedTokensJson[this.network];
-	return Object.keys(cardsDct).map(cardId => {
-	    return { ...cardsDct[cardId], cardId };
-      });
+  getCardsForSale() {
+    const cardsDct = mintedTokensJson[this.network];
+    return Object.keys(cardsDct).map(cardId => {
+      return { ...cardsDct[cardId], cardId };
+    });
   }
 
   getCard(cardId) {
-      return mintedTokensJson[this.network][cardId];
+    return mintedTokensJson[this.network][cardId];
   }
 
   // fetch gift information from blockchain
@@ -49,26 +49,26 @@ class CryptoxmasService {
       return msg;
     };
 
-      const _parse = async g => {
-	  console.log({g});
-	  const tokenId = g[0].toNumber();
-	  const tokenUri = g[1].toString();
-	  const card = this.getCard(utils.id(tokenUri));
-	  const msgHash = g[6].toString();
-	  const message = await _getMessageFromIPFS(msgHash);
+    const _parse = async g => {
+      console.log({ g });
+      const tokenId = g[0].toNumber();
+      const tokenUri = g[1].toString();
+      const card = this.getCard(utils.id(tokenUri));
+      const msgHash = g[6].toString();
+      const message = await _getMessageFromIPFS(msgHash);
 
       return {
-          transitAddress,
-          sender: g[1],
-          amount: this.web3.fromWei(g[3], "ether").toString(),
-          tokenId,
-          status: g[5].toString(),
-          msgHash,
-          message,
-	  card,
-          image: card.metadata.image,
-          name: card.metadata.name,
-          description: card.metadata.description
+        transitAddress,
+        sender: g[1],
+        amount: this.web3.fromWei(g[3], "ether").toString(),
+        tokenId,
+        status: g[5].toString(),
+        msgHash,
+        message,
+        card,
+        image: card.metadata.image,
+        name: card.metadata.name,
+        description: card.metadata.description
       };
     };
     const result = await this.escrowContract.contract.getGiftPromise(
@@ -89,7 +89,7 @@ class CryptoxmasService {
     const transitPrivateKey = wallet.privateKey.substring(2);
     const transferId = this._generateTransferIdForLink(transitAddress);
     const card = this.getCard(cardId);
-    
+
     // // 3. send deposit to smart contract
     const txHash = await this.escrowContract.buyGift(
       card.tokenUri,
