@@ -1,15 +1,14 @@
 import EscrowContract from "./escrowContract";
-import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
 import { Wallet, providers } from "ethers";
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { utils } from "ethers";
 
+
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
-    this.nftService = new NFTService();
   }
 
   setup(web3) {
@@ -18,7 +17,6 @@ class CryptoxmasService {
     const network = networkName.toLowerCase();
     this.network = network;
     this.escrowContract.setup({ web3, network });
-    this.nftService.setup({ web3, network });
   }
 
   getCardsForSale() {
@@ -83,6 +81,10 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
+    async getCardCategory(tokenUri) {
+	return this.escrowContract.getCardCategory(tokenUri);
+    }
+    
   async buyGift({ tokenAddress, cardId, amountToPay, msgHash }) {
     const wallet = Wallet.createRandom();
     const transitAddress = wallet.address;
