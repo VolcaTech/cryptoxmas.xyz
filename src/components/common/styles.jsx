@@ -110,15 +110,44 @@ export default {
     margin: "auto"
   },
   headerContainer: {
-    paddingTop: "30px",
-    textAlign: "center"
+    paddingTop: "19px",
+    textAlign: "center",
+    width: 354,
+    margin: "auto",
+    display: "flex",
+    alignItems: "center"
   },
   headerText: {
     display: "inline",
-    marginLeft: 87.5,
     fontFamily: "Inter UI Bold",
     fontSize: 30,
     color: "white",
     textAlign: "right"
+  },
+  popUpContainer: {
+    width: 364,
+    height: 384,
+    margin: "auto",
+    marginTop: 55,
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    borderRadius: 5,
+    backgroundColor: "white",
+    position: "absolute"
+  },
+  popUpTopText: {
+    display: "block",
+    width: 304,
+    margin: "auto",
+    marginTop: 45,
+    fontFamily: "Inter UI Regular",
+    fontSize: 18
+  },
+  popUpBottomText: {
+    display: "block",
+    width: 304,
+    margin: "auto",
+    marginTop: 30,
+    fontFamily: "Inter UI Regular",
+    fontSize: 18
   }
 };

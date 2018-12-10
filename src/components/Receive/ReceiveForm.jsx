@@ -139,7 +139,12 @@ class ReceiveScreen extends Component {
   render() {
     if (this.state.fetching) {
       return (
-        <Loader text="Getting transfer details..." textLeftMarginOffset={-40} />
+        <div style={{ height: window.innerHeight }}>
+          <Loader
+            text="Getting transfer details..."
+            textLeftMarginOffset={-40}
+          />
+        </div>
       );
     }
 

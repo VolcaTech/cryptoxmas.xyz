@@ -3,7 +3,7 @@ import React from "react";
 class QuestionButton extends React.Component {
   render() {
     return (
-        <span
+      <span
         style={{
           display: "inline-block",
           width: 25,
@@ -18,7 +18,6 @@ class QuestionButton extends React.Component {
           lineHeight: "26px",
           marginLeft: 5
         }}
-        onClick={this.props.onClick}
       >
         ?
       </span>

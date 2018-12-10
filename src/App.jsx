@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import web3Service from "./services/web3Service";
 import SendScreen from "./components/SendScreen/SendScreen";
 import ReceiveForm from "./components/Receive/ReceiveForm";
@@ -17,31 +17,14 @@ import NoWalletScreen from "./components/NotConnectedScreens/NoWalletScreen/NoWa
 import UnsupportedNetwork from "./components/NotConnectedScreens/UnsupportedNetwork";
 import HomeScreen from "./components/HomeScreen/HomeScreen.jsx";
 import Footer from "./components/common/poweredByVolca";
-
-const styles = {
-  background: {
-    margin: "auto",
-    backgroundPosition: "top",
-    backgroundRepeat: "no-repeat",
-    backgroundImage:
-      "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)",
-    backgroundColor: "#474D5B"
-  }
-};
+import styles from "./styles";
 
 class App extends Component {
   _renderWrongNetwork() {
     return (
       <div>
         <Header />
-        <div
-          style={{
-            height: window.innerHeight - 100,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between"
-          }}
-        >
+        <div style={styles.wrongNetworkContainer}>
           <UnsupportedNetwork />
           <Footer />
         </div>
@@ -51,7 +34,7 @@ class App extends Component {
 
   _renderStaticRouter() {
     return (
-      <div style={{ backgroundColor: "#474D5B", height: window.innerHeight }}>
+      <div style={styles.staticRouteContainer}>
         <Header />
         <Router>
           <div style={styles.background}>
@@ -86,7 +69,7 @@ class App extends Component {
       <div style={styles.background}>
         <Header />
         <Router>
-          <div>
+          <div style={{ height: window.outerHeight }}>
             <Switch>
               <Route
                 exact
@@ -111,13 +94,10 @@ class App extends Component {
               />
               <Route component={HomeScreen} />
             </Switch>
-            <Col xs={12}>
-              <Row>
-                <Footer />
-              </Row>
-            </Col>
+            <Footer />
           </div>
         </Router>
+        <Row />
       </div>
     );
   }

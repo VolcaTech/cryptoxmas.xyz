@@ -4,11 +4,15 @@ import ButtonPrimary from "./../common/ButtonPrimary";
 import ReactCardFlip from "react-card-flip";
 import { getEtherscanLink } from "./components";
 import QuestionButton from "./../common/QuestionButton";
+import CharityPopUp from "./../common/CharityPopUp";
+import WhatsNextPopUp from "./../common/WhatsNextPopUp";
 import styles from "./styles";
 
 class CompletedReceivedScreen extends React.Component {
   state = {
-    isFlipped: false
+    isFlipped: false,
+    charityPopupShown: false,
+    whatsNextPopupShown: false
   };
 
   render() {
@@ -30,7 +34,14 @@ class CompletedReceivedScreen extends React.Component {
               You claimed a{" "}
               <span style={{ textDecoration: "underline" }}>Nifty token</span>
               <br />
-              and <span style={{ color: "#4CD964" }}>{gift.amount}</span> ETH
+              {gift.amount > 0 ? (
+                <span>
+                  and <span style={{ color: "#4CD964" }}>{gift.amount}</span>{" "}
+                  ETH
+                </span>
+              ) : (
+                ""
+              )}
             </div>
             <div style={{ height: 300, marginBottom: 20 }}>
               <ReactCardFlip isFlipped={this.state.isFlipped}>
@@ -41,12 +52,28 @@ class CompletedReceivedScreen extends React.Component {
                   key="front"
                 />
                 <TokenImage
-                   message={gift.message}
-                   hidePrice={true}
-                   key="back"
+                  message={gift.message}
+                  hidePrice={true}
+                  key="back"
                 />
               </ReactCardFlip>
             </div>
+            {this.state.charityPopupShown ? (
+              <CharityPopUp
+                handleClick={() => this.setState({ charityPopupShown: false })}
+              />
+            ) : (
+              ""
+            )}
+            {this.state.whatsNextPopupShown ? (
+              <WhatsNextPopUp
+                handleClick={() =>
+                  this.setState({ whatsNextPopupShown: false })
+                }
+              />
+            ) : (
+              ""
+            )}
           </div>
           <ButtonPrimary
             handleClick={() =>
@@ -68,8 +95,13 @@ class CompletedReceivedScreen extends React.Component {
             With this gift your friend sent
             <div style={{ marginBottom: 2 }}>
               <span style={{ color: "#4CD964" }}>0.05 ETH </span>
-              <span style={{ textDecoration: "underline" }}>to charity</span>
-              <QuestionButton/>
+              <div
+                style={{ display: "inline" }}
+                onClick={() => this.setState({ charityPopupShown: true })}
+              >
+                <span style={{ textDecoration: "underline" }}>to charity</span>
+                <QuestionButton />
+              </div>
             </div>
             Details on
             <a
@@ -81,7 +113,11 @@ class CompletedReceivedScreen extends React.Component {
             </a>
           </div>
           <div style={{ marginTop: 40 }}>
-            <ButtonPrimary>So what's next</ButtonPrimary>
+            <ButtonPrimary
+              handleClick={() => this.setState({ whatsNextPopupShown: true })}
+            >
+              So what's next
+            </ButtonPrimary>
           </div>
         </div>
       </div>

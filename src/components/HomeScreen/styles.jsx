@@ -32,7 +32,7 @@ export default {
     fontSize: 14
   },
   homescreenContainer: {
-    margin: "auto",
+    width: "100%",
     backgroundColor: "#474D5B",
     backgroundImage:
       "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles_tree.png)",
