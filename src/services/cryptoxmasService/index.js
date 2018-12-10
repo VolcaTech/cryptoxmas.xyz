@@ -22,14 +22,14 @@ class CryptoxmasService {
   }
 
     getCardsForSale() {
-      const cards = mintedTokensJson[this.network];
-      return Object.keys(cards).map(catId => {
-	  return { ...cards[catId], catId };
+	const cardsDct = mintedTokensJson[this.network];
+	return Object.keys(cardsDct).map(cardId => {
+	    return { ...cardsDct[cardId], cardId };
       });
   }
 
-  getTokenMetadata(tokenId) {
-    return this.nftService.getMetadata(tokenId);
+  getCard(cardId) {
+      return mintedTokensJson[this.network][cardId];
   }
 
   // fetch gift information from blockchain
@@ -85,16 +85,16 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
-  async buyGift({ tokenAddress, tokenId, amountToPay, msgHash }) {
+  async buyGift({ tokenAddress, cardId, amountToPay, msgHash }) {
     const wallet = Wallet.createRandom();
     const transitAddress = wallet.address;
     const transitPrivateKey = wallet.privateKey.substring(2);
     const transferId = this._generateTransferIdForLink(transitAddress);
-
+    const card = this.getCard(cardId);
+    
     // // 3. send deposit to smart contract
     const txHash = await this.escrowContract.buyGift(
-      tokenAddress,
-      tokenId,
+      card.tokenUri,
       transitAddress,
       amountToPay,
       msgHash

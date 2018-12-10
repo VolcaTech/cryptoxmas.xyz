@@ -7,7 +7,7 @@ import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
 import QuestionButton from "./../common/QuestionButton";
 import CharityPopUp from "./../common/CharityPopUp";
-import web3Service from "./../../services/web3Service";
+import { utils } from 'ethers';
 import cryptoxmasService from "../../services/cryptoxmasService";
 import styles from "./styles";
 
@@ -15,49 +15,29 @@ class SendScreen extends Component {
   constructor(props) {
     super(props);
 
-    const tokenId = props.match.params.tokenId;
-
+    const cardId = props.match.params.cardId;
+    const card = cryptoxmasService.getCard(cardId);
     this.state = {
-      amount: 0.05,
+      amount: card.price,
       addedEther: 0,
       errorMessage: "",
       fetching: false,
       buttonDisabled: false,
-      checked: false,
-      checkboxTextColor: "#000",
       numberInputError: false,
-      phoneError: false,
-      phoneOrLinkActive: false,
-      tokenId,
-      token: {},
+      cardId,
+      card,
       cardMessage: "",
       charityPopupShown: false
     };
   }
 
-  async componentDidMount() {
-    try {
-      const token = await cryptoxmasService.getTokenMetadata(
-        this.state.tokenId
-      );
-      this.setState({
-        fetching: false,
-        token
-      });
-    } catch (err) {
-      console.log(err);
-      this.setState({
-        errorMessage: "Error occured while getting token from blockchain!"
-      });
-    }
-  }
-
+    
   async _buyGift() {
     try {
       const transfer = await this.props.buyGift({
         message: this.state.cardMessage,
         amount: this.state.amount,
-        tokenId: this.state.tokenId
+          cardId: this.state.cardId
       });
       this.props.history.push(`/transfers/${transfer.id}`);
     } catch (err) {
@@ -68,29 +48,11 @@ class SendScreen extends Component {
   }
 
   _onSubmit() {
-    //format balance
-    let balance;
-    console.log("onSubmit");
-    const web3 = web3Service.getWeb3();
-    if (this.props.balanceUnformatted) {
-      balance = web3.fromWei(this.props.balanceUnformatted, "ether").toNumber();
-    }
-
     // check amount
     if (this.state.amount <= 0) {
       this.setState({
         fetching: false,
         errorMessage: "Amount should be more than 0",
-        numberInputError: true
-      });
-      return;
-    }
-
-    // check wallet has enough ether
-    if (this.state.amount > balance) {
-      this.setState({
-        fetching: false,
-        errorMessage: "Not enough ETH on your balance",
         numberInputError: true
       });
       return;
@@ -108,7 +70,7 @@ class SendScreen extends Component {
 
   _renderForm() {
     let messageInputHeight = 50;
-    let nftPrice = 0.05;
+    let nftPrice = Number(this.state.card.price);
     let claimFee = 0.01;
     if (this.state.cardMessage.length) {
       messageInputHeight = 100;
@@ -131,7 +93,7 @@ class SendScreen extends Component {
             Buy a Nifty and create your gift link!
           </div>
         </div>
-        <TokenImage price={nftPrice} url={this.state.token.image || ""} />
+        <TokenImage price={nftPrice} url={this.state.card.metadata.image || ""} />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
@@ -148,8 +110,8 @@ class SendScreen extends Component {
         <NumberInput
           onChange={({ target }) =>
             this.setState({
-              amount: parseFloat(target.value) + nftPrice + claimFee,
-              addedEther: parseFloat(target.value),
+              amount: parseFloat(target.value || 0) + nftPrice,
+              addedEther: parseFloat(target.value || 0),
               numberInputError: false,
               errorMessage: ""
             })
@@ -209,7 +171,7 @@ class SendScreen extends Component {
           ) : (
             <br />
           )}
-          <span>Donation: {nftPrice} ETH</span>
+            <span>Donation: {(nftPrice - 0.01).toFixed(2)} ETH</span>
           <br />
           <span>Claim fee: {claimFee} ETH</span>
         </div>

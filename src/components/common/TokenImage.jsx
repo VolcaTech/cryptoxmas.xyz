@@ -17,7 +17,7 @@ const TokenImage = ({
     shownPrice = price.toFixed(3) + " ETH";
   }
   if (!price) {
-    shownPrice = "0.05 ETH";
+    shownPrice = "? ETH";
   }
 
   return (
@@ -25,7 +25,7 @@ const TokenImage = ({
       <div style={styles.tokenPrice}> {!hidePrice ? shownPrice : ""}</div>
       {url ? (
         <div>
-          <RetinaImage
+          <img
             className="img-responsive"
             style={styles.tokenImage}
             src={url}

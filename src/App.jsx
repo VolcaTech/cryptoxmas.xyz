@@ -76,7 +76,7 @@ class App extends Component {
                 path="/transfers/:transferId"
                 component={TransferComponent}
               />
-              <Route exact path="/send/:tokenId" component={SendScreen} />
+              <Route exact path="/send/:cardId" component={SendScreen} />
 
               <Route path="/receive" component={ReceiveForm} />
               <Route

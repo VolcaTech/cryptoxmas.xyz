@@ -9,9 +9,9 @@ import styles from "./styles";
 class HomeScreen extends Component {
 
   _renderCard(card, position) {
-    const { catId, metadata, price } = card;
+    const { cardId, metadata, price } = card;
     return (
-      <a style={{ display: "block" }} href={`/#/send/${catId}`} key={catId}>
+      <a style={{ display: "block" }} href={`/#/send/${cardId}`} key={cardId}>
         <div
           style={{
             ...styles.nftContainer,
