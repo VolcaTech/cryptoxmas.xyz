@@ -89,11 +89,9 @@ class SendScreen extends Component {
             ""
           )}
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
-          <div style={styles.sendscreenWhiteTitle}>
-            Buy a Nifty and create your gift link!
-          </div>
         </div>
-        <TokenImage price={nftPrice} url={this.state.card.metadata.image || ""} />
+        <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>1 out of 100 left</div>
+        <TokenImage price={nftPrice} rarity="unique" url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
@@ -162,7 +160,7 @@ class SendScreen extends Component {
             </div>
           )}
         </div>
-        <div style={styles.sendscreenGreyText}>
+        <div style={{...styles.sendscreenGreyText, color: "white"}}>
           <span style={{ fontFamily: "Inter UI Bold" }}>
             Total: {this.state.amount} ETH
           </span>
@@ -173,7 +171,7 @@ class SendScreen extends Component {
           )}
             <span>Donation: {(nftPrice - 0.01).toFixed(2)} ETH</span>
           <br />
-          <span>Claim fee: {claimFee} ETH</span>
+          <span>Claim fee: {claimFee} ETH (for Gas)</span>
         </div>
       </div>
     );

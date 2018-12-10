@@ -8,8 +8,7 @@ import {
 import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
 import { updateBalance } from "./web3";
-import { getNetworkNameById } from "../utils";
-import config from "../../dapp-config.json";
+
 
 const createTransfer = payload => {
   return {
@@ -93,12 +92,12 @@ export const buyGift = ({ message, amount, cardId }) => {
     const transfer = {
       id,
       txHash,
-	transitPrivateKey,
-	transferId,
-	cardId,
-	transitAddress: transitAddress.toLowerCase(),
-	networkId,
-	senderAddress,
+      transitPrivateKey,
+      transferId,
+      cardId,
+      transitAddress: transitAddress.toLowerCase(),
+      networkId,
+      senderAddress,
       status: "depositing",
       timestamp: Date.now(),
       amount,

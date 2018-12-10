@@ -1,6 +1,8 @@
 export default {
   nftContainer: {
-    display: "block",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     width: 170,
     height: 170,
     backgroundColor: "white",
@@ -13,15 +15,15 @@ export default {
     marginBottom: 30
   },
   nftPrice: {
-    float: "right",
-    margin: "8px 8px 0px 0px",
+    width: "100%",
+    margin: "8px 25px 0px 0px",
+    textAlign: "right",
     color: "#4CD964",
     fontFamily: "Inter UI Bold",
     fontSize: 14
   },
   nftImage: {
     display: "block",
-    margin: "auto",
     height: 115,
     width: 115
   },
