@@ -26,11 +26,11 @@ const mint = async (network, escrowAddress) => {
 	let [url, categoryId, price, maxQnty] = r;
 	console.log("fetching ", url);
 
-	const { data: tokenUriData } = await axios.get(url);
+	const { data: metadata } = await axios.get(url);
 
 	// save category to file
 	const token = {
-	    tokenUriData,
+	    metadata,
 	    tokenUri: url,
 	    categoryId: Number(categoryId),
 	    price: Number(price),
