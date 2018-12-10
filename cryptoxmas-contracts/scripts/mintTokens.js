@@ -41,7 +41,7 @@ const mint = async (network, escrowAddress) => {
 
 	// save category to escrow contract
 	let category = await escrow.getTokenCategory(url);
-	if (category.price === utils.parseEther('0')) {
+	if (category.price.toString() === '0') {
 	    console.log("Adding new category to blockchain ", url);
 	    let result = await escrow.addTokenCategory(url, token.categoryId, token.maxQnty, utils.parseEther(String(token.price)));
 	    await waitForTransactionReceipt(provider, result.hash);
@@ -57,8 +57,8 @@ const mint = async (network, escrowAddress) => {
     const dct = {};
     dct[network] = tokensDct;
     
-    storeData(dct, './scripts/deployed/mintedTokens.json' );
-    console.log("Config is saved to './scripts/deployed/mintedTokens.json'.");
+    storeData(dct, `./scripts/deployed/mintedTokens-${network}.json` );
+    console.log(`Config is saved to './scripts/deployed/mintedTokens-${network}.json'.`);
 }
 
 
@@ -66,7 +66,8 @@ const mint = async (network, escrowAddress) => {
 
 const main = async () => {
     try {
-	await mint("ropsten", "0x0700830ed76B6a25b84d69eD1BE9501CF6651aF7");
+	//await mint("ropsten", "0x0700830ed76B6a25b84d69eD1BE9501CF6651aF7");
+	await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
     } catch(err) {
 	console.log("ERROR while deploying contracts");
 	console.log(err);

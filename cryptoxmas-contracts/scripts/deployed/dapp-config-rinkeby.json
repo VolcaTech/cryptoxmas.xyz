@@ -1,0 +1,7 @@
+{
+    "rinkeby": {
+        "ESCROW_CONTRACT": "0xB06521bf4C170C7111538B10a13EdF1F0435D67A",
+        "NFT_ADDRESS": "0xe1d5946ea3566013940ABdaD07E357cfE0e3860d",
+        "JSON_RPC_URL": "https://rinkeby.infura.io"
+    }
+}

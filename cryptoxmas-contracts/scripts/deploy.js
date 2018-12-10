@@ -38,14 +38,14 @@ const deploy = async (network) => {
 
     console.log({dappConfig});
     
-    storeData(dappConfig, './scripts/deployed/dapp-config.json' );
-    console.log("Config is saved to './scripts/deployed/dapp-networkConfig.json'.");
-    console.log("To update the front-end config copy and paste it to '../dapp-networkConfig.json' (project root)");    
+    storeData(dappConfig, `./scripts/deployed/dapp-config-${network}.json` );
+    console.log(`Config is saved to './scripts/deployed/dapp-config-${network}.json'.`);
+    console.log("To update the front-end config copy and paste it to '../dapp-config.json' (project root)");    
 }
 
 const main = async () => {
     try {
-	await deploy("ropsten");
+	await deploy("rinkeby");
     } catch(err) {
 	console.log("ERROR while deploying contracts");
 	console.log(err);

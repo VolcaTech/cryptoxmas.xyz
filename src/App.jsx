@@ -61,7 +61,7 @@ class App extends Component {
       return this._renderStaticRouter();
     }
 
-    if (this.props.networkId !== "3") {
+      if (!(this.props.networkId === "3" || this.props.networkId === "4")) {
       return this._renderWrongNetwork();
     }
 
