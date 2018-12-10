@@ -286,13 +286,19 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   function cancelGift(address _transitAddress) public returns (bool success) {
     Gift storage gift = gifts[_transitAddress];
 
+    // is deposited and wasn't claimed or cancelled before
+    require(gift.status == Statuses.Deposited);
+    
     // only sender can cancel transfer;
     require(msg.sender == gift.sender);
-
+    
+    // update status to cancelled
     gift.status = Statuses.Cancelled;
 
-    // transfer ether to receiver's address
-    gift.sender.transfer(gift.claimEth);
+    // transfer optional ether to receiver's address
+    if (gift.claimEth > 0) {
+      gift.sender.transfer(gift.claimEth);
+    }
 
     // send nft to buyer
     nft.transferFrom(address(this), msg.sender, gift.tokenId);

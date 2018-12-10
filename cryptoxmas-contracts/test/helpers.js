@@ -7,7 +7,7 @@ export const genereteTransitWallet = (provider) => {
 
 export const buyNFT = async ({value, tokenUri, transitAddress, escrowAddress, buyerWallet, messageHash=''}) => {
     const gasPrice = utils.parseEther('0.00011');
-    const gasLimit = 500000;
+    const gasLimit = 600000;
     const args = [tokenUri, transitAddress, messageHash];
     const executeData = new utils.Interface(CryptoxmasEscrow.interface).functions.buyGift.encode(args);
     const transaction = {
@@ -24,11 +24,16 @@ export const buyNFT = async ({value, tokenUri, transitAddress, escrowAddress, bu
 }
 
 export const cancelGift = async ({ transitAddress, escrow, wallet }) => {
+    const gasPrice = utils.parseEther('0.00011');
+    const gasLimit = 600000;
+    
     const data = new utils.Interface(CryptoxmasEscrow.interface).functions.cancelGift.encode([transitAddress]);
     const tx = await wallet.sendTransaction({
 	to: escrow.address,
 	value: 0,
-	data
+	data,
+	gasPrice,
+	gasLimit	
     });
 
     const receipt = await wallet.provider.getTransactionReceipt(tx.hash);
@@ -38,7 +43,7 @@ export const cancelGift = async ({ transitAddress, escrow, wallet }) => {
 
 export const claimGift = async ({ transitWallet, receiverAddress, escrow }) => {
     const gasPrice = utils.parseUnits('10', 'gwei');
-    const gasLimit = 200000;
+    const gasLimit = 300000;
 
     const args = [receiverAddress];
     const data = new utils.Interface(CryptoxmasEscrow.interface).functions.claimGift.encode(args);

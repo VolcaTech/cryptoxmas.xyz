@@ -18,6 +18,7 @@ describe('CryptoxmasEscrow', () => {
     let escrow;
     let deployerWallet;
     let buyerWallet;
+    let anotherBuyerWallet;
     let minNftPrice;
     let withEthAmount;
     let givethBridgeMock;
@@ -33,7 +34,7 @@ describe('CryptoxmasEscrow', () => {
     
     beforeEach(async () => {
 	provider = createMockProvider();
-	[deployerWallet, buyerWallet, fakeTransitWallet] = await getWallets(provider);
+	[deployerWallet, buyerWallet, anotherBuyerWallet, fakeTransitWallet] = await getWallets(provider);
 
 	transitWallet = genereteTransitWallet(provider);
 	transitWallet2 = genereteTransitWallet(provider);
@@ -52,7 +53,7 @@ describe('CryptoxmasEscrow', () => {
 	
 	const escrowArgs =  [givethBridgeMock.address, givethCampaignId, tokenName, tokenSymbol ];
 	escrow = await deployContract(deployerWallet, CryptoxmasEscrow, escrowArgs);
-
+	
 	// nft contract created by the escrow contract 
 	const nftAddress = await escrow.nft();
 	nft = new Contract(nftAddress, BasicNFT.interface, provider);
@@ -75,6 +76,7 @@ describe('CryptoxmasEscrow', () => {
 	// add token categories for sale
 	await escrow.addTokenCategory(rareCategory.tokenUri, rareCategory.categoryId, rareCategory.maxQnty, rareCategory.price);
 	await escrow.addTokenCategory(uniqueCategory.tokenUri, uniqueCategory.categoryId, uniqueCategory.maxQnty, uniqueCategory.price);
+
     });
 
     describe("Deploying escrow", () => {
@@ -373,28 +375,45 @@ describe('CryptoxmasEscrow', () => {
 
     
     describe("Cancelling gift", () =>  {
+	let escrowTransitAddress;
 	beforeEach(async () => {
+	    // buy nft to add ETH to contract, to test that it can't be drained	    
+	    escrowTransitAddress = Wallet.createRandom().address;
 	    await buyNFT({
-		value: rareCategory.price,
-		tokenUri: rareCategory.tokenUri,
-		transitAddress: transitWallet.address,		    
-		escrowAddress: escrow.address,
-		buyerWallet,
-		messageHash
+	    	value: utils.parseEther('3'),
+	    	tokenUri: rareCategory.tokenUri,
+	    	transitAddress: escrowTransitAddress,
+	    	escrowAddress: escrow.address,
+	    	buyerWallet: anotherBuyerWallet,
+	    	messageHash
+	    });
+
+	    // this gift is tested further
+	    await buyNFT({
+	    	value: utils.parseEther('1'),
+	    	tokenUri: rareCategory.tokenUri,
+	    	transitAddress: transitWallet.address,		    
+	    	escrowAddress: escrow.address,
+	    	buyerWallet,
+	    	messageHash
 	    });	    
 	});
 	
 	describe("existing gift", () => {	    
 	    let gift;
-	    let buyerBalBefore;
+	    let escrowBalBefore;
 	    
 	    beforeEach(async () => {
-		buyerBalBefore = await deployerWallet.provider.getBalance(escrow.address);
-		await cancelGift({
-		    transitAddress: transitWallet.address,
+		escrowBalBefore = await deployerWallet.provider.getBalance(escrow.address);
+		const transitAddress = transitWallet.address;
+		const buyer = buyerWallet;
+		
+		const cancelParams = {
+		    transitAddress,
 		    escrow,
-		    wallet: buyerWallet
-		});
+		    wallet: buyer
+		};
+		await cancelGift(cancelParams);				
 		gift = await escrow.getGift(transitWallet.address);
 	    });
 	    
@@ -403,14 +422,13 @@ describe('CryptoxmasEscrow', () => {
 	    });
 	    
 	    it("it transfers NFT to buyer", async () => {
-		expect(await nft.ownerOf(1)).to.eq(buyerWallet.address);
+		expect(await nft.ownerOf(2)).to.eq(buyerWallet.address);
 	    });
 	    
 	    it("it sends eth back to buyer", async () => {
 		const escrowBal = await deployerWallet.provider.getBalance(escrow.address);
 		const buyerBal = await deployerWallet.provider.getBalance(buyerWallet.address);
-		expect(escrowBal).to.eq(0);
-		expect(buyerBal).to.be.above(buyerBalBefore);
+		expect(escrowBal).to.be.eq(utils.parseEther('2.95'));
 	    });
 	    
 	    it("can't cancel twice", async () => {
@@ -460,6 +478,17 @@ describe('CryptoxmasEscrow', () => {
     describe("Claiming gift", () =>  {
 	let receiverAddress;
 	beforeEach(async () => {
+	    // buy nft to add ETH to contract, to test that it can't be drained
+	    await buyNFT({
+		value: utils.parseEther("3"),
+		tokenUri: rareCategory.tokenUri,
+		transitAddress: Wallet.createRandom().address,		    
+		escrowAddress: escrow.address,
+		buyerWallet: anotherBuyerWallet,
+		messageHash
+	    });	
+	    
+	    // this gift is tested further
 	    receiverAddress = Wallet.createRandom().address;
 	    await buyNFT({
 		value: utils.parseEther('1.05'),
@@ -482,7 +511,7 @@ describe('CryptoxmasEscrow', () => {
 		});
 		
 		it("token goes to receiver", async () => {
-		    const tokenOwner = await nft.ownerOf(1);
+		    const tokenOwner = await nft.ownerOf(2);
 		    expect(tokenOwner).to.be.eq(receiverAddress);
 		});
 
