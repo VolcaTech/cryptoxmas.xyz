@@ -38,7 +38,7 @@ const deploy = async (network) => {
 
     console.log({dappConfig});
     
-    storeData(dappConfig, './scripts/deployed/contract-networkConfig.json' );
+    storeData(dappConfig, './scripts/deployed/dapp-config.json' );
     console.log("Config is saved to './scripts/deployed/dapp-networkConfig.json'.");
     console.log("To update the front-end config copy and paste it to '../dapp-networkConfig.json' (project root)");    
 }

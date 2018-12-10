@@ -1,5 +1,14 @@
+import Promise from 'bluebird';
 import { ContractFactory, Contract } from 'ethers';
 import fs from 'fs';
+const parse = Promise.promisify(require('csv-parse'));
+
+export const readCSV = async (filename) => { 
+    const fileData = fs.readFileSync(filename);
+    
+    const rows = await parse(fileData, {columns: false, delimiter: ';'});
+    return rows;
+};
 
 const defaultDeployOptions = {
     gasLimit: 4000000,
@@ -7,6 +16,8 @@ const defaultDeployOptions = {
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
 
 export const waitForTransactionReceipt = async (providerOrWallet, transactionHash, tick = 10000) => {
     console.log("Waiting for receipt: ", transactionHash);
@@ -39,7 +50,7 @@ export const deployContract = async (wallet, contractJSON, args = [], overrideOp
 
 export const storeData = (data, path) => {
     try {
-	fs.writeFileSync(path, JSON.stringify(data));
+	fs.writeFileSync(path, JSON.stringify(data, null, 4));
 	console.log("config file updated");
     } catch (err) {
 	console.error(err);

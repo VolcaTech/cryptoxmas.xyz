@@ -1,0 +1,304 @@
+{
+    "ropsten": {
+        "https://ipfs.infura.io/ipfs/QmbLR9VpdRKL6nb13BFJmDXYBjCdMvGyoP69VRdJoEZgP8": {
+            "tokenUri": {
+                "description": "Ded Moroz is a fictional character similar to Santa Claus and has its roots in Slavic mythology. The literal translation is «Grandfather Frost». Ded Moroz is accompanied by Snegurochka, his granddaughter and helper.",
+                "image": "https://ipfs.infura.io/ipfs/QmfZx3C4hZoaxYePdmpNofx531k4djvK23Y1uNmmmwByfM",
+                "name": "Ded Moroz #1"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmZPiwDLeDaaPp5jatbDUAftxnNGrdEDomhDSLmk2ztB23": {
+            "tokenUri": {
+                "description": "Ded Moroz is a fictional character similar to Santa Claus and has its roots in Slavic mythology. The literal translation is «Grandfather Frost». Ded Moroz is accompanied by Snegurochka, his granddaughter and helper.",
+                "image": "https://ipfs.infura.io/ipfs/QmWkVtY24KJXgRxzS58x6m2ptoXuQHkso6tS24n7PsZSbu",
+                "name": "Ded Moroz #2"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmeW9VoBpLUh2fHV4k6Dm8sgf5RTgmht1VGBGMLYb2GFbu": {
+            "tokenUri": {
+                "description": "Ded Moroz is a fictional character similar to Santa Claus and has its roots in Slavic mythology. The literal translation is «Grandfather Frost». Ded Moroz is accompanied by Snegurochka, his granddaughter and helper.",
+                "image": "https://ipfs.infura.io/ipfs/QmZHFBpN3i7sK33jCuYKXL4pNPHzxaB1HyfbCDrYqr6uAD",
+                "name": "Ded Moroz #3"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmbUZGXhmFSHMVW4iydeX1ps5HodtrUZ8QKnVna8d9DEyD": {
+            "tokenUri": {
+                "description": "Santa Claus, also known as Saint Nicholas, Kris Kringle, Father Christmas, or simply Santa. He is commonly portrayed as living at the North Pole, and often laughing in a way that sounds like «ho ho ho».",
+                "image": "https://ipfs.infura.io/ipfs/QmXi4aQRtzRSXUg3pbrzZMCWP3Vefu9tWhtiW8u85s1KT3",
+                "name": "Santa Claus #1"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmawEobzFvgo2zfdwpMCy4kNb6RyroE8jEKLJroQUqSVAY": {
+            "tokenUri": {
+                "description": "Santa Claus, also known as Saint Nicholas, Kris Kringle, Father Christmas, or simply Santa. He is commonly portrayed as living at the North Pole, and often laughing in a way that sounds like «ho ho ho».",
+                "image": "https://ipfs.infura.io/ipfs/QmR6RcQYb4f5MCzEi51Ahpo7P134Rwc6mCH8GX6DmPGZ5H",
+                "name": "Santa Claus #2"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmVdCsDqSubFapVm2Df2tGux3sW5abUXw52FZ8m91wtwyN": {
+            "tokenUri": {
+                "description": "Santa Claus, also known as Saint Nicholas, Kris Kringle, Father Christmas, or simply Santa. He is commonly portrayed as living at the North Pole, and often laughing in a way that sounds like «ho ho ho».",
+                "image": "https://ipfs.infura.io/ipfs/QmaA9JKu8M94fz1RTB4qHSHTxcaHZwhVSuNVkesinMhnZT",
+                "name": "Santa Claus #3"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmcQdmwxJxBdXo33kSBKiDXumURZkQnEh8hErkYxDq7RKd": {
+            "tokenUri": {
+                "description": "The Grinch is a fictional character. He is best known as the main character of the children's book «How the Grinch Stole Christmas!». He especially hates the Christmas season, making particular note of how disturbing the various noises of Christmastime are to him, including the singing of Christmas carols.",
+                "image": "https://ipfs.infura.io/ipfs/QmWWA8gLb164pAHf72MbHm7CohqdkLzHKJoVbVXj3UtvxQ",
+                "name": "Grinch #1"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmVj9LUNpHBCHDZRoXX3nqvhPPjtcDLz7AqzpLAg3ssBAj": {
+            "tokenUri": {
+                "description": "The Grinch is a fictional character. He is best known as the main character of the children's book «How the Grinch Stole Christmas!». He especially hates the Christmas season, making particular note of how disturbing the various noises of Christmastime are to him, including the singing of Christmas carols.",
+                "image": "https://ipfs.infura.io/ipfs/QmcjyvWbeuKfcNXbEpMAPqHLqN3mTUEx1eT2mRNqoRNX3w",
+                "name": "Grinch #2"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmajaRS29Jcdoi9k2NLHCSiqdk4FzzTvPiFRYa3mhAKu5M": {
+            "tokenUri": {
+                "description": "The Grinch is a fictional character. He is best known as the main character of the children's book «How the Grinch Stole Christmas!». He especially hates the Christmas season, making particular note of how disturbing the various noises of Christmastime are to him, including the singing of Christmas carols.",
+                "image": "https://ipfs.infura.io/ipfs/QmZJrKvNBV1hDDbg88epXcgRZ7ADhN5cRKMrJ3bi9K1jTY",
+                "name": "Grinch #3"
+            },
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100
+        },
+        "https://ipfs.infura.io/ipfs/QmRgorNYL7JDyqC5uLm7n6MN2ETD1yXvBzuHGsc9tUzLEu": {
+            "tokenUri": {
+                "description": "Mikulás is the Hungarian version of Santa Claus. Mikulás arrives to celebrate his day, December 6, and leaves before Christmas. In the Czech Republic, Slovenia and Slovakia, Mikulás/Miklavž often comes with two assistants: a good Angel who gives out presents to good children and a «Krampusz», a mean elf, in some version a Devil, who punishes bad children.",
+                "image": "https://ipfs.infura.io/ipfs/QmTQ1AgWKC5CT1qMXmmA3YfiX3NxA1BRrgjX9TzBXTUs6v",
+                "name": "Mikulas #1"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmWHu73LLZHXDP67epG9K6EM9tLevtzCP4j2iwv8RHXjQN": {
+            "tokenUri": {
+                "description": "Mikulás is the Hungarian version of Santa Claus. Mikulás arrives to celebrate his day, December 6, and leaves before Christmas. In the Czech Republic, Slovenia and Slovakia, Mikulás/Miklavž often comes with two assistants: a good Angel who gives out presents to good children and a «Krampusz», a mean elf, in some version a Devil, who punishes bad children.",
+                "image": "https://ipfs.infura.io/ipfs/QmNeRTgr73wWXn9zwkGrL1DRrcwpgBSozwkx3gqx473U75",
+                "name": "Mikulas #2"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmPvy6YsCQFJtFtvAekucHHUD4iwTGAZoiH673zHMkePT3": {
+            "tokenUri": {
+                "description": "Mikulás is the Hungarian version of Santa Claus. Mikulás arrives to celebrate his day, December 6, and leaves before Christmas. In the Czech Republic, Slovenia and Slovakia, Mikulás/Miklavž often comes with two assistants: a good Angel who gives out presents to good children and a «Krampusz», a mean elf, in some version a Devil, who punishes bad children.",
+                "image": "https://ipfs.infura.io/ipfs/QmcmwgHPtDZR3uDrxNLdWMk3qMwffWeu7wNtkPvnGYqk8v",
+                "name": "Mikulas #3"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmUPikCFEBL4JCXY2eFqNd3pVnvVMRWFoE5rNwdwExNwSa": {
+            "tokenUri": {
+                "description": "Christmas elf is a diminutive elf that lives with Santa Claus at the North Pole and acts as his helper. They were first introduced in literature by Louisa May Alcott in 1856. The association of Christmas presents with elves has precedents in the first half of the 19th century with the Tomte in Sweden and Nisse in Denmark.",
+                "image": "https://ipfs.infura.io/ipfs/QmbdbVBJoey9UZDb5BeKWCCMV3zgPVsvn7YkReNu5S1R22",
+                "name": "Christmas Elf #1"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmTSZpYwkbufA1D6U3k4vTwGcbjKSVyZ7oX51LQdbEtbHi": {
+            "tokenUri": {
+                "description": "Christmas elf is a diminutive elf that lives with Santa Claus at the North Pole and acts as his helper. They were first introduced in literature by Louisa May Alcott in 1856. The association of Christmas presents with elves has precedents in the first half of the 19th century with the Tomte in Sweden and Nisse in Denmark.",
+                "image": "https://ipfs.infura.io/ipfs/QmP6gF4XbVZo8xLoHZxLkUHir8fcaiJpZT29VKLr4yJYGk",
+                "name": "Christmas Elf #2"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmT2qign8Mbz5M5f76PZLammbq1ncWHuww215dLaNtzsAi": {
+            "tokenUri": {
+                "description": "Christmas elf is a diminutive elf that lives with Santa Claus at the North Pole and acts as his helper. They were first introduced in literature by Louisa May Alcott in 1856. The association of Christmas presents with elves has precedents in the first half of the 19th century with the Tomte in Sweden and Nisse in Denmark.",
+                "image": "https://ipfs.infura.io/ipfs/QmS8sXjzARcpNwS32531GRn5SGR9YK2DNFq9CxUn47ZwXB",
+                "name": "Christmas Elf #2"
+            },
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50
+        },
+        "https://ipfs.infura.io/ipfs/QmaoTHLBrigr3ULDyLYR64TC6vZGJcV7vWw3Q98cY35gTJ": {
+            "tokenUri": {
+                "description": "A nisse is a mythological creature from Nordic folklore today typically associated with the winter solstice and the Christmas season. The nisse will deliver gifts at the door, in accordance with the modern-day tradition of the visiting Santa Claus, enters homes to hand out presents.",
+                "image": "https://ipfs.infura.io/ipfs/QmTnig7oubuEXwDsbMtLudRYF12uBq5QQdFND2TWiWmF54",
+                "name": "Nisse #1"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmSkyac6URhEaXThyUmBEisSN4V5vBoz9yDsK48Y9Z9CKq": {
+            "tokenUri": {
+                "description": "A nisse is a mythological creature from Nordic folklore today typically associated with the winter solstice and the Christmas season. The nisse will deliver gifts at the door, in accordance with the modern-day tradition of the visiting Santa Claus, enters homes to hand out presents.",
+                "image": "https://ipfs.infura.io/ipfs/QmdbZdibrzEg9qDtDyTRTV7X2oWNNXZpRLCAvkPNWQoUGV",
+                "name": "Nisse #2"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmUTRX61dQo4WSrfTbK2g4Wj2k4xjxY89DEf9tmVd8XCzN": {
+            "tokenUri": {
+                "description": "A nisse is a mythological creature from Nordic folklore today typically associated with the winter solstice and the Christmas season. The nisse will deliver gifts at the door, in accordance with the modern-day tradition of the visiting Santa Claus, enters homes to hand out presents.",
+                "image": "https://ipfs.infura.io/ipfs/QmdemMdXvR1vxoTaXk5xMdUyXNvkXPfJ8r7m2WP8FZnAAA",
+                "name": "Nisse #3"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmXA64jk4saB2xkMMsvWoVHGh2TUUD4d4CCgwy8x5SrfFa": {
+            "tokenUri": {
+                "description": "In Italian folklore, Befana is an old woman who delivers gifts to children throughout Italy on Epiphany Eve (the night of January 5) in a similar way to Santa Claus. She is usually portrayed as a hag riding a broomstick through the air wearing a black shawl and is covered in soot because she enters the children's houses through the chimney. She is often smiling and carries a bag or hamper filled with candy, gifts, or both.",
+                "image": "https://ipfs.infura.io/ipfs/QmRchm6rWRru8BnFGXBbWemAJUxfh1ZizAWmGFxUEzcTq7",
+                "name": "Befana #1"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmUPP342nv5Ufbu6JkZkvMGv6Qo6J3mUJnKeLAmLuk3E9z": {
+            "tokenUri": {
+                "description": "In Italian folklore, Befana is an old woman who delivers gifts to children throughout Italy on Epiphany Eve (the night of January 5) in a similar way to Santa Claus. She is usually portrayed as a hag riding a broomstick through the air wearing a black shawl and is covered in soot because she enters the children's houses through the chimney. She is often smiling and carries a bag or hamper filled with candy, gifts, or both.",
+                "image": "https://ipfs.infura.io/ipfs/QmQNSVC5WijEX3Uc4DZvwEjY4rE5tTLsDDK7nwJ8Ekz3k7",
+                "name": "Befana #3"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmRMJhBegrMKUN8qKzetm5UP2q1r3bATv3zJZmkw289Zap": {
+            "tokenUri": {
+                "description": "In Italian folklore, Befana is an old woman who delivers gifts to children throughout Italy on Epiphany Eve (the night of January 5) in a similar way to Santa Claus. She is usually portrayed as a hag riding a broomstick through the air wearing a black shawl and is covered in soot because she enters the children's houses through the chimney. She is often smiling and carries a bag or hamper filled with candy, gifts, or both.",
+                "image": "https://ipfs.infura.io/ipfs/QmPzAqYpgFrY2Bjtt877iUQTZpeTjNzW797qCAQZgiWhBZ",
+                "name": "Befana #3"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmaTKju4TPRoZmQQSQZLkoU2uup4M6zfEsoYpFUnP6T7ZF": {
+            "tokenUri": {
+                "description": "A gingerbread man is a biscuit or cookie made of gingerbread, usually in the shape of a stylized human. In Pyotr Ilyich Tchaikovsky's famous ballet The Nutcracker (1892), the eponymous hero leads an army of gingerbread men against the Mouse King and his fellows.",
+                "image": "https://ipfs.infura.io/ipfs/QmYtTD45Y4iMynBv5PxF9edi4nTeyG761LQrxi7kxnjkTr",
+                "name": "Gingerbread Man #1"
+            },
+            "categoryId": 3,
+            "price": 0.5,
+            "maxQnty": 10
+        },
+        "https://ipfs.infura.io/ipfs/QmRA1hygwJXwk7Cv93Bh1qUAGPu4F7ATb1N2YHi3RSs4f3": {
+            "tokenUri": {
+                "description": "A gingerbread man is a biscuit or cookie made of gingerbread, usually in the shape of a stylized human. In Pyotr Ilyich Tchaikovsky's famous ballet The Nutcracker (1892), the eponymous hero leads an army of gingerbread men against the Mouse King and his fellows.",
+                "image": "https://ipfs.infura.io/ipfs/QmS9AjwLWtboQGE8DKZt5ukVqB3tk2bum7371seYxdMpv3",
+                "name": "Gingerbread Man #1"
+            },
+            "categoryId": 4,
+            "price": 1,
+            "maxQnty": 5
+        },
+        "https://ipfs.infura.io/ipfs/Qma6P5m4auApvymyvvNsGmYwunAjJb9Jtyjm2pfp3dfXN8": {
+            "tokenUri": {
+                "description": "A gingerbread man is a biscuit or cookie made of gingerbread, usually in the shape of a stylized human. In Pyotr Ilyich Tchaikovsky's famous ballet The Nutcracker (1892), the eponymous hero leads an army of gingerbread men against the Mouse King and his fellows.",
+                "image": "https://ipfs.infura.io/ipfs/QmP2q5JHX7V6Ev8PtsoqCpCFN3dLrrkf9eHf6M6k7VyZai",
+                "name": "Gingerbread Man #1"
+            },
+            "categoryId": 4,
+            "price": 1,
+            "maxQnty": 5
+        },
+        "https://ipfs.infura.io/ipfs/QmS7R7aGLa9V8f5L6BrP9AFuCr9GkcpHKUPkecfNxyUnJU": {
+            "tokenUri": {
+                "description": "The Yule Lads are figures from Icelandic folklore, portrayed as being mischievous pranksters, but who have in modern times also been depicted as taking on a more benevolent role similar to Santa Claus. Every night, one Yule Lads visits each child, leaving gifts or rotting potatoes,[2] depending on the child’s behaviour throughout the year.",
+                "image": "https://ipfs.infura.io/ipfs/QmYQkUSzEoMdLWVwYgCbnXfFkxD37TmasnSX7BcexaLaQp",
+                "name": "Yule Lads #1"
+            },
+            "categoryId": 4,
+            "price": 1,
+            "maxQnty": 5
+        },
+        "https://ipfs.infura.io/ipfs/QmRYhm79jBMUQAfngk79VhUPiHD2wUosv1GcCibrzwJaAH": {
+            "tokenUri": {
+                "description": "The Yule Lads are figures from Icelandic folklore, portrayed as being mischievous pranksters, but who have in modern times also been depicted as taking on a more benevolent role similar to Santa Claus. Every night, one Yule Lads visits each child, leaving gifts or rotting potatoes,[2] depending on the child’s behaviour throughout the year.",
+                "image": "https://ipfs.infura.io/ipfs/QmXuuy7CDzNNMk11kMcJ8c6SQRdxsaHoWoK32hnopC14a5",
+                "name": "Yule Lads #2"
+            },
+            "categoryId": 4,
+            "price": 1,
+            "maxQnty": 5
+        },
+        "https://ipfs.infura.io/ipfs/QmW91NMPkn1igD8P2A8SuMiHDHaT2pyWarE5yxK4L9cgsA": {
+            "tokenUri": {
+                "description": "The Yule Lads are figures from Icelandic folklore, portrayed as being mischievous pranksters, but who have in modern times also been depicted as taking on a more benevolent role similar to Santa Claus. Every night, one Yule Lads visits each child, leaving gifts or rotting potatoes,[2] depending on the child’s behaviour throughout the year.",
+                "image": "https://ipfs.infura.io/ipfs/QmbThYU37xgs1nD6GJ4F1i2RVJPnGXkvevr4gpSA3GkPzf",
+                "name": "Yule Lads #3"
+            },
+            "categoryId": 4,
+            "price": 1,
+            "maxQnty": 5
+        },
+        "https://ipfs.infura.io/ipfs/QmTbQXvbynCyQcXk1AkczFSJHVuzz11k4wQU8cQXm5c9jP": {
+            "tokenUri": {
+                "description": "The Christkind is a sprite-like child, usually depicted with blond hair and angelic wings. Children never see the Christkind in person, and parents tell them that Christkind will not come and bring presents if they are curious and try to spot it.",
+                "image": "https://ipfs.infura.io/ipfs/QmYVCdfCwqkmanpJyfFvJ3tRrPd8A2SADV12zHQGLyU4Fv",
+                "name": "Christkind #1"
+            },
+            "categoryId": 5,
+            "price": 10,
+            "maxQnty": 1
+        },
+        "https://ipfs.infura.io/ipfs/QmRf9R2ZGTeLKiGtw3TTXrW6nh32LAUrF9AWqaTpKmZzRB": {
+            "tokenUri": {
+                "description": "The Christkind is a sprite-like child, usually depicted with blond hair and angelic wings. Children never see the Christkind in person, and parents tell them that Christkind will not come and bring presents if they are curious and try to spot it.",
+                "image": "https://ipfs.infura.io/ipfs/QmUJMnmDCev6MKz6n1RUk5QoH6G9wMFXSGmruwGELRNfK8",
+                "name": "Christkind #1"
+            },
+            "categoryId": 5,
+            "price": 10,
+            "maxQnty": 1
+        },
+        "https://ipfs.infura.io/ipfs/QmPFu6Dari7beTHhafyfyKmRVwiSEZ76MHganfL6ASjCk8": {
+            "tokenUri": {
+                "description": "The Christkind is a sprite-like child, usually depicted with blond hair and angelic wings. Children never see the Christkind in person, and parents tell them that Christkind will not come and bring presents if they are curious and try to spot it.",
+                "image": "https://ipfs.infura.io/ipfs/Qma4jFwqcnpqJE9CuF7QChdHpkVog1hgDHv8cn4vT7wVWY",
+                "name": "Christkind #1"
+            },
+            "categoryId": 5,
+            "price": 10,
+            "maxQnty": 1
+        }
+    }
+}
