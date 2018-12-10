@@ -7,7 +7,8 @@ const TokenImage = ({
   price = null,
   message = "",
   hidePrice = false,
-  name = ""
+  name = "",
+  rarity
 }) => {
   let shownPrice;
   if (price) {
@@ -22,7 +23,7 @@ const TokenImage = ({
 
   return (
     <div style={styles.tokenBorder}>
-      <div style={styles.tokenPrice}> {!hidePrice ? shownPrice : ""}</div>
+      <div style={styles.tokenPrice}><div style={styles.tokenRarity}>{rarity}</div> {!hidePrice ? shownPrice : ""}</div>
       {url ? (
         <div>
           <img
