@@ -7,31 +7,18 @@ import cryptoxmasService from "./../../services/cryptoxmasService";
 import styles from "./styles";
 
 class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorMessage: "",
-      fetching: true,
-      tokens: []
-    };
-  }
 
-  async componentDidMount() {
-    const tokens = await cryptoxmasService.getGiftsForSale();
-    this.setState({ fetching: false, tokens });
-  }
-
-  _renderToken(token, position) {
-    const { tokenId, metadata } = token;
+  _renderCard(card, position) {
+    const { catId, metadata, price } = card;
     return (
-      <a style={{ display: "block" }} href={`/#/send/${tokenId}`} key={tokenId}>
+      <a style={{ display: "block" }} href={`/#/send/${catId}`} key={catId}>
         <div
           style={{
             ...styles.nftContainer,
             float: position
           }}
         >
-          <span style={styles.nftPrice}>0.05 ETH</span>
+          <span style={styles.nftPrice}>{price} ETH</span>
           <img style={styles.nftImage} src={metadata.image} />
           <div style={styles.nftName}>{metadata.name}</div>
         </div>
@@ -39,9 +26,12 @@ class HomeScreen extends Component {
     );
   }
 
-  render() {
-    const column1 = this.state.tokens.filter((token, index) => index % 2 === 0);
-    const column2 = this.state.tokens.filter((token, index) => index % 2 !== 0);
+    render() {
+	console.log("in render")
+	const cards = cryptoxmasService.getCardsForSale();
+	console.log({cards})
+    const column1 = cards.filter((card, index) => index % 2 === 0);
+    const column2 = cards.filter((card, index) => index % 2 !== 0);
     return (
       <Col xs={12} style={{ paddingBottom: 30 }}>
         <Row>
@@ -67,18 +57,10 @@ class HomeScreen extends Component {
               </div>
             </div>
             <Col xs={6} sm={6} lg={6} style={styles.nftLeftColumn}>
-              {this.state.fetching || this.state.errorMessage ? (
-                <Loader text="Getting tokens" />
-              ) : (
-                <div>{column1.map(t => this._renderToken(t, "right"))}</div>
-              )}
+                <div>{column1.map(card => this._renderCard(card, "right"))}</div>
             </Col>
             <Col xs={6} sm={6} lg={6} style={styles.nftRightColumn}>
-              {this.state.fetching || this.state.errorMessage ? (
-                <Loader text="Getting tokens" />
-              ) : (
-                <div>{column2.map(t => this._renderToken(t, "left"))}</div>
-              )}
+                <div>{column2.map(card => this._renderCard(card, "left"))}</div>
             </Col>
           </div>
         </Row>

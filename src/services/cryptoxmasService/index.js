@@ -3,6 +3,8 @@ import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
 import { Wallet, providers } from "ethers";
+import mintedTokensJson from '../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json';
+
 
 class CryptoxmasService {
   constructor() {
@@ -19,8 +21,11 @@ class CryptoxmasService {
     this.nftService.setup({ web3, network });
   }
 
-  getGiftsForSale() {
-    return this.nftService.tokensOf(config[this.network].SELLER_ADDRESS);
+    getCardsForSale() {
+      const cards = mintedTokensJson[this.network];
+      return Object.keys(cards).map(catId => {
+	  return { ...cards[catId], catId };
+      });
   }
 
   getTokenMetadata(tokenId) {
