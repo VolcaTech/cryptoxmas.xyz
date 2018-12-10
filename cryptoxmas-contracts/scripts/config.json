@@ -5,5 +5,12 @@
 	"GIVETH_CAMPAIGN_ID": 226,
 	"NFT_NAME": "Crypoxmas Postcards Token",
 	"NFT_SYMBOL": "CXMAS"
-    }
+    },
+    "rinkeby": { 
+	"JSON_RPC_URL": "https://rinkeby.infura.io",
+	"GIVETH_BRIDGE_ADDRESS": "0xF695e673d7D159CBFc119b53D8928cEca4Efe99e",
+	"GIVETH_CAMPAIGN_ID": 226,
+	"NFT_NAME": "Crypoxmas Postcards Token",
+	"NFT_SYMBOL": "CXMAS"
+    }    
 }
