@@ -71,11 +71,13 @@ export default {
   nftLeftColumn: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    position: "inherit"
   },
   nftRightColumn: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    position: "inherit"
   }
 };
