@@ -26,11 +26,20 @@ class SendScreen extends Component {
       numberInputError: false,
       cardId,
       card,
-      cardMessage: "",
-      charityPopupShown: false
+	cardMessage: "",
+	charityPopupShown: false,
+	tokensLeft: 0
     };
   }
 
+    async componentDidMount() {
+	const category = await cryptoxmasService.getCardCategory(this.state.card.tokenUri);
+	console.log({category});
+	const tokensLeft = this.state.card.maxQnty - category.minted;
+	this.setState({
+	    tokensLeft
+	});
+    }
     
   async _buyGift() {
     try {
@@ -90,7 +99,7 @@ class SendScreen extends Component {
           )}
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
         </div>
-        <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>1 out of 100 left</div>
+            <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>{this.state.tokensLeft} out of {this.state.card.maxQnty} left</div>
         <TokenImage price={nftPrice} rarity="unique" url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
