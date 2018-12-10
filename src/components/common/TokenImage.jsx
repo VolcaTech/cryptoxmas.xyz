@@ -23,7 +23,9 @@ const TokenImage = ({
 
   return (
     <div style={styles.tokenBorder}>
-      <div style={styles.tokenPrice}><div style={styles.tokenRarity}>{rarity}</div> {!hidePrice ? shownPrice : ""}</div>
+      <div style={styles.tokenPrice}>
+	{ rarity ? <div style={styles.tokenRarity}>{rarity}</div>: null }
+	{!hidePrice ? shownPrice : ""}</div>
       {url ? (
         <div>
           <img

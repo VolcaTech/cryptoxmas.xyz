@@ -1,6 +1,7 @@
 import EscrowContract from "./escrowContract";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
+import { getCategoryNameById } from "./utils";
 import { Wallet, providers } from "ethers";
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { utils } from "ethers";
@@ -21,13 +22,15 @@ class CryptoxmasService {
 
   getCardsForSale() {
     const cardsDct = mintedTokensJson[this.network];
-    return Object.keys(cardsDct).map(cardId => {
-      return { ...cardsDct[cardId], cardId };
-    });
+      return Object.keys(cardsDct).map(cardId => { return this.getCard(cardId); });
   }
 
-  getCard(cardId) {
-    return mintedTokensJson[this.network][cardId];
+    getCard(cardId) {		
+      const card = mintedTokensJson[this.network][cardId];
+      const category = getCategoryNameById(card.categoryId);
+      console.log({card, category});
+      return { ...card, cardId, category };
+
   }
 
   // fetch gift information from blockchain

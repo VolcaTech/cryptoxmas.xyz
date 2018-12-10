@@ -100,7 +100,7 @@ class SendScreen extends Component {
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
         </div>
             <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>{this.state.tokensLeft} out of {this.state.card.maxQnty} left</div>
-        <TokenImage price={nftPrice} rarity="unique" url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
+            <TokenImage price={nftPrice} rarity={this.state.card.category} url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
