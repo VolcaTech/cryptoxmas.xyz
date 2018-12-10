@@ -7,6 +7,7 @@ import PendingTxScreen from "./PendingTxScreen";
 import CancelledTransferScreen from "./CancelledTransferScreen";
 import TxErrorScreen from "./TxErrorScreen";
 
+
 export class TransferComponent extends Component {
   render() {
     const { transfer, urlError } = this.props;

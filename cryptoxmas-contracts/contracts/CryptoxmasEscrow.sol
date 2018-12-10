@@ -1,155 +1,217 @@
 pragma solidity ^0.4.25;
 
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
-import 'openzeppelin-solidity/contracts/math/Math.sol';
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
-import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
 import './NFT.sol';
 
 
 contract CryptoxmasEscrow is Pausable, Ownable {
   using SafeMath for uint256;
-  using Math for uint256;  
-  using ECDSA for bytes32;
   
-
-  // fixed amount of wei accrued to verifier with each transfer
+  /* Giveth */
   address public givethBridge;
   uint64 public givethReceiverId;
 
+  /* NFT */
+  NFT public nft; 
+  
   // commission to fund paying gas for claim transactions
-  // leftover eth will be donated to charity
-  uint public EPHEMERAL_ADDRESS_FEE = 0.01 ether; 
-
-  // verifier's address
-  enum Statuses { Empty, Deposited, Claimed, Cancelled }
-
-  struct Seller {
-    address seller;
-    uint nftPrice;
-    mapping (uint => uint) uniquePrices; // tokenId => price
-  }
-
-  // tokenId 
-  mapping (address => Seller) sellers;
+  uint public EPHEMERAL_ADDRESS_FEE = 0.01 ether;
+  uint public MIN_PRICE = 0.05 ether; // minimum token price
+  uint public tokensCounter; // minted tokens counter
+  
+  /* GIFT */
+  enum Statuses { Empty, Deposited, Claimed, Cancelled }  
   
   struct Gift {
     address sender;
-    uint claimEth; // eth for receiver
-    address tokenAddress;
+    uint claimEth; // ETH for receiver    
     uint256 tokenId;
     Statuses status;
-    uint nftPrice;
-    string msgHash; // ifps message hash
+    string msgHash; // IFPS message hash
   }
 
-  // Mappings of transitAddress => Transfer Struct
+  // Mappings of transitAddress => Gift Struct
   mapping (address => Gift) gifts;
 
+
+  /* Token Categories */
+  enum CategoryId { Common, Special, Rare, Scarce, Limited, Epic }  
+  struct TokenCategory {
+    CategoryId categoryId;
+    uint minted;  // already minted
+    uint maxQnty; // maximum amount of tokens to mint
+    uint price; 
+  }
+
+  // tokenURI => TokenCategory
+  mapping(string => TokenCategory) tokenCategories;
+  
   /*
    * EVENTS
    */
   event LogBuy(
 	       address indexed transitAddress,
 	       address indexed sender,
-	       address indexed tokenAddress,
+	       string indexed tokenUri,
 	       uint tokenId,
 	       uint claimEth,
 	       uint nftPrice
 	       );
 
-  event LogCancel(
-		  address indexed transitAddress,
-		  address indexed sender,
-		  address indexed tokenAddress,
-		  uint tokenId
-		  );
-
   event LogClaim(
 		 address indexed transitAddress,
 		 address indexed sender,
-		 address indexed tokenAddress,
 		 uint tokenId,
 		 address receiver,
 		 uint claimEth
-		 );
+		 );  
 
-  event LogSellerAdded(
-		 address sellerAddress,
-		 address tokenAddress,
-		 uint nftPrice
-		 );
+  event LogCancel(
+		  address indexed transitAddress,
+		  address indexed sender,
+		  uint tokenId
+		  );
   
 
   /**
-   * @dev Contructor that sets msg.sender as owner (verifier) in Ownable
-   * and sets verifier's fixed commission fee.
+   * @dev Contructor that sets msg.sender as owner in Ownable,
+   * sets escrow contract params and deploys new NFT contract 
+   * for minting and selling tokens.
+   *
+   * @param _givethBridge address Address of GivethBridge contract
+   * @param _givethReceiverId uint64 Campaign Id created on Giveth platform.
+   * @param _name string Name for the NFT 
+   * @param _symbol string Symbol for the NFT 
    */
   constructor(address _givethBridge,
-	      uint64 _givethReceiverId) public {
+	      uint64 _givethReceiverId,
+	      string _name,
+	      string _symbol) public {
+    // setup Giveth params
     givethBridge = _givethBridge;
     givethReceiverId = _givethReceiverId;
-  }
-
-
-  function addSeller(address _sellerAddress, address _tokenAddress, uint _sellerPrice) public onlyOwner {
-    // can't add seller with cheaper nft price that EPHEMERAL_ADDRESS_FEE
-    require(_sellerPrice >= EPHEMERAL_ADDRESS_FEE);
     
-    // can't override existing seller
-    require(sellers[_tokenAddress].seller == 0);
-
-    // store seller
-    sellers[_tokenAddress] = Seller(_sellerAddress, _sellerPrice);
-    emit LogSellerAdded( _sellerAddress,  _tokenAddress,  _sellerPrice);
-   
+    // deploy nft contract
+    nft = new NFT(_name, _symbol);
   }
 
-  function canBuyGift(address _tokenAddress, uint _tokenId, address _transitAddress, uint _value) public view returns (bool) {
-    Seller memory seller = sellers[_tokenAddress];    
-    require(_value >= seller.nftPrice);
+   /* 
+   * METHODS 
+   */
+  
+  /**
+   * @dev Get Token Category for the tokenUri.
+   *
+   * @param _tokenUri string token URI of the category
+   * @return Token Category details (CategoryId, minted, maxQnty, price)
+   */  
+  function getTokenCategory(string _tokenUri) public view returns (CategoryId categoryId,
+								  uint minted,
+								  uint maxQnty,
+								  uint price) { 
+    TokenCategory memory category = tokenCategories[_tokenUri];    
+    return (category.categoryId,
+	    category.minted,
+	    category.maxQnty,
+	    category.price);
+  }
 
+  /**
+   * @dev Add Token Category for the tokenUri.
+   *
+   * @param _tokenUri string token URI of the category
+   * @param _categoryId uint categoryid of the category
+   * @param _maxQnty uint maximum quantity of tokens allowed to be minted
+   * @param _price uint price tokens of that category will be sold at  
+   * @return True if success.
+   */    
+  function addTokenCategory(string _tokenUri, CategoryId _categoryId, uint _maxQnty, uint _price)
+    public onlyOwner returns (bool success) {
+
+    // price should be more than MIN_PRICE
+    require(_price >= MIN_PRICE);
+	    
+    // can't override existing category
+    require(tokenCategories[_tokenUri].price == 0);
+    
+    tokenCategories[_tokenUri] = TokenCategory(_categoryId,
+					       0, // zero tokens minted initially
+					       _maxQnty,
+					       _price);
+    return true;
+  }
+
+  /**
+   * @dev Checks that it's possible to buy gift and mint token with the tokenURI.
+   *
+   * @param _tokenUri string token URI of the category
+   * @param _transitAddress address transit address assigned to gift
+   * @param _value uint amount of ether, that is send in tx. 
+   * @return True if success.
+   */      
+  function canBuyGift(string _tokenUri, address _transitAddress, uint _value) public view returns (bool) {
     // can not override existing gift
     require(gifts[_transitAddress].status == Statuses.Empty);
 
-    // check that nft wasn't sold before
-    NFT nft = NFT(_tokenAddress);
-    require(nft.ownerOf(_tokenId) == sellers[_tokenAddress].seller);
+    // eth covers NFT price
+    TokenCategory memory category = tokenCategories[_tokenUri];
+    require(_value >= category.price);
+
+    // tokens of that type not sold out yet
+    require(category.minted < category.maxQnty);
     
     return true;
   }
 
-
-  function buyGift(address _tokenAddress, uint _tokenId, address _transitAddress, string _msgHash)
+  /**
+   * @dev Buy gift and mint token with _tokenUri, new minted token will be kept in escrow
+   * until receiver claims it. 
+   *
+   * Received ether, splitted in 3 parts:
+   *   - 0.01 ETH goes to ephemeral account, so it can pay gas fee for claim transaction. 
+   *   - token price (minus ephemeral account fee) goes to the Giveth Campaign as a donation.  
+   *   - Eth above token price is kept in the escrow, waiting for receiver to claim. 
+   *
+   * @param _tokenUri string token URI of the category
+   * @param _transitAddress address transit address assigned to gift
+   * @param _msgHash string IPFS hash, where gift message stored at 
+   * @return True if success.
+   */    
+  function buyGift(string _tokenUri, address _transitAddress, string _msgHash)
           payable public whenNotPaused returns (bool) {
+    
+    require(canBuyGift(_tokenUri, _transitAddress, msg.value));
 
-    Seller memory seller = sellers[_tokenAddress];
-    
-    require(canBuyGift(_tokenAddress, _tokenId, _transitAddress, msg.value));
+    // get token price from the category for that token URI
+    uint tokenPrice = tokenCategories[_tokenUri].price;
 
-    uint tokenPrice = _getTokenSalePrice( _tokenAddress, _tokenId);       
-    uint claimEth = msg.value.sub(tokenPrice); //amount = msg.value - comission
+    // ether above token price is for receiver to claim
+    uint claimEth = msg.value.sub(tokenPrice);
+
+    // mint new token 
+    uint tokenId = tokensCounter.add(1);
+    nft.mintWithTokenURI(tokenId, _tokenUri);
+
+    // increment counters
+    tokenCategories[_tokenUri].minted = tokenCategories[_tokenUri].minted.add(1);
+    tokensCounter = tokensCounter.add(1);
     
-    
-    // saving transfer details
+    // saving gift details
     gifts[_transitAddress] = Gift(
 				  msg.sender,
 				  claimEth,
-				  _tokenAddress,
-				  _tokenId,
+				  tokenId,
 				  Statuses.Deposited,
-				  tokenPrice,
 				  _msgHash
 				  );
 
-    // transfer NFT from seller's address to this escrow contract
-    NFT nft = NFT(_tokenAddress);
-    nft.transferFrom(seller.seller, address(this), _tokenId);
 
-    // transfer ETH to relayer to fund claim txs
+    // transfer small fee to ephemeral account to fund claim txs
     _transitAddress.transfer(EPHEMERAL_ADDRESS_FEE);
-    
+
+    // send donation to Giveth campaign
     uint donation = tokenPrice.sub(EPHEMERAL_ADDRESS_FEE);
     if (donation > 0) {
       _makeDonation(msg.sender, donation);
@@ -159,14 +221,21 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     emit LogBuy(
 		_transitAddress,
 		msg.sender,
-		_tokenAddress,
-		_tokenId,
+		_tokenUri,
+		tokenId,
 		claimEth,
 		tokenPrice);
     return true;
   }
 
-
+  /**
+   * @dev Send donation to Giveth campaign 
+   * by calling function 'donateAndCreateGiver' of GivethBridge contract.
+   *
+   * @param _giver address giver address
+   * @param _value uint donation amount (in wei)
+   * @return True if success.
+   */    
   function _makeDonation(address _giver, uint _value) internal returns (bool success) {
     bytes memory _data = abi.encodePacked(0x1870c10f, // function signature
 					   bytes32(_giver),
@@ -178,78 +247,39 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     return success;
   }
 
-  
+  /**
+   * @dev Get Gift assigned to transit address.
+   *
+   * @param _transitAddress address transit address assigned to gift
+   * @return Gift details
+   */    
   function getGift(address _transitAddress) public view returns (
-	     address sender, // transfer sender
-	     uint claimEth,
-	     address tokenAddress,
 	     uint256 tokenId,
-	     Statuses status,
-	     string tokenURI,
-	     uint nftPrice,
-	     string msgHash) {
+	     string tokenUri,								 
+	     address sender,  // gift buyer
+	     uint claimEth,   // eth for receiver
+	     uint nftPrice,   // token price 	     
+	     Statuses status, // gift status (deposited, claimed, cancelled) 								 	     
+	     string msgHash   // IPFS hash, where gift message stored at 
+    ) {
     Gift memory gift = gifts[_transitAddress];
-    
-    NFT nft = NFT(gift.tokenAddress);
-
+    tokenUri =  nft.tokenURI(gift.tokenId);
+    TokenCategory memory category = tokenCategories[tokenUri];    
     return (
+	    gift.tokenId,
+	    tokenUri,
 	    gift.sender,
 	    gift.claimEth,
-	    gift.tokenAddress,
-	    gift.tokenId,
+	    category.price,	    
 	    gift.status,
-	    nft.tokenURI(gift.tokenId),
-	    gift.nftPrice,
 	    gift.msgHash
 	    );
-  }
-
-
-  function getSeller(address _tokenAddress) public view returns (address sellerAddress, uint nftPrice) {
-    Seller memory seller = sellers[_tokenAddress];
-    
-    return (
-	    seller.seller,
-	    seller.nftPrice
-	    );
-  }
-
-  function getTokenSaleInfo(address _tokenAddress, uint _tokenId) public view returns (uint price, string tokenURI) {
-    NFT nft = NFT(_tokenAddress);
-    price = _getTokenSalePrice(_tokenAddress, _tokenId);
-    
-    return (
-	    price,
-	    nft.tokenURI(_tokenId)
-	    );
-  }
-
-  function _getTokenSalePrice(address _tokenAddress, uint _tokenId) internal view returns (uint price) {
-    Seller storage seller = sellers[_tokenAddress];
-    uint uniquePrice = seller.uniquePrices[_tokenId];
-    // return unique or standard price (if no unique price for this token)
-    if (uniquePrice >= EPHEMERAL_ADDRESS_FEE) {
-      price = uniquePrice;
-    } else {
-      price = seller.nftPrice;
-    }
-
-    return price;
-  }
-  
-  function setUniquePrice(address _tokenAddress, uint _tokenId, uint _price ) public returns (bool success) {
-    // can't set nft price that less that EPHEMERAL_ADDRESS_FEE
-    require(_price >= EPHEMERAL_ADDRESS_FEE);
-
-    Seller storage seller = sellers[_tokenAddress];
-    seller.uniquePrices[_tokenId] = _price;
-    
-    return true;
   }
   
   /**
    * @dev Cancel gift and get sent ether back. Only gift buyer can
    * cancel.
+   * 
    * @param _transitAddress transit address assigned to gift
    * @return True if success.
    */
@@ -265,11 +295,10 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     gift.sender.transfer(gift.claimEth);
 
     // send nft to buyer
-    NFT nft = NFT(gift.tokenAddress);
     nft.transferFrom(address(this), msg.sender, gift.tokenId);
 
     // log cancel event
-    emit LogCancel(_transitAddress, msg.sender, gift.tokenAddress, gift.tokenId);
+    emit LogCancel(_transitAddress, msg.sender, gift.tokenId);
 
     return true;
   }
@@ -283,7 +312,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
    * @return True if success.
    */
   function claimGift(address _receiver) public whenNotPaused returns (bool success) {
-
+    // only holder of ephemeral private key can claim gift
     address _transitAddress = msg.sender;
     
     Gift storage gift = gifts[_transitAddress];
@@ -291,20 +320,19 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     // is deposited and wasn't claimed or cancelled before
     require(gift.status == Statuses.Deposited);
 
-    /* // update gift status */
+    // update gift status to claimed
     gift.status = Statuses.Claimed;
     
-    /* // send nft */
-    NFT nft = NFT(gift.tokenAddress);
+    // send nft to receiver
     nft.transferFrom(address(this), _receiver, gift.tokenId);
     
-    /* // transfer ether to receiver's address */
+    // transfer ether to receiver's address
     if (gift.claimEth > 0) {
       _receiver.transfer(gift.claimEth);
     }
 
-    // log withdraw event
-    emit LogClaim(_transitAddress, gift.sender, gift.tokenAddress, gift.tokenId, _receiver, gift.claimEth);
+    // log claim event
+    emit LogClaim(_transitAddress, gift.sender, gift.tokenId, _receiver, gift.claimEth);
     
     return true;
   }

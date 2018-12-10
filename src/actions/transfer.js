@@ -67,13 +67,11 @@ export const subscribePendingTransfers = () => {
   };
 };
 
-export const buyGift = ({ message, amount, tokenId }) => {
+export const buyGift = ({ message, amount, cardId }) => {
   return async (dispatch, getState) => {
     const state = getState();
     const networkId = state.web3Data.networkId;
     const senderAddress = state.web3Data.address;
-    const network = getNetworkNameById(networkId).toLowerCase();
-    const tokenAddress = config[network].NFT_ADDRESS;
     let msgHash = "";
     if (message) {
       msgHash = await ipfsService.saveMessage(message);
@@ -85,8 +83,7 @@ export const buyGift = ({ message, amount, tokenId }) => {
       transferId,
       transitAddress
     } = await cryptoxmasService.buyGift({
-      tokenAddress,
-      tokenId,
+      cardId,
       amountToPay: amount,
       senderAddress,
       msgHash
@@ -96,15 +93,15 @@ export const buyGift = ({ message, amount, tokenId }) => {
     const transfer = {
       id,
       txHash,
-      transitPrivateKey,
-      transferId,
-      transitAddress: transitAddress.toLowerCase(),
-      networkId,
-      senderAddress,
+	transitPrivateKey,
+	transferId,
+	cardId,
+	transitAddress: transitAddress.toLowerCase(),
+	networkId,
+	senderAddress,
       status: "depositing",
       timestamp: Date.now(),
       amount,
-      fee: 0,
       direction: "out"
     };
 
