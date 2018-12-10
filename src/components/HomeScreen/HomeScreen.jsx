@@ -18,7 +18,7 @@ class HomeScreen extends Component {
             float: position
           }}
         >
-          <span style={styles.nftPrice}>{price} ETH</span>
+          <span style={styles.nftPrice}>1 ETH</span>
           <img style={styles.nftImage} src={metadata.image} />
           <div style={styles.nftName}>{metadata.name}</div>
         </div>
