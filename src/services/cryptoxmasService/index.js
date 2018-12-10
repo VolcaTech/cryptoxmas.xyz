@@ -6,7 +6,6 @@ import { Wallet, providers } from "ethers";
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { utils } from "ethers";
 
-
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
@@ -22,15 +21,16 @@ class CryptoxmasService {
 
   getCardsForSale() {
     const cardsDct = mintedTokensJson[this.network];
-      return Object.keys(cardsDct).map(cardId => { return this.getCard(cardId); });
+    return Object.keys(cardsDct).map(cardId => {
+      return this.getCard(cardId);
+    });
   }
 
-    getCard(cardId) {		
-      const card = mintedTokensJson[this.network][cardId];
-      const category = getCategoryNameById(card.categoryId);
-      console.log({card, category});
-      return { ...card, cardId, category };
-
+  getCard(cardId) {
+    const card = mintedTokensJson[this.network][cardId];
+    const category = getCategoryNameById(card.categoryId);
+    console.log({ card, category });
+    return { ...card, cardId, category };
   }
 
   // fetch gift information from blockchain
@@ -84,10 +84,10 @@ class CryptoxmasService {
     return `link-${address}`;
   }
 
-    async getCardCategory(tokenUri) {
-	return this.escrowContract.getCardCategory(tokenUri);
-    }
-    
+  async getCardCategory(tokenUri) {
+    return this.escrowContract.getCardCategory(tokenUri);
+  }
+
   async buyGift({ tokenAddress, cardId, amountToPay, msgHash }) {
     const wallet = Wallet.createRandom();
     const transitAddress = wallet.address;

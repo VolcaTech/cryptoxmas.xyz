@@ -9,7 +9,6 @@ import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
 import { updateBalance } from "./web3";
 
-
 const createTransfer = payload => {
   return {
     type: actionTypes.CREATE_TRANSFER,

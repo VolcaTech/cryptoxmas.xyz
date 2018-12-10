@@ -1,26 +1,24 @@
-
-
 export function getCategoryNameById(catId) {
   let catName;
-    switch (String(catId)) {
+  switch (String(catId)) {
     case "1":
-	catName = "Special";
-	break;
+      catName = "Special";
+      break;
     case "2":
-	catName = "Rare";
-	break;
+      catName = "Rare";
+      break;
     case "3":
-	catName = "Scarce";
-	break;
+      catName = "Scarce";
+      break;
     case "4":
-	catName = "Limited";
-	break;
+      catName = "Limited";
+      break;
     case "5":
-	catName = "Epic";
-	break;
+      catName = "Epic";
+      break;
     case "6":
       catName = "Unique";
-      break;		
+      break;
     default:
       catName = `Unknown network`;
   }
