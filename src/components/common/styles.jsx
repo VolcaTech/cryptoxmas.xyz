@@ -40,7 +40,8 @@ export default {
     marginBottom: 30
   },
   tokenPrice: {
-    textAlign: "right",
+    display: "flex",
+    justifyContent: "space-between",
     margin: "15px 25px 0px 0px",
     color: "#4CD964",
     fontFamily: "Inter UI Bold",
@@ -57,7 +58,21 @@ export default {
     display: "block",
     textAlign: "center",
     fontFamily: "Inter UI Bold",
-    fontSize: 18
+    fontSize: 18,
+    color: "black"
+  },
+  tokenRarity: {
+    display: "inline",
+    width: 80,
+    marginLeft: 20,
+    textAlign: "center",
+    fontFamily: "Inter UI Medium",
+    fontSize: 16,
+    textTransform: "capitalize",
+    paddingTop: 4,
+    borderRadius: 15,
+    backgroundColor: "#4CD964",
+    color: "white"
   },
   message: {
     display: "flex",
