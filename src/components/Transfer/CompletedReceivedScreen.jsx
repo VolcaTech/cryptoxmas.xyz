@@ -34,7 +34,14 @@ class CompletedReceivedScreen extends React.Component {
               You claimed a{" "}
               <span style={{ textDecoration: "underline" }}>Nifty token</span>
               <br />
-              and <span style={{ color: "#4CD964" }}>{gift.amount}</span> ETH
+              {gift.amount > 0 ? (
+                <span>
+                  and <span style={{ color: "#4CD964" }}>{gift.amount}</span>{" "}
+                  ETH
+                </span>
+              ) : (
+                ""
+              )}
             </div>
             <div style={{ height: 300, marginBottom: 20 }}>
               <ReactCardFlip isFlipped={this.state.isFlipped}>
@@ -59,12 +66,14 @@ class CompletedReceivedScreen extends React.Component {
               ""
             )}
             {this.state.whatsNextPopupShown ? (
-                <WhatsNextPopUp
-                  handleClick={() => this.setState({ whatsNextPopupShown: false })}
-                />
-              ) : (
-                ""
-              )}
+              <WhatsNextPopUp
+                handleClick={() =>
+                  this.setState({ whatsNextPopupShown: false })
+                }
+              />
+            ) : (
+              ""
+            )}
           </div>
           <ButtonPrimary
             handleClick={() =>
@@ -104,7 +113,11 @@ class CompletedReceivedScreen extends React.Component {
             </a>
           </div>
           <div style={{ marginTop: 40 }}>
-            <ButtonPrimary handleClick={() => this.setState({whatsNextPopupShown: true})}>So what's next</ButtonPrimary>
+            <ButtonPrimary
+              handleClick={() => this.setState({ whatsNextPopupShown: true })}
+            >
+              So what's next
+            </ButtonPrimary>
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ export default {
     fontSize: 18,
     color: "#8B8B8B",
     textAlign: "left",
-    marginBottom: 40,
+    marginBottom: 40
   },
   gifContainer: {
     display: "block",
