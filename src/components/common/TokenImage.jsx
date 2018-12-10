@@ -1,5 +1,4 @@
 import React from "react";
-import RetinaImage from "react-retina-image";
 import styles from "./styles";
 
 const TokenImage = ({
@@ -28,11 +27,7 @@ const TokenImage = ({
 	{!hidePrice ? shownPrice : ""}</div>
       {url ? (
         <div>
-          <img
-            className="img-responsive"
-            style={styles.tokenImage}
-            src={url}
-          />
+          <img className="img-responsive" style={styles.tokenImage} src={url} />
           <span style={styles.tokenName}>{name}</span>
         </div>
       ) : (

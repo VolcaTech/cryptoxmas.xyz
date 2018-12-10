@@ -7,7 +7,7 @@ import ButtonPrimary from "./../common/ButtonPrimary";
 import { Error, ButtonLoader } from "./../common/Spinner";
 import QuestionButton from "./../common/QuestionButton";
 import CharityPopUp from "./../common/CharityPopUp";
-import { utils } from 'ethers';
+import { utils } from "ethers";
 import cryptoxmasService from "../../services/cryptoxmasService";
 import styles from "./styles";
 
@@ -46,7 +46,7 @@ class SendScreen extends Component {
       const transfer = await this.props.buyGift({
         message: this.state.cardMessage,
         amount: this.state.amount,
-          cardId: this.state.cardId
+        cardId: this.state.cardId
       });
       this.props.history.push(`/transfers/${transfer.id}`);
     } catch (err) {
@@ -99,6 +99,8 @@ class SendScreen extends Component {
           )}
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
         </div>
+
+
             <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>{this.state.tokensLeft} out of {this.state.card.maxQnty} left</div>
             <TokenImage price={nftPrice} rarity={this.state.card.category} url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
         <div style={styles.sendscreenGreyText}>
@@ -145,7 +147,7 @@ class SendScreen extends Component {
             type="text"
             readOnly={false}
             error={this.state.numberInputError}
-            maxLength={300}
+            maxLength={80}
             textAlign={this.state.cardMessage ? "left" : "center"}
           />
         </div>
@@ -169,7 +171,7 @@ class SendScreen extends Component {
             </div>
           )}
         </div>
-        <div style={{...styles.sendscreenGreyText, color: "white"}}>
+        <div style={{ ...styles.sendscreenGreyText, color: "white" }}>
           <span style={{ fontFamily: "Inter UI Bold" }}>
             Total: {this.state.amount} ETH
           </span>
@@ -178,7 +180,7 @@ class SendScreen extends Component {
           ) : (
             <br />
           )}
-            <span>Donation: {(nftPrice - 0.01).toFixed(2)} ETH</span>
+          <span>Donation: {(nftPrice - 0.01).toFixed(2)} ETH</span>
           <br />
           <span>Claim fee: {claimFee} ETH (for Gas)</span>
         </div>
