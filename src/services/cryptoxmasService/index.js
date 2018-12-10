@@ -4,7 +4,7 @@ import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
 import { Wallet, providers } from "ethers";
 import mintedTokensJson from '../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json';
-
+import { utils } from 'ethers';
 
 class CryptoxmasService {
   constructor() {
@@ -49,28 +49,26 @@ class CryptoxmasService {
       return msg;
     };
 
-    const _parse = async g => {
-      const tokenURI = g[5].toString();
-      const tokenId = g[3].toString();
-      const { image, name, description } = await this.nftService.getMetadata(
-        tokenId,
-        tokenURI
-      );
-      const msgHash = g[7].toString();
-      const message = await _getMessageFromIPFS(msgHash);
+      const _parse = async g => {
+	  console.log({g});
+	  const tokenId = g[0].toNumber();
+	  const tokenUri = g[1].toString();
+	  const card = this.getCard(utils.id(tokenUri));
+	  const msgHash = g[6].toString();
+	  const message = await _getMessageFromIPFS(msgHash);
 
       return {
-        transitAddress,
-        sender: g[0],
-        amount: this.web3.fromWei(g[1], "ether").toString(),
-        tokenAddress: g[2],
-        tokenId,
-        status: g[4].toString(),
-        msgHash,
-        message,
-        image,
-        name,
-        description
+          transitAddress,
+          sender: g[1],
+          amount: this.web3.fromWei(g[3], "ether").toString(),
+          tokenId,
+          status: g[5].toString(),
+          msgHash,
+          message,
+	  card,
+          image: card.metadata.image,
+          name: card.metadata.name,
+          description: card.metadata.description
       };
     };
     const result = await this.escrowContract.contract.getGiftPromise(
