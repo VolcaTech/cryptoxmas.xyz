@@ -4,9 +4,9 @@ import styles from "./styles";
 const PoweredByVolca = () => {
   return (
     <div style={styles.footerContainer}>
-      <a href="https://volca.tech" style={{ textDecoration: "none" }}>
-        <div style={styles.footerPowered}>Powered by </div>
-        <div style={styles.footerVolca}>Volcà</div>
+      <a href="https://t.me/CryptoXmas" target="_blank" style={{ textDecoration: "none" }}>
+        <div style={styles.footerPowered}>Join our </div>
+        <div style={styles.footerVolca}>Telegram group</div>
       </a>
     </div>
   );
