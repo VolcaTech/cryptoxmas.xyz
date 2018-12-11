@@ -23,7 +23,7 @@ const mint = async (network, escrowAddress) => {
     
     const rows = await readCSV('./scripts/tokens.csv');
     for (let r of rows) { 
-	let [url, categoryId, price, maxQnty] = r;
+	let [name, url, categoryId, price, maxQnty] = r;
 	console.log("fetching ", url);
 
 	const { data: metadata } = await axios.get(url);
