@@ -214,7 +214,19 @@ describe('CryptoxmasEscrow', () => {
 		    buyerWallet,
 		    messageHash
 		})).to.be.reverted;
-	    });	    
+	    });
+
+	    it("should fail if GivethBridge is paused", async () => {
+		await givethBridgeMock.pause();
+		await expect(buyNFT({
+		    value: rareCategory.price,
+		    tokenUri: rareCategory.tokenUri,
+		    transitAddress: Wallet.createRandom().address,		    
+		    escrowAddress: escrow.address,
+		    buyerWallet,
+		    messageHash
+		})).to.be.reverted;
+	    });	    	    
 	});
 
 	describe("Rare Category NFT", () => {

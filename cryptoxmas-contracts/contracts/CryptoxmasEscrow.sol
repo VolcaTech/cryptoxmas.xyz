@@ -223,7 +223,10 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     // send donation to Giveth campaign
     uint donation = tokenPrice.sub(EPHEMERAL_ADDRESS_FEE);
     if (donation > 0) {
-      _makeDonation(msg.sender, donation);
+      bool donationSuccess = _makeDonation(msg.sender, donation);
+
+      // revert if there was problem with sending ether to GivethBridge
+      require(donationSuccess == true);
     }
     
     // log buy event
