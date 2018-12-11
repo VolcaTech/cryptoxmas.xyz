@@ -6,7 +6,7 @@ const CharityPopUp = ({ handleClick }) => {
   return (
     <div style={styles.popUpContainer}>
       <RetinaImage
-        className="img-responsive"
+        className="img-responsive hover"
         style={{ float: "right", margin: 15 }}
         src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/close.png"
         onClick={handleClick}

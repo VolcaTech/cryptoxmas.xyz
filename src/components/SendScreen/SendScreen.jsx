@@ -34,7 +34,6 @@ class SendScreen extends Component {
 
     async componentDidMount() {
 	const category = await cryptoxmasService.getCardCategory(this.state.card.tokenUri);
-	console.log({category});
 	const tokensLeft = this.state.card.maxQnty - category.minted;
 	this.setState({
 	    tokensLeft
@@ -91,7 +90,7 @@ class SendScreen extends Component {
       <div>
         <div style={styles.sendscreenTitleContainer}>
           {this.state.charityPopupShown ? (
-            <CharityPopUp
+              <CharityPopUp
               handleClick={() => this.setState({ charityPopupShown: false })}
             />
           ) : (
@@ -110,7 +109,7 @@ class SendScreen extends Component {
             style={{ display: "inline" }}
             onClick={() => this.setState({ charityPopupShown: true })}
           >
-            <span style={{ textDecoration: "underline" }}>
+            <span className="hover" style={{ textDecoration: "underline" }}>
               will be sent to charity
             </span>
             <QuestionButton />
