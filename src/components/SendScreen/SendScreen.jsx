@@ -18,7 +18,7 @@ class SendScreen extends Component {
     const cardId = props.match.params.cardId;
     const card = cryptoxmasService.getCard(cardId);
     this.state = {
-      amount: card.price,
+	amount: utils.parseEther(String(card.price)),
       addedEther: 0,
       errorMessage: "",
       fetching: false,
@@ -46,7 +46,7 @@ class SendScreen extends Component {
     try {
       const transfer = await this.props.buyGift({
         message: this.state.cardMessage,
-        amount: this.state.amount,
+          amount: utils.formatEther(this.state.amount),
         cardId: this.state.cardId
       });
       this.props.history.push(`/transfers/${transfer.id}`);
@@ -80,7 +80,7 @@ class SendScreen extends Component {
 
   _renderForm() {
     let messageInputHeight = 50;
-    let nftPrice = Number(this.state.card.price);
+    let nftPrice = this.state.card.price;
     let claimFee = 0.01;
     if (this.state.cardMessage.length) {
       messageInputHeight = 100;
@@ -133,14 +133,16 @@ class SendScreen extends Component {
           </div>
         </div>
         <NumberInput
-          onChange={({ target }) =>
+        onChange={({ target }) => {
+	    
+	    const amount = utils.parseEther(String(target.value) || '0').add(utils.parseEther(String(nftPrice)));
             this.setState({
-              amount: parseFloat(target.value || 0) + nftPrice,
-              addedEther: parseFloat(target.value || 0),
-              numberInputError: false,
-              errorMessage: ""
-            })
-          }
+		amount, 
+		addedEther: parseFloat(target.value || 0),
+		numberInputError: false,
+		errorMessage: ""
+            });
+        }}
           disabled={false}
           style={{ touchInput: "manipulation" }}
           placeholder="Send ETH to your friend"
@@ -192,7 +194,7 @@ class SendScreen extends Component {
         </div>
         <div style={{ ...styles.sendscreenGreyText, color: "white" }}>
           <span style={{ fontFamily: "Inter UI Bold" }}>
-            Total: {this.state.amount} ETH
+        Total: {utils.formatEther(this.state.amount)} ETH
           </span>
           {this.state.addedEther ? (
             <div>Receiver will get: {this.state.addedEther} ETH</div>
