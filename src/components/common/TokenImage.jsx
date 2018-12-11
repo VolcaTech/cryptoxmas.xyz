@@ -1,5 +1,4 @@
 import React from "react";
-import RetinaImage from "react-retina-image";
 import styles from "./styles";
 
 const TokenImage = ({
@@ -23,14 +22,12 @@ const TokenImage = ({
 
   return (
     <div style={styles.tokenBorder}>
-      <div style={styles.tokenPrice}><div style={styles.tokenRarity}>{rarity}</div> {!hidePrice ? shownPrice : ""}</div>
+      <div style={styles.tokenPrice}>
+	{ rarity ? <div style={styles.tokenRarity}>{rarity}</div>: null }
+	{!hidePrice ? shownPrice : ""}</div>
       {url ? (
         <div>
-          <img
-            className="img-responsive"
-            style={styles.tokenImage}
-            src={url}
-          />
+          <img className="img-responsive" style={styles.tokenImage} src={url} />
           <span style={styles.tokenName}>{name}</span>
         </div>
       ) : (

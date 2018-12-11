@@ -1,0 +1,7 @@
+{
+    "ropsten": {
+        "ESCROW_CONTRACT": "0xb6623F9d7CF3b04A34C757aebf549500b65977e4",
+        "NFT_ADDRESS": "0x86dDDCe7311120bEf05f34C8C05B169276ed89a6",
+        "JSON_RPC_URL": "https://ropsten.infura.io"
+    }
+}

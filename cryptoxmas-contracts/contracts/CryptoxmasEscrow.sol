@@ -37,7 +37,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
 
   /* Token Categories */
-  enum CategoryId { Common, Special, Rare, Scarce, Limited, Epic }  
+  enum CategoryId { Common, Special, Rare, Scarce, Limited, Epic, Unique }  
   struct TokenCategory {
     CategoryId categoryId;
     uint minted;  // already minted
@@ -72,6 +72,13 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 		  address indexed transitAddress,
 		  address indexed sender,
 		  uint tokenId
+		  );
+
+  event LogAddTokenCategory(
+			    string tokenUri,
+			    CategoryId categoryId,
+			    uint maxQnty,
+			    uint price
 		  );
   
 
@@ -140,6 +147,8 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 					       0, // zero tokens minted initially
 					       _maxQnty,
 					       _price);
+
+    emit LogAddTokenCategory(_tokenUri, _categoryId, _maxQnty, _price);
     return true;
   }
 

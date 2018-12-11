@@ -17,7 +17,6 @@ const deploy = async (network) => {
     console.log("deploying from: ", deployerAddress);
     console.log(" ");    
 
-    console.log("Step: 3/6");        
     console.log("deploying escrow contract...");
     const escrowArgs = [networkConfig.GIVETH_BRIDGE_ADDRESS,
 			networkConfig.GIVETH_CAMPAIGN_ID,
@@ -45,7 +44,7 @@ const deploy = async (network) => {
 
 const main = async () => {
     try {
-	await deploy("rinkeby");
+	await deploy("ropsten");
     } catch(err) {
 	console.log("ERROR while deploying contracts");
 	console.log(err);

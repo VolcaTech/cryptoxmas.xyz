@@ -3,7 +3,8 @@ import React from "react";
 class QuestionButton extends React.Component {
   render() {
     return (
-      <span
+	<span
+	   className="hover"
         style={{
           display: "inline-block",
           width: 25,

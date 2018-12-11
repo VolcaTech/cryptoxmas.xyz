@@ -29,6 +29,16 @@ class EscrowContractService {
     );
   }
 
+  async getCardCategory(tokenUri) {
+    const c = await this.contract.getTokenCategoryPromise(tokenUri);
+    return {
+      categoryId: c[0].toNumber(),
+      minted: c[1].toNumber(),
+      maxQnty: c[2].toNumber(),
+      price: c[3]
+    };
+  }
+
   async claimGift({ transitWallet, receiverAddress }) {
     const gasPrice = utils.parseUnits("10", "gwei");
     const gasLimit = 200000;

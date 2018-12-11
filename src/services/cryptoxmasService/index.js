@@ -1,7 +1,7 @@
 import EscrowContract from "./escrowContract";
-import NFTService from "./NFTService";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
+import { getCategoryNameById } from "./utils";
 import { Wallet, providers } from "ethers";
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { utils } from "ethers";
@@ -9,7 +9,6 @@ import { utils } from "ethers";
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
-    this.nftService = new NFTService();
   }
 
   setup(web3) {
@@ -18,18 +17,20 @@ class CryptoxmasService {
     const network = networkName.toLowerCase();
     this.network = network;
     this.escrowContract.setup({ web3, network });
-    this.nftService.setup({ web3, network });
   }
 
   getCardsForSale() {
     const cardsDct = mintedTokensJson[this.network];
     return Object.keys(cardsDct).map(cardId => {
-      return { ...cardsDct[cardId], cardId };
+      return this.getCard(cardId);
     });
   }
 
   getCard(cardId) {
-    return mintedTokensJson[this.network][cardId];
+    const card = mintedTokensJson[this.network][cardId];
+    const category = getCategoryNameById(card.categoryId);
+    console.log({ card, category });
+    return { ...card, cardId, category };
   }
 
   // fetch gift information from blockchain
@@ -81,6 +82,10 @@ class CryptoxmasService {
 
   _generateTransferIdForLink(address) {
     return `link-${address}`;
+  }
+
+  async getCardCategory(tokenUri) {
+    return this.escrowContract.getCardCategory(tokenUri);
   }
 
   async buyGift({ tokenAddress, cardId, amountToPay, msgHash }) {
