@@ -37,7 +37,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
 
   /* Token Categories */
-  enum CategoryId { Common, Special, Rare, Scarce, Limited, Epic }  
+  enum CategoryId { Common, Special, Rare, Scarce, Limited, Epic, Unique }  
   struct TokenCategory {
     CategoryId categoryId;
     uint minted;  // already minted
