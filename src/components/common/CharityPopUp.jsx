@@ -18,7 +18,7 @@ const CharityPopUp = ({ handleClick }) => {
       <RetinaImage
         className="img-responsive"
         style={{ margin: "auto", marginTop: 30, marginBottom: 15 }}
-        src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/airdropven.png"
+        src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/giveth.png"
       />
       <RetinaImage
         className="img-responsive"

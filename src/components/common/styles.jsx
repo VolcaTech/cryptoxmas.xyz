@@ -16,7 +16,7 @@ export default {
     color: "black",
     backgroundColor: "white",
     fontSize: 20,
-    letterSpacing: 1.5,
+    letterSpacing: 1,
     boxShadow: 0,
     display: "block",
     margin: "auto",
@@ -142,6 +142,7 @@ export default {
   popUpContainer: {
     width: 364,
     height: 384,
+    left: "40%",
     margin: "auto",
     marginTop: 55,
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",

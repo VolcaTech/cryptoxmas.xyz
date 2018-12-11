@@ -23,8 +23,9 @@ const TokenImage = ({
   return (
     <div style={styles.tokenBorder}>
       <div style={styles.tokenPrice}>
-	{ rarity ? <div style={styles.tokenRarity}>{rarity}</div>: null }
-	{!hidePrice ? shownPrice : ""}</div>
+        {rarity ? <div style={styles.tokenRarity}>{rarity}</div> : null}
+        {!hidePrice ? shownPrice : ""}
+      </div>
       {url ? (
         <div>
           <img className="img-responsive" style={styles.tokenImage} src={url} />

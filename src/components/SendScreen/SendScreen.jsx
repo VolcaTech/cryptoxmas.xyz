@@ -26,20 +26,22 @@ class SendScreen extends Component {
       numberInputError: false,
       cardId,
       card,
-	cardMessage: "",
-	charityPopupShown: false,
-	tokensLeft: 0
+      cardMessage: "",
+      charityPopupShown: false,
+      tokensLeft: 0
     };
   }
 
-    async componentDidMount() {
-	const category = await cryptoxmasService.getCardCategory(this.state.card.tokenUri);
-	const tokensLeft = this.state.card.maxQnty - category.minted;
-	this.setState({
-	    tokensLeft
-	});
-    }
-    
+  async componentDidMount() {
+    const category = await cryptoxmasService.getCardCategory(
+      this.state.card.tokenUri
+    );
+    const tokensLeft = this.state.card.maxQnty - category.minted;
+    this.setState({
+      tokensLeft
+    });
+  }
+
   async _buyGift() {
     try {
       const transfer = await this.props.buyGift({
@@ -90,7 +92,7 @@ class SendScreen extends Component {
       <div>
         <div style={styles.sendscreenTitleContainer}>
           {this.state.charityPopupShown ? (
-              <CharityPopUp
+            <CharityPopUp
               handleClick={() => this.setState({ charityPopupShown: false })}
             />
           ) : (
@@ -99,9 +101,24 @@ class SendScreen extends Component {
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
         </div>
 
-
-            <div style={{width: 300, margin: "auto", marginBottom: 20, color: "white", fontSize: 18, fontFamily: "Inter UI Regular"}}>{this.state.tokensLeft} out of {this.state.card.maxQnty} left</div>
-            <TokenImage price={nftPrice} rarity={this.state.card.category} url={this.state.card.metadata.image || ""} name={this.state.card.metadata.name} />
+        <div
+          style={{
+            width: 300,
+            margin: "auto",
+            marginBottom: 20,
+            color: "white",
+            fontSize: 18,
+            fontFamily: "Inter UI Regular"
+          }}
+        >
+          {this.state.tokensLeft} out of {this.state.card.maxQnty} left
+        </div>
+        <TokenImage
+          price={nftPrice}
+          rarity={this.state.card.category}
+          url={this.state.card.metadata.image || ""}
+          name={this.state.card.metadata.name}
+        />
         <div style={styles.sendscreenGreyText}>
           All Ether from the sale of this Nifty
           <br />
@@ -126,7 +143,7 @@ class SendScreen extends Component {
           }
           disabled={false}
           style={{ touchInput: "manipulation" }}
-          placeholder="Wanna add ETH?"
+          placeholder="Send ETH to your friend"
           type="number"
           readOnly={false}
           error={this.state.numberInputError}
@@ -151,7 +168,10 @@ class SendScreen extends Component {
           />
         </div>
         <div style={styles.sendButton}>
-          <ButtonPrimary handleClick={this._onSubmit.bind(this)}>
+          <ButtonPrimary
+            disabled={this.state.tokensLeft === 0}
+            handleClick={this._onSubmit.bind(this)}
+          >
             {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
           </ButtonPrimary>
 
@@ -179,7 +199,10 @@ class SendScreen extends Component {
           ) : (
             <br />
           )}
-          <span>Donation: {(nftPrice - 0.01).toFixed(2)} ETH</span>
+          <span>
+            Donation: {(nftPrice - 0.01).toFixed(2)} ETH (NFT price minus
+            network fees)
+          </span>
           <br />
           <span>Claim fee: {claimFee} ETH (for Gas)</span>
         </div>
