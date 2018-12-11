@@ -28,7 +28,8 @@ const CharityPopUp = ({ handleClick }) => {
       <div style={styles.popUpBottomText}>
         Follow the campaign progress on our{" "}
         <a
-          href="https://release.giveth.io/campaigns/5c05357a4a1382778fc07cef"
+           href="https://beta.giveth.io/campaigns/5c0e84ea06392d786b64d484"
+	   target="_blank"
           style={{ textDecoration: "underline", color: "black" }}
         >
           Giveth site
