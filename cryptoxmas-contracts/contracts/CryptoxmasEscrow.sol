@@ -73,6 +73,13 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 		  address indexed sender,
 		  uint tokenId
 		  );
+
+  event LogAddTokenCategory(
+			    string tokenUri,
+			    CategoryId categoryId,
+			    uint maxQnty,
+			    uint price
+		  );
   
 
   /**
@@ -140,6 +147,8 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 					       0, // zero tokens minted initially
 					       _maxQnty,
 					       _price);
+
+    emit LogAddTokenCategory(_tokenUri, _categoryId, _maxQnty, _price);
     return true;
   }
 
