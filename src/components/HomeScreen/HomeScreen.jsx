@@ -57,7 +57,8 @@ class HomeScreen extends Component {
               </div>
               <div style={styles.homescreenGreyText}>
                 *receiver{" "}
-                <span
+            <span
+	          className="hover"
                   onClick={() => this.setState({ popUpShown: true })}
                   style={{ textDecoration: "underline" }}
                 >
