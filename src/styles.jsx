@@ -1,6 +1,6 @@
 export default {
   background: {
-    width: 414,
+    // width: 414,
     margin: "auto",
     display: "flex",
     flexDirection: "column",
