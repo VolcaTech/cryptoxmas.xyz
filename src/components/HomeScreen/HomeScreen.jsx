@@ -56,13 +56,13 @@ class HomeScreen extends Component {
                 some Ether to charity
               </div>
               <div style={styles.homescreenGreyText}>
-                *receiver{" "}
-            <span
-	          className="hover"
+                *receiver
+                <span
+                  className="hover"
                   onClick={() => this.setState({ popUpShown: true })}
-                  style={{ textDecoration: "underline" }}
+                  style={{ textDecoration: "underline", marginLeft: 4 }}
                 >
-                  doesn’t need a<br /> crypto wallet
+                  gets guided to <br /> claiming nft&eth in wallet
                 </span>
               </div>
               <div style={styles.homescreenWhiteTitle}>
