@@ -160,7 +160,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
    * @param _value uint amount of ether, that is send in tx. 
    * @return True if success.
    */      
-  function canBuyGift(string _tokenUri, address _transitAddress, uint _value) public view returns (bool) {
+  function canBuyGift(string _tokenUri, address _transitAddress, uint _value) public view whenNotPaused returns (bool) {
     // can not override existing gift
     require(gifts[_transitAddress].status == Statuses.Empty);
 
@@ -223,7 +223,10 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     // send donation to Giveth campaign
     uint donation = tokenPrice.sub(EPHEMERAL_ADDRESS_FEE);
     if (donation > 0) {
-      _makeDonation(msg.sender, donation);
+      bool donationSuccess = _makeDonation(msg.sender, donation);
+
+      // revert if there was problem with sending ether to GivethBridge
+      require(donationSuccess == true);
     }
     
     // log buy event
