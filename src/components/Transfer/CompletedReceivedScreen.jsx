@@ -95,7 +95,7 @@ class CompletedReceivedScreen extends React.Component {
             With this gift your friend sent
             <div style={{ marginBottom: 2 }}>
               <span style={{ color: "#4CD964" }}>
-                {(gift.card.price - 0.01).toFixed(2)} ETH{" "}
+                {(gift.card.price - 0.01).toFixed(2)} ETH 
               </span>
               <div
                 style={{ display: "inline" }}
