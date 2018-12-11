@@ -1,9 +1,9 @@
 {
-    "ropsten":{
-	"ESCROW_CONTRACT":"0x0700830ed76B6a25b84d69eD1BE9501CF6651aF7",
-	"NFT_ADDRESS":"0x5EbF074E73Bc7721E1133D995222980caFc6d068",
-	"JSON_RPC_URL":"https://ropsten.infura.io"
-    },
+    "ropsten": {
+        "ESCROW_CONTRACT": "0xb6623F9d7CF3b04A34C757aebf549500b65977e4",
+        "NFT_ADDRESS": "0x86dDDCe7311120bEf05f34C8C05B169276ed89a6",
+        "JSON_RPC_URL": "https://ropsten.infura.io"
+    },    
     "rinkeby": {
         "ESCROW_CONTRACT": "0xB06521bf4C170C7111538B10a13EdF1F0435D67A",
         "NFT_ADDRESS": "0xe1d5946ea3566013940ABdaD07E357cfE0e3860d",

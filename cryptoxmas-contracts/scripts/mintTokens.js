@@ -22,8 +22,9 @@ const mint = async (network, escrowAddress) => {
     const escrow = new Contract(escrowAddress, CryptoxmasEscrow.interface, deployerWallet);
     
     const rows = await readCSV('./scripts/tokens.csv');
-    for (let r of rows) { 
-	let [name, url, categoryId, price, maxQnty] = r;
+    for (let r of rows) {
+	console.log({r})
+	let [name, url, categoryId, maxQnty, price] = r;
 	console.log("fetching ", url);
 
 	const { data: metadata } = await axios.get(url);
@@ -66,8 +67,8 @@ const mint = async (network, escrowAddress) => {
 
 const main = async () => {
     try {
-	//await mint("ropsten", "0x0700830ed76B6a25b84d69eD1BE9501CF6651aF7");
-	await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
+	await mint("ropsten", "0xb6623F9d7CF3b04A34C757aebf549500b65977e4");
+	//await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
     } catch(err) {
 	console.log("ERROR while deploying contracts");
 	console.log(err);
