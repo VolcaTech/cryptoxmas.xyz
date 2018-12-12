@@ -2,7 +2,7 @@ export function getNetworkNameById(networkId) {
   let networkName;
   switch (networkId) {
     case "1":
-      networkName = "Main";
+      networkName = "Mainnet";
       break;
     case "2":
       networkName = "Morden";

@@ -19,6 +19,7 @@ import HomeScreen from "./components/HomeScreen/HomeScreen.jsx";
 import Footer from "./components/common/poweredByVolca";
 import styles from "./styles";
 
+
 class App extends Component {
   _renderWrongNetwork() {
     return (
@@ -61,7 +62,7 @@ class App extends Component {
       return this._renderStaticRouter();
     }
 
-      if (!(this.props.networkId === "3" || this.props.networkId === "4")) {
+      if (!(this.props.networkId === "1" || this.props.networkId === "3" || this.props.networkId === "4")) {
       return this._renderWrongNetwork();
     }
 

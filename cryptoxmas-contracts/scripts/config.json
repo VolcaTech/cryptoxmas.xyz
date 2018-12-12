@@ -1,4 +1,12 @@
 {
+
+    "mainnet": { 
+	"JSON_RPC_URL": "https://mainnet.infura.io",
+	"GIVETH_BRIDGE_ADDRESS": "0x30f938fED5dE6e06a9A7Cd2Ac3517131C317B1E7",
+	"GIVETH_CAMPAIGN_ID": 569,
+	"NFT_NAME": "CryptoXmas Postcards",
+	"NFT_SYMBOL": "CXMAS"
+    },    
     "ropsten": { 
 	"JSON_RPC_URL": "https://ropsten.infura.io",
 	"GIVETH_BRIDGE_ADDRESS": "0xC59dCE5CCC065A4b51A2321F857466A25ca49B40",
