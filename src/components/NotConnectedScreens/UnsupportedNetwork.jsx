@@ -10,14 +10,14 @@ class UnsupportedNetwork extends Component {
         </div>
         <div style={styles.unsupportedNetworkScreenContainer}>
           <div style={styles.unsupportedNetworkScreenText}>
-            We support Ropsten Test Network
+            We support Main Ethereum Network and Ropsten Test Network
             <br />
             <br />
             How to change Network:
             <br />
             1. Go to Settings in your wallet app
             <br />
-            2. Switch Network to Ropsten
+            2. Switch Network to Main Ethereum Network or Ropsten Test Network
             <br />
             3. Back to DApp browser in your wallet and reload the receiver’s
             link
