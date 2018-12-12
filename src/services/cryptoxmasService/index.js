@@ -29,8 +29,11 @@ class CryptoxmasService {
   getCard(cardId) {
     const card = mintedTokensJson[this.network][cardId];
     const category = getCategoryNameById(card.categoryId);
-    console.log({ card, category });
     return { ...card, cardId, category };
+  }
+
+  getBuyEvents(params) {
+    return this.escrowContract.getBuyEvents(params);
   }
 
   // fetch gift information from blockchain
@@ -43,6 +46,7 @@ class CryptoxmasService {
         console.log("fetching msg...");
         const uri = `https://ipfs.io/ipfs/${msgHash}`;
         const res = await fetch(uri).then(res => res.json());
+        console.log("msg fetched");
         if (res && res.message) {
           msg = res.message;
         }

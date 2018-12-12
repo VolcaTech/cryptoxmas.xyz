@@ -54,7 +54,7 @@ contract CryptoxmasEscrow is Pausable, Ownable {
   event LogBuy(
 	       address indexed transitAddress,
 	       address indexed sender,
-	       string indexed tokenUri,
+	       string tokenUri,
 	       uint tokenId,
 	       uint claimEth,
 	       uint nftPrice
