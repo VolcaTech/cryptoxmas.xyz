@@ -33,7 +33,7 @@ const HomeScreenPopUp = ({ handleClick }) => {
         <br />
         For more details, read{" "}
         <a
-          href="https://cryptoxmas.xyz/"
+          href="https://medium.com/@cryptoxmas/launching-cryptoxmas-on-mainnet-9dbe107eaac0"
           style={{ textDecoration: "underline", color: "black" }}
         >
           our blog post

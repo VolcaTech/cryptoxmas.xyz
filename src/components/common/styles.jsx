@@ -103,6 +103,21 @@ export default {
     fontFamily: "Inter UI Bold",
     color: "#4CD964"
   },
+  footerLinkContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    fontFamily: "Inter UI Regular",
+    fontSize: 12,
+    color: "#8B8B8B",
+    textDecoration: "none",
+    width: 150,
+    margin: "auto",
+    marginTop: 10
+  },
+  link: {
+    color: "#8B8B8B",
+    textDecoration: "none"
+  },
   spinnerLoaderText: {
     height: 40,
     color: "#fff",

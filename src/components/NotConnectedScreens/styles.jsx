@@ -1,28 +1,28 @@
 export default {
   unsupportedNetworkScreenTitle: {
-    width: "90%",
     display: "block",
-    margin: "auto",
     fontSize: 30,
     lineHeight: 1,
     fontFamily: "Inter UI Medium",
     color: "#4CD964",
-    textAlign: "center",
-    marginBottom: 25,
-    marginTop: 50
+    textAlign: "left",
+    marginTop: 50,
+    marginBottom: 15
   },
   unsupportedNetworkScreenText: {
     fontFamily: "Inter UI Regular",
-    fontSize: 24
+    fontSize: 20,
+    marginBottom: 15
   },
   unsupportedNetworkScreenContainer: {
     width: 400,
-    padding: 20,
+    paddingLeft: 20,
     margin: "auto",
     textAlign: "left",
+    color: "white",
     verticalAlign: "text-top",
-    marginTop: 40,
-    marginBottom: 35
+    marginTop: 15,
+    marginBottom: 15
   },
   walletSliderLogo: {
     height: 60,
