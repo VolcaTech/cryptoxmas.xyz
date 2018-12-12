@@ -1,28 +1,27 @@
 import React, { Component } from "react";
+import RetinaImage from "react-retina-image";
 import styles from "./styles";
 
 class UnsupportedNetwork extends Component {
   render() {
     return (
-      <div style={{ color: "white" }}>
+      <div style={{ }}>
+        
+        <div style={styles.unsupportedNetworkScreenContainer}>
         <div style={styles.unsupportedNetworkScreenTitle}>
           Network is not supported
         </div>
-        <div style={styles.unsupportedNetworkScreenContainer}>
           <div style={styles.unsupportedNetworkScreenText}>
-            We support Main Ethereum Network and Ropsten Test Network
+            Please set your wallet to
             <br />
-            <br />
-            How to change Network:
-            <br />
-            1. Go to Settings in your wallet app
-            <br />
-            2. Switch Network to Main Ethereum Network or Ropsten Test Network
-            <br />
-            3. Back to DApp browser in your wallet and reload the receiver’s
-            link
+            Ethereum Mainnet, Ropsten or Rinkeby Testnet
           </div>
+          <RetinaImage
+          className="img-responsive"
+          src="https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/change_network.png"
+        />
         </div>
+       
       </div>
     );
   }
