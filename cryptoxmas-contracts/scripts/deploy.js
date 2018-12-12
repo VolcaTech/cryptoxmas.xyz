@@ -44,6 +44,7 @@ const deploy = async (network) => {
 
 const main = async () => {
     try {
+	// await deploy("mainnet");
 	await deploy("ropsten");
     } catch(err) {
 	console.log("ERROR while deploying contracts");
