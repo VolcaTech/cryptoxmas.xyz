@@ -62,7 +62,7 @@ export default {
     textAlign: "left"
   },
   homescreenWhiteTitle: {
-    marginBottom: 40,
+    marginBottom: 30,
     fontFamily: "Inter UI Medium",
     fontSize: 24,
     color: "white",
