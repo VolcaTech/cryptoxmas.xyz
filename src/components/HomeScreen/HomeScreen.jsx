@@ -49,24 +49,27 @@ class HomeScreen extends Component {
             )}
             <div style={styles.homescreenTextContainer}>
               <div style={styles.homescreenGreenTitle}>
-                Surprise your friend
+                Surprise your Friends
                 <br />
-                with a Nifty & send
+                with Crypto &
                 <br />
-                some Ether to charity
+                Support Charity
               </div>
               <div style={styles.homescreenGreyText}>
-                *receiver
+                *receiving crypto made easy
                 <span
                   className="hover"
                   onClick={() => this.setState({ popUpShown: true })}
                   style={{ textDecoration: "underline", marginLeft: 4 }}
                 >
-                  gets guided to <br /> claiming nft&eth in wallet
+                  for non-crypto friends
                 </span>
               </div>
               <div style={styles.homescreenWhiteTitle}>
                 First, choose a Nifty
+              </div>
+              <div style={{...styles.homescreenWhiteTitle, marginBottom: 25, color: "#FFF100"}}>
+              A Global Christmas 
               </div>
             </div>
             <Col xs={6} sm={6} lg={6} style={styles.nftLeftColumn}>

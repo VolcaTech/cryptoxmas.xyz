@@ -137,9 +137,11 @@ class NoWalletScreen extends Component {
     return (
       <div style={styles.screenContainer}>
         <div style={styles.greenTitle}>
-          You need Metamask to
+        To send or receive gifts 
           <br />
-          send or receive gifts
+          you need the Metamask 
+          <br/>
+          browser addon
         </div>
         <RetinaImage
           className="img-responsive"
@@ -154,6 +156,7 @@ class NoWalletScreen extends Component {
           {" "}
           Install Metamask{" "}
         </a>
+        <div style={{...styles.walletSliderTitle, marginTop: 10}}>For Chrome, Firefox</div>
       </div>
     );
   }

@@ -24,7 +24,7 @@ const WhatsNextPopUp = ({ handleClick }) => {
         <br />
         → Send it to another friend
         <br />→{" "}
-        <a href="" style={{ color: "black", textDecoration: "underline" }}>
+        <a href="opensea.io" style={{ color: "black", textDecoration: "underline" }}>
           Sell it on OpenSea
         </a>
         <br />→{" "}
