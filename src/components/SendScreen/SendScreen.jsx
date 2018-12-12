@@ -145,7 +145,9 @@ class SendScreen extends Component {
         }}
           disabled={false}
           style={{ touchInput: "manipulation" }}
-          placeholder="Send ETH to your friend"
+          className="no-spinners"
+          min="0"
+          placeholder="Add ETH amount"
           type="number"
           readOnly={false}
           error={this.state.numberInputError}
