@@ -18,7 +18,7 @@ class SendScreen extends Component {
     const cardId = props.match.params.cardId;
     const card = cryptoxmasService.getCard(cardId);
     this.state = {
-	amount: utils.parseEther(String(card.price)),
+      amount: utils.parseEther(String(card.price)),
       addedEther: 0,
       errorMessage: "",
       fetching: false,
@@ -28,7 +28,8 @@ class SendScreen extends Component {
       card,
       cardMessage: "",
       charityPopupShown: false,
-      tokensLeft: 0
+      tokensLeft: 0,
+      addFieldsShown: false
     };
   }
 
@@ -46,7 +47,7 @@ class SendScreen extends Component {
     try {
       const transfer = await this.props.buyGift({
         message: this.state.cardMessage,
-          amount: utils.formatEther(this.state.amount),
+        amount: utils.formatEther(this.state.amount),
         cardId: this.state.cardId
       });
       this.props.history.push(`/transfers/${transfer.id}`);
@@ -132,45 +133,52 @@ class SendScreen extends Component {
             <QuestionButton />
           </div>
         </div>
-        <NumberInput
-        onChange={({ target }) => {
-	    
-	    const amount = utils.parseEther(String(target.value) || '0').add(utils.parseEther(String(nftPrice)));
-            this.setState({
-		amount, 
-		addedEther: parseFloat(target.value || 0),
-		numberInputError: false,
-		errorMessage: ""
-            });
-        }}
-          disabled={false}
-          style={{ touchInput: "manipulation" }}
-          className="no-spinners"
-          min="0"
-          placeholder="Add ETH amount"
-          type="number"
-          readOnly={false}
-          error={this.state.numberInputError}
-        />
-        <div style={{ marginTop: 20 }}>
-          <NumberInput
-            onChange={({ target }) =>
-              this.setState({
-                cardMessage: target.value
-              })
-            }
-            componentClass="textarea"
-            rows={3}
-            height={messageInputHeight}
-            disabled={false}
-            placeholder="Add gift message?"
-            type="text"
-            readOnly={false}
-            error={this.state.numberInputError}
-            maxLength={80}
-            textAlign={this.state.cardMessage ? "left" : "center"}
-          />
-        </div>
+        {this.state.addFieldsShown ? (
+          <div>
+            <NumberInput
+              onChange={({ target }) => {
+                const amount = utils
+                  .parseEther(String(target.value) || "0")
+                  .add(utils.parseEther(String(nftPrice)));
+                this.setState({
+                  amount,
+                  addedEther: parseFloat(target.value || 0),
+                  numberInputError: false,
+                  errorMessage: ""
+                });
+              }}
+              disabled={false}
+              style={{ touchInput: "manipulation" }}
+              className="no-spinners"
+              min="0"
+              placeholder="Add ETH amount"
+              type="number"
+              readOnly={false}
+              error={this.state.numberInputError}
+            />
+            <div style={{ marginTop: 20 }}>
+              <NumberInput
+                onChange={({ target }) =>
+                  this.setState({
+                    cardMessage: target.value
+                  })
+                }
+                componentClass="textarea"
+                rows={3}
+                height={messageInputHeight}
+                disabled={false}
+                placeholder="Add gift message?"
+                type="text"
+                readOnly={false}
+                error={this.state.numberInputError}
+                maxLength={80}
+                textAlign={this.state.cardMessage ? "left" : "center"}
+              />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
         <div style={styles.sendButton}>
           <ButtonPrimary
             disabled={this.state.tokensLeft === 0}
@@ -185,18 +193,26 @@ class SendScreen extends Component {
               error={this.state.errorMessage}
             />
           ) : (
-            <div style={styles.infoTextContainer}>
-              <span style={styles.infoText}>
-                ETH is securely held on the escrow Smart
-                <br />
-                Contract until the receiver claims it
-              </span>
+            <div
+              onClick={() =>
+                this.setState({ addFieldsShown: !this.state.addFieldsShown })
+              }
+              style={styles.infoTextContainer}
+            >
+              Add ETH or Gift Message{" "}
+              <i
+                className={
+                  this.state.addFieldsShown
+                    ? "fa fa-caret-up"
+                    : "fa fa-caret-down"
+                }
+              />
             </div>
           )}
         </div>
         <div style={{ ...styles.sendscreenGreyText, color: "white" }}>
           <span style={{ fontFamily: "Inter UI Bold" }}>
-        Total: {utils.formatEther(this.state.amount)} ETH
+            Total: {utils.formatEther(this.state.amount)} ETH
           </span>
           {this.state.addedEther ? (
             <div>Receiver will get: {this.state.addedEther} ETH</div>
