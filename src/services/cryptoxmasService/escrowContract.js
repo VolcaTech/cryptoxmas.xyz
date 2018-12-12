@@ -40,8 +40,8 @@ class EscrowContractService {
   }
 
   async claimGift({ transitWallet, receiverAddress }) {
-    const gasPrice = utils.parseUnits("10", "gwei");
-    const gasLimit = 200000;
+    const gasPrice = utils.parseUnits("20", "gwei");
+    //const gasLimit = 200000;
 
     const args = [receiverAddress];
     const data = new utils.Interface(
@@ -52,7 +52,7 @@ class EscrowContractService {
       value: 0,
       data,
       gasPrice,
-      gasLimit
+      //gasLimit
     });
     return tx;
   }
