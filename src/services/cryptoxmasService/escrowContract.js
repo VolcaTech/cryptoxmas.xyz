@@ -7,7 +7,7 @@ class EscrowContractService {
   setup({ web3, network }) {
     this.web3 = web3;
     this.contractAddress = config[network].ESCROW_CONTRACT;
-
+      this.network = network;
     // init contract object
     this.contract = web3.eth
       .contract(JSON.parse(CryptoxmasEscrow.interface))
@@ -27,6 +27,18 @@ class EscrowContractService {
         //gas: 110000
       }
     );
+  }
+    
+    async getBuyEvents(params) {
+	return new Promise((resolve, reject) => {
+	    //
+	    const fromBlock = config[this.network].CONTRACT_BLOCK_DEPLOYMENT || 0;
+	    const eventsGetter = this.contract.LogBuy(params, {fromBlock});
+	    eventsGetter.get((error, response) => {
+		if (error) { return reject(error); }
+		resolve(response);
+	    });
+	});
   }
 
   async getCardCategory(tokenUri) {

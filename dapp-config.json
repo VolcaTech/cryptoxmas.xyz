@@ -2,7 +2,8 @@
     "mainnet": {
         "ESCROW_CONTRACT": "0xcBD901dB55c9139828f7b5D5Cbfd5AfeAB01d066",
         "NFT_ADDRESS": "0x5f37ef03130f92925EA56579b891261118773aeA",
-        "JSON_RPC_URL": "https://mainnet.infura.io"
+        "JSON_RPC_URL": "https://mainnet.infura.io",
+	"CONTRACT_BLOCK_DEPLOYMENT": 6869533
     },    
     "ropsten": {
         "ESCROW_CONTRACT": "0xb6623F9d7CF3b04A34C757aebf549500b65977e4",
