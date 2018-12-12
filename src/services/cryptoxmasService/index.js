@@ -33,10 +33,9 @@ class CryptoxmasService {
   }
 
   getBuyEvents(params) {
-      return this.escrowContract.getBuyEvents(params);
+    return this.escrowContract.getBuyEvents(params);
   }
 
-    
   // fetch gift information from blockchain
   async getGift(transitPK) {
     const transitAddress = new Wallet(transitPK).address;
@@ -46,8 +45,8 @@ class CryptoxmasService {
       if (msgHash && msgHash !== "0x0") {
         console.log("fetching msg...");
         const uri = `https://ipfs.io/ipfs/${msgHash}`;
-          const res = await fetch(uri).then(res => res.json());
-	  console.log("msg fetched");
+        const res = await fetch(uri).then(res => res.json());
+        console.log("msg fetched");
         if (res && res.message) {
           msg = res.message;
         }

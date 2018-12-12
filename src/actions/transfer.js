@@ -27,8 +27,6 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
   return async dispatch => {
     const web3 = web3Service.getWeb3();
 
-
-      
     const txReceipt = await web3.eth.getTransactionReceiptMined(
       txHash || transfer.txHash
     );
@@ -36,10 +34,10 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
     const isError = !(txReceipt.status === "0x1" && txReceipt.logs.length > 0);
     dispatch(
       updateTransfer({
-          status: nextStatus,
-          isError,
-          id: transfer.id,
-	  txHash: transfer.txHash
+        status: nextStatus,
+        isError,
+        id: transfer.id,
+        txHash: transfer.txHash
       })
     );
 
@@ -52,29 +50,31 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
 // find all pending transfers and update status when they will be mined
 export const subscribePendingTransfers = () => {
   return async (dispatch, getState) => {
-      const state = getState();
+    const state = getState();
     const depositingTransfers = getDepositingTransfers(state);
     const receivingTransfers = getReceivingTransfers(state);
     const cancellingTransfers = getCancellingTransfers(state);
-      
-      // get pending depositing transfers from blockchain
-      //if (depositingTransfers.length > 0) {
-	  const params = { sender: state.web3Data.address } ;
-	  const buyEvents = await cryptoxmasService.getBuyEvents(params);
-      console.log({buyEvents})
-      buyEvents.map(buyEvent => {
 
-	      depositingTransfers.map(transfer => {	  
-		  if (transfer.transitAddress === buyEvent.args.transitAddress) {
-		      console.log("Updating transfer", {transfer, buyEvent});
-		      transfer.txHash = buyEvent.transactionHash;
-		  }
-	      });
-	  });
-      //}
-      
+    // get pending depositing transfers from blockchain
+    //if (depositingTransfers.length > 0) {
+    const params = { sender: state.web3Data.address };
+    const buyEvents = await cryptoxmasService.getBuyEvents(params);
+    console.log({ buyEvents });
+    buyEvents.map(buyEvent => {
+      depositingTransfers.map(transfer => {
+        if (transfer.transitAddress === buyEvent.args.transitAddress) {
+          console.log("Updating transfer", { transfer, buyEvent });
+          transfer.txHash = buyEvent.transactionHash;
+        }
+      });
+    });
+    //}
+
     depositingTransfers.map(transfer => {
-	dispatch(subscribePendingTransferMined(transfer, "deposited"), transfer.txHash);
+      dispatch(
+        subscribePendingTransferMined(transfer, "deposited"),
+        transfer.txHash
+      );
     });
     receivingTransfers.map(transfer => {
       dispatch(subscribePendingTransferMined(transfer, "received"));
