@@ -1,6 +1,6 @@
 import React from "react";
 import RetinaImage from "react-retina-image";
-import styles from "./styles";
+import styles from "./../common/styles";
 
 const HomeScreenPopUp = ({ handleClick }) => {
   return (

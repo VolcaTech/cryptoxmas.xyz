@@ -56,18 +56,29 @@ export default {
   },
   homescreenGreyText: {
     marginBottom: 50,
-    fontFamily: "Inter UI Regular",
-    fontSize: 18,
-    color: "#8B8B8B",
-    textAlign: "left"
+      fontFamily: "Inter UI Regular",
+      fontSize: 18,
+      color: "#8B8B8B",
+      textAlign: "left",
   },
   homescreenWhiteTitle: {
-    marginBottom: 30,
-    fontFamily: "Inter UI Medium",
-    fontSize: 24,
-    color: "white",
-    textAlign: "left"
+      marginBottom: 30,
+      fontFamily: "Inter UI Medium",
+      fontSize: 24,
+      color: "white",
+      textAlign: "left"
   },
+    groupTitle: {
+	width: 354,
+	margin: "auto",
+	marginTop: 50,
+	marginBottom: 30,
+	fontFamily: "Inter UI Medium",
+	fontSize: 24,
+	textAlign: "left",
+	marginBottom: 25,
+	color: "#FFF100"  
+    },
   nftLeftColumn: {
     display: "flex",
     flexDirection: "column",
