@@ -56,3 +56,17 @@ export const storeData = (data, path) => {
 	console.error(err);
     }
 }
+
+
+export const categoryNameToId = (name) => {
+    const dct = {
+	Common: 0,
+	Special: 1,
+	Rare: 2,
+	Scarce: 3,
+	Limited: 4,
+	Epic: 5,
+	Unique: 6
+    };
+    return dct[name];
+}
