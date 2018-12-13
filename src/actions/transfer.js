@@ -73,7 +73,7 @@ export const subscribePendingTransfers = () => {
 
     depositingTransfers.map(transfer => {
       dispatch(
-          subscribePendingTransferMined(transfer, "deposited", transfer.txHash),
+        subscribePendingTransferMined(transfer, "deposited", transfer.txHash)
       );
     });
     receivingTransfers.map(transfer => {
