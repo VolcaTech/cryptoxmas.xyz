@@ -6,7 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import RetinaImage from 'react-retina-image';
 
 const styles = {
-    screen: { minHeight: 600, paddingTop: 30 },
+    screen: { minHeight: 600, paddingTop: 50 },
     transfers: { fontSize: 24, fontFamily: 'SF Display Black', marginBottom: 30, color: 'white' },
     noTransfersContainer: {textAlign: 'center', marginTop: 100},
     illustration: {width: 'unset', marginBottom: 10},
