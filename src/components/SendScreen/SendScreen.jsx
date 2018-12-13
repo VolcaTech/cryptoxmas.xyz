@@ -99,18 +99,12 @@ class SendScreen extends Component {
           ) : (
             ""
           )}
-          <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
+            <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
+            <div style={styles.subtitle}>Send card to your friend &<br/> donate card price to<br/>charity</div>	    
         </div>
 
         <div
-          style={{
-            width: 300,
-            margin: "auto",
-            marginBottom: 20,
-            color: "white",
-            fontSize: 18,
-            fontFamily: "Inter UI Regular"
-          }}
+          style={styles.tokensLeft}
         >
           {this.state.tokensLeft} out of {this.state.card.maxQnty} left
         </div>
@@ -187,19 +181,26 @@ class SendScreen extends Component {
             {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
           </ButtonPrimary>
 
+
+	    <div>
+
           {this.state.fetching || this.state.errorMessage ? (
             <Error
               fetching={this.state.fetching}
               error={this.state.errorMessage}
             />
-          ) : (
+          ) : null}
+        </div>
+	   <div>
             <div
               onClick={() =>
                 this.setState({ addFieldsShown: !this.state.addFieldsShown })
-              }
+	      }
+	      className="hover"
               style={styles.infoTextContainer}
             >
-              Add ETH or Gift Message{" "}
+        Add pesonal message &<br/>
+	ETH for your friend{" "}
               <i
                 className={
                   this.state.addFieldsShown
@@ -207,9 +208,11 @@ class SendScreen extends Component {
                     : "fa fa-caret-down"
                 }
               />
-            </div>
-          )}
         </div>
+	    </div>
+	</div>
+
+	    
         <div style={{ ...styles.sendscreenGreyText, color: "white" }}>
           <span style={{ fontFamily: "Inter UI Bold" }}>
             Total: {utils.formatEther(this.state.amount)} ETH
