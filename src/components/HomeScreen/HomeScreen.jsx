@@ -68,8 +68,14 @@ class HomeScreen extends Component {
               <div style={styles.homescreenWhiteTitle}>
                 First, choose a Nifty
               </div>
-              <div style={{...styles.homescreenWhiteTitle, marginBottom: 25, color: "#FFF100"}}>
-              A Global Christmas 
+              <div
+                style={{
+                  ...styles.homescreenWhiteTitle,
+                  marginBottom: 25,
+                  color: "#FFF100"
+                }}
+              >
+                Christmas Mascots
               </div>
             </div>
             <Col xs={6} sm={6} lg={6} style={styles.nftLeftColumn}>
