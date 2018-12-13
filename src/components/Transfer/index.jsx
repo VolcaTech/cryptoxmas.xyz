@@ -25,6 +25,7 @@ export class TransferComponent extends Component {
       case "receiving":
         return <PendingTxScreen transfer={transfer} />;
       case "deposited":
+      case "sent":	
         return <DepositedScreen transfer={transfer} />;
       case "received":
         return <CompletedReceivedScreen transfer={transfer} />;

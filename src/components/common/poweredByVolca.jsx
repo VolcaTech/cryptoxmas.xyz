@@ -13,6 +13,12 @@ const PoweredByVolca = () => {
         <div style={styles.footerVolca}>Telegram group</div>
       </a>
       <div style={styles.footerLinkContainer}>
+        <a href="https://cryptoxmas.xyz" style={styles.link}>
+          About
+        </a>		
+        <a href="/#/history" style={styles.link}>
+          History
+        </a>	
         <a href="https://cryptoxmas.xyz/privacy.html" style={styles.link}>
           Privacy
         </a>

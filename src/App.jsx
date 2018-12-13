@@ -7,6 +7,7 @@ import ReceiveForm from "./components/Receive/ReceiveForm";
 import TransferComponent from "./components/Transfer";
 import Header from "./components/common/Header/Header";
 import { Loader } from "./components/common/Spinner";
+import HistoryScreen from './components/HistoryScreen/HistoryScreen';
 import {
   HashRouter as Router,
   Route,
@@ -76,7 +77,8 @@ class App extends Component {
                 exact
                 path="/transfers/:transferId"
                 component={TransferComponent}
-              />
+		 />
+              <Route path="/history" component={HistoryScreen} />	      
               <Route exact path="/send/:cardId" component={SendScreen} />
 
               <Route path="/receive" component={ReceiveForm} />

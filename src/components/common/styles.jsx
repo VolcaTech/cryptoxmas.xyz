@@ -110,9 +110,9 @@ export default {
     fontSize: 12,
     color: "#8B8B8B",
     textDecoration: "none",
-    width: 150,
+    width: 320,
     margin: "auto",
-    marginTop: 10
+    marginTop: 20
   },
   link: {
     color: "#8B8B8B",
