@@ -45,6 +45,9 @@ export default {
     textAlign: "center"
   },
   infoTextContainer: {
+    fontFamily: "Inter UI Medium",
+    fontSize: 16,
+    color: "white",
     paddingTop: 15,
     marginBottom: 50,
     height: 28,
