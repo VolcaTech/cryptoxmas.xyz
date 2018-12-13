@@ -57,7 +57,6 @@ class EscrowContractService {
     });
   }
 
-    
   async getCardCategory(tokenUri) {
     const c = await this.contract.getTokenCategoryPromise(tokenUri);
     return {

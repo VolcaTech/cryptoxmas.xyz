@@ -39,7 +39,7 @@ class CryptoxmasService {
   getClaimEvents(params) {
     return this.escrowContract.getClaimEvents(params);
   }
-    
+
   // fetch gift information from blockchain
   async getGift(transitPK) {
     const transitAddress = new Wallet(transitPK).address;

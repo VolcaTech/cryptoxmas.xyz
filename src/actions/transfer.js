@@ -1,10 +1,10 @@
 import ipfsService from "./../services/ipfsService";
 import web3Service from "../services/web3Service";
 import {
-    getTransfersForActiveAddress,
-    getDepositingTransfers,
-    getReceivingTransfers,
-    getCancellingTransfers
+  getTransfersForActiveAddress,
+  getDepositingTransfers,
+  getReceivingTransfers,
+  getCancellingTransfers
 } from "./../data/selectors";
 import cryptoxmasService from "../services/cryptoxmasService";
 import * as actionTypes from "./types";
@@ -187,36 +187,36 @@ export const cancelTransfer = transfer => {
   };
 };
 
-
 export const fetchClaimEvents = () => {
-    return async (dispatch, getState) => {
-    	const state = getState();
-	const address = state.web3Data.address;
-	const lastChecked = 0;
-	const activeAddressTransfers = getTransfersForActiveAddress(state);
-	
-	try {
-	    const params = { sender: address };
-	    const events = await cryptoxmasService.getClaimEvents(params);
-	    console.log({events})
-	    events.map(event => {
-		const { transitAddress, sender } = event.args;
-		activeAddressTransfers
-		    .filter(transfer =>
-			    transfer.status === 'deposited' &&
-			    transfer.transitAddress === transitAddress &&
-			    transfer.senderAddress === sender
-			   )
-		    .map(transfer => {
-			dispatch(updateTransfer({
-			    status: "sent",
-			    id: transfer.id
-			}));
-		    });
-	    });
+  return async (dispatch, getState) => {
+    const state = getState();
+    const address = state.web3Data.address;
+    const activeAddressTransfers = getTransfersForActiveAddress(state);
 
-	} catch (err) {
-	    console.log("Error while getting events", err);
-	}
-    };
-}
+    try {
+      const params = { sender: address };
+      const events = await cryptoxmasService.getClaimEvents(params);
+      console.log({ events });
+      events.map(event => {
+        const { transitAddress, sender } = event.args;
+        activeAddressTransfers
+          .filter(
+            transfer =>
+              transfer.status === "deposited" &&
+              transfer.transitAddress === transitAddress &&
+              transfer.senderAddress === sender
+          )
+          .map(transfer => {
+            dispatch(
+              updateTransfer({
+                status: "sent",
+                id: transfer.id
+              })
+            );
+          });
+      });
+    } catch (err) {
+      console.log("Error while getting events", err);
+    }
+  };
+};
