@@ -15,7 +15,7 @@ const defaultDeployOptions = {
     gasPrice: 9000000000
 };
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 
