@@ -5,7 +5,14 @@ import config from './config';
 import CryptoxmasEscrow from '../build/CryptoxmasEscrow';
 import NFT from '../build/NFT';
 import axios from 'axios';
-import { deployContract, storeData, waitForTransactionReceipt, readCSV } from './helpers';
+import {
+    deployContract,
+    storeData,
+    waitForTransactionReceipt,
+    readCSV,
+    categoryNameToId,
+    sleep
+} from './helpers';
 
 
 const mint = async (network, escrowAddress) => {
@@ -23,10 +30,10 @@ const mint = async (network, escrowAddress) => {
     
     const rows = await readCSV('./scripts/tokens.csv');
     for (let r of rows) {
-	console.log({r})
-	let [name, url, categoryId, maxQnty, price] = r;
-	console.log("fetching ", url);
-
+	console.log(r);
+	let [name, url, categoryName, maxQnty, price, group ] = r;
+	
+	const categoryId = categoryNameToId(categoryName);
 	const { data: metadata } = await axios.get(url);
 
 	// save category to file
@@ -35,10 +42,13 @@ const mint = async (network, escrowAddress) => {
 	    tokenUri: url,
 	    categoryId: Number(categoryId),
 	    price: Number(price),
-	    maxQnty: Number(maxQnty)
+	    maxQnty: Number(maxQnty),
+	    categoryName,
+	    group
 	};
 	tokensDct[utils.id(url)] = token;
 
+	console.log(token);
 
 	// save category to escrow contract
 	let category = await escrow.getTokenCategory(url);
@@ -46,7 +56,9 @@ const mint = async (network, escrowAddress) => {
 	    console.log("Adding new category to blockchain ", url);
 	    let result = await escrow.addTokenCategory(url, token.categoryId, token.maxQnty, utils.parseEther(String(token.price)));
 	    await waitForTransactionReceipt(provider, result.hash);
-	    console.log("category added");
+	    console.log("category added. sleeping for 60s");
+	    await sleep(1000*60);
+	    console.log("woke up.");
 	} else {
 	    console.log("Existing category for: ", url);
 	}
@@ -67,7 +79,7 @@ const mint = async (network, escrowAddress) => {
 
 const main = async () => {
     try {
-	// await mint("ropsten", "0xb6623F9d7CF3b04A34C757aebf549500b65977e4");
+	//await mint("ropsten", "0xb6623F9d7CF3b04A34C757aebf549500b65977e4");
 	// await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
 	await mint("mainnet", "0xcBD901dB55c9139828f7b5D5Cbfd5AfeAB01d066");	
     } catch(err) {

@@ -15,7 +15,7 @@ const defaultDeployOptions = {
     gasPrice: 9000000000
 };
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 
@@ -55,4 +55,18 @@ export const storeData = (data, path) => {
     } catch (err) {
 	console.error(err);
     }
+}
+
+
+export const categoryNameToId = (name) => {
+    const dct = {
+	Common: 0,
+	Special: 1,
+	Rare: 2,
+	Scarce: 3,
+	Limited: 4,
+	Epic: 5,
+	Unique: 6
+    };
+    return dct[name];
 }

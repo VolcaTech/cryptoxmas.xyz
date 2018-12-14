@@ -48,7 +48,7 @@ class CryptoxmasService {
       let msg = "";
       if (msgHash && msgHash !== "0x0") {
         console.log("fetching msg...");
-        const uri = `https://ipfs.io/ipfs/${msgHash}`;
+        const uri = `https://ipfs.infura.io/ipfs/${msgHash}`;
         const res = await fetch(uri).then(res => res.json());
         console.log("msg fetched");
         if (res && res.message) {
