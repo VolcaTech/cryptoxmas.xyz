@@ -1,4 +1,8 @@
 
+a.no-hover-decoration:hover, a.no-hover-decoration:hover > * {
+    text-decoration: none !important; 
+}
+
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */

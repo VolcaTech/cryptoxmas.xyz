@@ -142,7 +142,7 @@ export default {
   headerContainer: {
     paddingTop: "19px",
     textAlign: "center",
-    width: 354,
+      width: Math.min(354, window.innerWidth),
     margin: "auto",
     display: "flex",
     alignItems: "center"
@@ -163,7 +163,8 @@ export default {
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 5,
     backgroundColor: "white",
-    position: "absolute"
+      position: "absolute",
+      zIndex: 10
   },
   popUpTopText: {
     display: "block",

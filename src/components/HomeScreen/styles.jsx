@@ -2,7 +2,8 @@ export default {
   nftContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+      alignItems: "center",
+      margin:'auto',
     width: 170,
     height: 170,
     backgroundColor: "white",
@@ -31,64 +32,61 @@ export default {
     textAlign: "center",
     color: "black",
     fontFamily: "Inter UI Bold",
-    fontSize: 14
+      fontSize: 14,
+      height: 20,
+      overflow: 'hidden'
   },
   homescreenContainer: {
-    width: "100%",
-    backgroundColor: "#474D5B",
-    backgroundImage:
+      width: "100%",
+      backgroundColor: "#474D5B",
+      backgroundImage:
       "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles_tree.png)",
-    backgroundPosition: "right top",
-    backgroundRepeat: "no-repeat"
+      backgroundPosition: "right top",
+      backgroundRepeat: "no-repeat",
+      //
   },
+  homescreenContent: {
+      maxWidth: 1000,
+      margin: 'auto',
+      height: window.innerHeight,
+  },    
   homescreenTextContainer: {
-    width: 354,
-    margin: "auto",
-    marginTop: 50,
-    textAlign: "left"
+      width: (window.innerWidth > 667 ? '100%': Math.min(354, window.innerWidth)),
+      margin: "auto",
+      marginTop: 50,
+      textAlign: "left",      
   },
   homescreenGreenTitle: {
     marginBottom: 25,
     fontFamily: "Inter UI Medium",
     fontSize: 30,
     color: "#4CD964",
-    textAlign: "left"
+      textAlign: (window.innerWidth > 667 ? 'center': 'left'),
   },
   homescreenGreyText: {
-    marginBottom: 50,
+      marginBottom: 50,
       fontFamily: "Inter UI Regular",
       fontSize: 18,
       color: "#8B8B8B",
-      textAlign: "left",
+      textAlign: (window.innerWidth > 667 ? 'center': 'left'),
   },
   homescreenWhiteTitle: {
-      marginBottom: 30,
+      marginBottom: 20,
       fontFamily: "Inter UI Medium",
       fontSize: 24,
       color: "white",
-      textAlign: "left"
+      paddingLeft: (window.innerWidth > 667 ? 40: 0),
   },
     groupTitle: {
-	width: 354,
 	margin: "auto",
-	marginTop: 50,
 	marginBottom: 30,
 	fontFamily: "Inter UI Medium",
 	fontSize: 24,
 	textAlign: "left",
 	marginBottom: 25,
+	width: (window.innerWidth > 667 ? '100%': Math.min(354, window.innerWidth)),
+	paddingLeft: (window.innerWidth > 667 ? 25: 0),
 	color: "#FFF100"  
     },
-  nftLeftColumn: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    position: "inherit"
-  },
-  nftRightColumn: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    position: "inherit"
-  }
+
 };

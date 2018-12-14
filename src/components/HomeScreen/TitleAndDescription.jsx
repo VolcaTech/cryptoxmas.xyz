@@ -14,13 +14,10 @@ class TitleAndDescription extends Component {
               {this.state.popUpShown ? (
 		  <PopUp handleClick={() => this.setState({ popUpShown: false })} />
               ) : null}
-		<div style={styles.homescreenTextContainer}>
+		<div>
 		<div style={styles.homescreenGreenTitle}>
-            Surprise your Friends
-                <br />
-            with Crypto &
-                <br />
-            Support Charity
+            Surprise your Friends with Crypto &<br/>
+	    Support Charity
             </div>
 		<div style={styles.homescreenGreyText}>
                 *receiving crypto made easy
@@ -31,11 +28,14 @@ class TitleAndDescription extends Component {
                 >
             for non-crypto friends
             </span>
-            </div>
+            
+	    </div>
+	    </div>
+	    
 		<div style={styles.homescreenWhiteTitle}>
-            First, choose a Nifty	
+	    First, choose a Nifty
 	    </div>
-	    </div>
+		
 	    </div>	    
 	)
     }

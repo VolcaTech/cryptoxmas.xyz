@@ -5,11 +5,10 @@ import styles from "./styles";
 const Card = ({card, position}) => { 
     const { cardId, metadata, price } = card;
     return (
-	<a style={{ display: "block" }} href={`/#/send/${cardId}`} key={cardId}>
+	<a style={{ display: "block"}} className="no-hover-decoration" href={`/#/send/${cardId}`} key={cardId}>
           <div
              style={{
-		 ...styles.nftContainer,
-            float: position
+		 ...styles.nftContainer
              }}
              >
             <span style={styles.nftPrice}>{price} ETH</span>
