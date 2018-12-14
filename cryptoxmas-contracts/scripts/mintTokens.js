@@ -76,8 +76,8 @@ const mint = async (network, escrowAddress) => {
 
 const main = async () => {
     try {
-	await mint("ropsten", "0xb6623F9d7CF3b04A34C757aebf549500b65977e4");
-	// await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
+	//await mint("ropsten", "0xb6623F9d7CF3b04A34C757aebf549500b65977e4");
+	await mint("rinkeby", "0xB06521bf4C170C7111538B10a13EdF1F0435D67A");
 	// await mint("mainnet", "0xcBD901dB55c9139828f7b5D5Cbfd5AfeAB01d066");	
     } catch(err) {
 	console.log("ERROR while deploying contracts");
