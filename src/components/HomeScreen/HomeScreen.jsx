@@ -32,7 +32,7 @@ const CardGroup = ({group}) => {
 class HomeScreen extends Component {
   render() {
       return (
-	  <Col xs={12} style={{ paddingBottom: 30}}>
+	  <Col xs={12} lg={12} style={{ paddingBottom: 30}}>
             <Row>
 
 	   <div style={styles.homescreenContainer}>
