@@ -37,7 +37,6 @@ export default {
     textTransform: "capitalize",
     padding: "3px 7px",
     borderRadius: 10,
-    backgroundColor: "#4CD964",
     color: "white"
   },
   nftImage: {
