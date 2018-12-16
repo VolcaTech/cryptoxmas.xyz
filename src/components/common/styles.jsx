@@ -159,6 +159,8 @@ export default {
     height: 384,
       left: ( window.innerWidth > 600 ? "40%" : 0),
     margin: "auto",
+    left: "auto",
+    right: "auto",
     marginTop: 55,
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 5,

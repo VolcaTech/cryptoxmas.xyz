@@ -82,9 +82,11 @@ class NoWalletScreen extends Component {
     return (
       <div style={styles.screenContainer}>
         <div style={styles.greenTitle}>
-          Your friend
+          To send or receive gifts
           <br />
-          sent you a gift
+          you need an Ethereum
+          <br />
+          wallet app
         </div>
         <RetinaImage
           className="img-responsive"
@@ -97,7 +99,7 @@ class NoWalletScreen extends Component {
           target="_blank"
         >
           {" "}
-          Open in {this.state.selectedWallet.name}{" "}
+          Install {this.state.selectedWallet.name}{" "}
         </a>
         <WalletSlider
           selectWallet={this._selectWallet.bind(this)}
@@ -137,10 +139,10 @@ class NoWalletScreen extends Component {
     return (
       <div style={styles.screenContainer}>
         <div style={styles.greenTitle}>
-        To send or receive gifts 
+          To send or receive gifts
           <br />
-          you need the Metamask 
-          <br/>
+          you need the Metamask
+          <br />
           browser addon
         </div>
         <RetinaImage
@@ -156,7 +158,9 @@ class NoWalletScreen extends Component {
           {" "}
           Install Metamask{" "}
         </a>
-        <div style={{...styles.walletSliderTitle, marginTop: 10}}>For Chrome, Firefox</div>
+        <div style={{ ...styles.walletSliderTitle, marginTop: 10 }}>
+          For Chrome, Firefox
+        </div>
       </div>
     );
   }
