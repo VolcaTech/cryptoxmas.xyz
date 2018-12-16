@@ -5,7 +5,7 @@ const _withoutProtocol = url => {
 export default {
   trust: {
     id: "trust",
-    name: "Trust",
+    name: "Trust Wallet",
     walletURL: "https://trustwalletapp.com",
     dappStoreUrl: "https://dapps.trustwalletapp.com/",
     mobile: {

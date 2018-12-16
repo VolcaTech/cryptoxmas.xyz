@@ -2,53 +2,47 @@ import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import cryptoxmasService from "./../../services/cryptoxmasService";
 import styles from "./styles";
-import TitleAndDescription from './TitleAndDescription';
-import Card from './Card';
+import TitleAndDescription from "./TitleAndDescription";
+import Card from "./Card";
 
+const CardGroup = ({ group }) => {
+  const cards = cryptoxmasService.getCardsForSale();
+  const groupCards = cards.filter(card => card.group === group);
 
-const CardGroup = ({group}) => {
-    const cards = cryptoxmasService.getCardsForSale();
-    const groupCards = cards.filter(card => card.group === group);
+  // for small devices i
+  const colsXs = window.innerWidth < 375 ? 12 : 6;
 
-    // for small devices i
-    const colsXs = window.innerWidth < 375 ? 12 : 6;
-    
-    return (
-	<Col xs={12} style={{marginBottom: 50}}>
-          <div style={styles.groupTitle}>{group}</div>
-	  <Row> { groupCards.map(card => (
-	      <Col xs={colsXs} sm={3}  key={card.cardId} style={{padding:0}}>
-		 <Card card={card} position={"right"} />
-              </Col>
-	  ))}
-	</Row>
-	</Col>
-
-    );
-}
-
-
+  return (
+    <Col xs={12} style={{ marginBottom: 50 }}>
+      <div style={styles.groupTitle}>{group}</div>
+      <Row>
+        {" "}
+        {groupCards.map(card => (
+          <Col xs={colsXs} sm={3} key={card.cardId} style={{ padding: 0 }}>
+            <Card card={card} position={"right"} />
+          </Col>
+        ))}
+      </Row>
+    </Col>
+  );
+};
 
 class HomeScreen extends Component {
   render() {
-      return (
-	  <Col xs={12} style={{ paddingBottom: 30}}>
-            <Row>
-
-	   <div style={styles.homescreenContainer}>
-	     <div style={styles.homescreenContent}>	  
-
-	       <TitleAndDescription/>
-	       <CardGroup group="Christmas Mascots"/>
- 	       <CardGroup group="Christmas Spirit"/>	
- 	       <CardGroup group="Raiden"/>
- 	       <CardGroup group="Centrifuge"/>
--
-	     </div>	    
-	   </div>
-            </Row>
-	  </Col>
-	  
+    return (
+      <Col xs={12} style={{ paddingBottom: 30 }}>
+        <Row>
+          <div style={styles.homescreenContainer}>
+            <div style={styles.homescreenContent}>
+              <TitleAndDescription />
+              <CardGroup group="Christmas Mascots" />
+              <CardGroup group="Christmas Spirit" />
+              <CardGroup group="Raiden" />
+              <CardGroup group="Centrifuge" />-
+            </div>
+          </div>
+        </Row>
+      </Col>
     );
   }
 }

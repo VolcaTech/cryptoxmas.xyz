@@ -14,7 +14,7 @@ class UnsupportedNetwork extends Component {
           <div style={styles.unsupportedNetworkScreenText}>
             Please set your wallet to
             <br />
-            Ethereum Mainnet, Ropsten or Rinkeby Testnet
+            Ethereum Mainnet
           </div>
           <RetinaImage
           className="img-responsive"
