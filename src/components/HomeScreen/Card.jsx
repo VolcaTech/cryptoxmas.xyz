@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./styles";
 
 const Card = ({ card }) => {
-  console.log(card);
   const { cardId, metadata, price } = card;
   const rarity = card.categoryName;
   return (

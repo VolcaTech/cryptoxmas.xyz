@@ -99,7 +99,7 @@ class NoWalletScreen extends Component {
           target="_blank"
         >
           {" "}
-          Install {this.state.selectedWallet.name}{" "}
+          Open {this.state.selectedWallet.name}{" "}
         </a>
         <WalletSlider
           selectWallet={this._selectWallet.bind(this)}

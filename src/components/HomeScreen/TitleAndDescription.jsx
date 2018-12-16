@@ -25,18 +25,17 @@ class TitleAndDescription extends Component {
             <span style={styles.redDot}>2</span>
             <div style={styles.homescreenGreenTitle}>Support charity</div>
           </div>
-          <div style={styles.homescreenWhiteText}>
+          <div style={styles.homescreenWhiteText} onClick={() => this.setState({ popUpShown: true })}>
             Read
             <span
               className="hover"
-              onClick={() => this.setState({ popUpShown: true })}
               style={{ textDecoration: "underline", marginLeft: 4 }}
             >
               how it works & how to support charity
             </span>
             <QuestionButon
-              width="19"
-              height="19"
+              width={19}
+              height={19}
               backgroundColor="white"
               color="#474D5B"
               fontSize="12px"

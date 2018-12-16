@@ -68,7 +68,7 @@ export default {
     height: window.innerHeight
   },
   homescreenTextContainer: {
-    width: window.innerWidth > 667 ? 528 : Math.min(354, window.innerWidth),
+    width: window.innerWidth > 667 ? 528 : Math.min(250, window.innerWidth),
     margin: "auto",
     marginLeft: window.innerWidth > 667 ? "auto" : 20,
     marginTop: 50,
@@ -91,17 +91,17 @@ export default {
     textAlign: window.innerWidth > 667 ? "center" : "left"
   },
   greenContainer: {
-    width: 250,
-    height: 40,
-    textAlign: "center",
-    backgroundColor: "#4CD964",
-    margin: "auto",
-    marginBottom: 20,
-    borderRadius: 20,
-    fontFamily: "Inter UI Regular",
-    fontSize: 20,
-    color: "white",
-    paddingTop: 5
+      width: Math.min(350, window.innerWidth - 50),
+      height: 40,
+      textAlign: "center",
+      // backgroundColor: "#4CD964",
+      margin: "auto",
+      marginBottom: 20,
+      borderRadius: 20,
+      fontFamily: "Inter UI Regular",
+      fontSize: 20,
+      color: "white",
+      paddingTop: 5
   },
   groupTitle: {
     margin: "auto",
