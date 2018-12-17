@@ -52,11 +52,13 @@ export default {
     mobile: {
       android: {
         support: true,
-        deepLink: null
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
       },
       ios: {
         support: true,
-        deepLink: null
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
       }
     }
   },
