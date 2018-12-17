@@ -50,19 +50,15 @@ export default {
     walletURL: "https://token.im/",
     dappStoreUrl: "https://dapps.trustwalletapp.com/",
     mobile: {
-	android: {
-            support: true,
-            deepLink: url =>
-		`imtokenv2://navigate/DappView?url=${encodeURIComponent(
-            url
-          )}`	    
-	},
-	ios: {
-            support: true,
-            deepLink: url =>
-		`imtokenv2://navigate/DappView?url=${encodeURIComponent(
-            url
-          )}`
+      android: {
+        support: true,
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
+      },
+      ios: {
+        support: true,
+        deepLink: url =>
+          `imtokenv2://navigate/DappView?url=${encodeURIComponent(url)}`
       }
     }
   },
