@@ -38,8 +38,13 @@ class HomeScreen extends Component {
               <CardGroup group="Christmas Mascots" />
               <CardGroup group="Christmas Spirit" />
               <CardGroup group="Raiden" />
-              <CardGroup group="Centrifuge" />-
-            </div>
+              <CardGroup group="Centrifuge" />
+              <CardGroup group="MetaCartel" />
+              <CardGroup group="imToken" />
+              <CardGroup group="GitCoin" />
+              <CardGroup group="resurREKT" />	
+              <CardGroup group="Giveth" />	      	      	      	            
+            </div>	    
           </div>
         </Row>
       </Col>
