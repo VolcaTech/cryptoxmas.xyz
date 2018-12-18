@@ -49,6 +49,11 @@ module.exports = {
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
   ],
+  externals: [
+    {
+      xmlhttprequest: 'XMLHttpRequest'
+    }
+  ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: paths.appBuild,

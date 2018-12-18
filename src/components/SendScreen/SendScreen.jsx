@@ -10,6 +10,7 @@ import CharityPopUp from "./../common/CharityPopUp";
 import { utils } from "ethers";
 import cryptoxmasService from "../../services/cryptoxmasService";
 import styles from "./styles";
+import BigNumber from "bignumber.js";
 
 class SendScreen extends Component {
   constructor(props) {
@@ -31,7 +32,8 @@ class SendScreen extends Component {
       tokensLeft: 0,
       addFieldsShown: false,
       totalShown: false,
-      fullDescriptionShown: false
+      fullDescriptionShown: false,
+      DAIAmount: utils.parseEther("0")
     };
   }
 
@@ -46,18 +48,19 @@ class SendScreen extends Component {
   }
 
   async _buyGift() {
-    try {
-      const transfer = await this.props.buyGift({
-        message: this.state.cardMessage,
-        amount: utils.formatEther(this.state.amount),
-        cardId: this.state.cardId
-      });
-      this.props.history.push(`/transfers/${transfer.id}`);
-    } catch (err) {
+    //   try {
+    const transfer = await this.props.buyGift({
+      message: this.state.cardMessage,
+      amount: utils.formatEther(this.state.amount),
+      cardId: this.state.cardId,
+      DAIAmount: utils.formatEther(this.state.DAIAmount)
+    });
+    this.props.history.push(`/transfers/${transfer.id}`);
+    /*  } catch (err) {
       let errorMsg = err.message;
       if (err.isOperational) errorMsg = "User denied transaction";
       this.setState({ fetching: false, errorMessage: errorMsg });
-    }
+     }*/
   }
 
   _onSubmit() {
@@ -89,8 +92,8 @@ class SendScreen extends Component {
     let descriptionHeight = 44;
     let descriptionWidth = 270;
     if (this.state.fullDescriptionShown || description.length < 64) {
-        descriptionHeight = "unset";
-        descriptionWidth = 300;
+      descriptionHeight = "unset";
+      descriptionWidth = 300;
     }
     if (this.state.cardMessage.length) {
       messageInputHeight = 100;
@@ -116,19 +119,28 @@ class SendScreen extends Component {
           url={this.state.card.metadata.image || ""}
           name={this.state.card.metadata.name}
         />
-        <div onClick={() => this.setState({fullDescriptionShown: true})} style={{ display: "flex", justifyContent: "center" }}>
-          <div style={{ ...styles.description, height: descriptionHeight, width: descriptionWidth }}>
+        <div
+          onClick={() => this.setState({ fullDescriptionShown: true })}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <div
+            style={{
+              ...styles.description,
+              height: descriptionHeight,
+              width: descriptionWidth
+            }}
+          >
             {description}
           </div>
           {this.state.fullDescriptionShown || description.length < 64 ? (
             ""
           ) : (
-              <div style={styles.fullDescriptionArrowContainer}>
+            <div style={styles.fullDescriptionArrowContainer}>
               <span>... </span>
-            <i
-              className="fa fa-caret-down"
-              style={styles.fullDescriptionArrow}
-            />
+              <i
+                className="fa fa-caret-down"
+                style={styles.fullDescriptionArrow}
+              />
             </div>
           )}
         </div>
@@ -155,6 +167,24 @@ class SendScreen extends Component {
               readOnly={false}
               error={this.state.numberInputError}
             />
+            <div style={{ marginTop: 20 }}>
+              <NumberInput
+                onChange={({ target }) => {
+                  const DAIAmount = utils.parseEther(
+                    String(target.value) || "0"
+                  );
+                  this.setState({ DAIAmount });
+                }}
+                disabled={false}
+                style={{ touchInput: "manipulation" }}
+                className="no-spinners"
+                min="0"
+                placeholder="Add DAI amount"
+                type="number"
+                readOnly={false}
+                error={this.state.numberInputError}
+              />
+            </div>
             <div style={{ marginTop: 20 }}>
               <NumberInput
                 onChange={({ target }) =>
@@ -203,7 +233,7 @@ class SendScreen extends Component {
               style={styles.infoTextContainer}
             >
               Add personal message &<br />
-              ETH for your friend{" "}
+              ETH &/or DAI for your friend{" "}
               <i
                 className={
                   this.state.addFieldsShown

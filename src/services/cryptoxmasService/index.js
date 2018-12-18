@@ -1,14 +1,18 @@
 import EscrowContract from "./escrowContract";
+import DAIContract from "./DAIContract";
 import config from "../../../dapp-config.json";
 import { detectNetwork } from "../../utils";
 import { getCategoryNameById } from "./utils";
 import { Wallet, providers } from "ethers";
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { utils } from "ethers";
+import BigNumber from "bignumber.js";
 
 class CryptoxmasService {
   constructor() {
     this.escrowContract = new EscrowContract();
+    this.daiContract = new DAIContract();
+    this.nullAddress = "0x0000000000000000000000000000000000000000";
   }
 
   setup(web3) {
@@ -17,6 +21,8 @@ class CryptoxmasService {
     const network = networkName.toLowerCase();
     this.network = network;
     this.escrowContract.setup({ web3, network });
+    this.daiContract.setup({ web3, network });
+    this.DAIAddress = config[network].DAI_ADDRESS;
   }
 
   getCardsForSale() {
@@ -29,9 +35,9 @@ class CryptoxmasService {
   getCard(cardId) {
     const card = mintedTokensJson[this.network][cardId];
     if (!card) {
-	window.location.replace('/');
+      window.location.replace("/");
     }
-      
+
     const category = getCategoryNameById(card.categoryId);
     return { ...card, cardId, category };
   }
@@ -100,19 +106,25 @@ class CryptoxmasService {
     return this.escrowContract.getCardCategory(tokenUri);
   }
 
-  async buyGift({ tokenAddress, cardId, amountToPay, msgHash }) {
+  async buyGift({ tokenAddress, cardId, amountToPay, msgHash, DAIAmount }) {
     const wallet = Wallet.createRandom();
     const transitAddress = wallet.address;
     const transitPrivateKey = wallet.privateKey.substring(2);
     const transferId = this._generateTransferIdForLink(transitAddress);
     const card = this.getCard(cardId);
 
+    if (parseFloat(DAIAmount) !== 0) {
+      await this.daiContract.Approve(DAIAmount);
+    }
+
     // // 3. send deposit to smart contract
     const txHash = await this.escrowContract.buyGift(
       card.tokenUri,
       transitAddress,
       amountToPay,
-      msgHash
+      msgHash,
+      DAIAmount === "0" ? this.nullAddress : this.DAIAddress,
+      DAIAmount
     );
     return { txHash, transitPrivateKey, transferId, transitAddress };
   }

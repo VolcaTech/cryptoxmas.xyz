@@ -102,7 +102,7 @@ export const fetchBuyEvents = () => {
   };
 };
 
-export const buyGift = ({ message, amount, cardId }) => {
+export const buyGift = ({ message, amount, cardId, DAIAmount }) => {
   return async (dispatch, getState) => {
     const state = getState();
     const networkId = state.web3Data.networkId;
@@ -121,7 +121,8 @@ export const buyGift = ({ message, amount, cardId }) => {
       cardId,
       amountToPay: amount,
       senderAddress,
-      msgHash
+      msgHash,
+      DAIAmount
     });
     const id = `${transferId}-out`;
 
