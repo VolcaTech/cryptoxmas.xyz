@@ -17,12 +17,13 @@ class EscrowContractService {
 
   async buyGift(tokenUri, transitAddress, amount, msgHash) {
     const weiAmount = this.web3.toWei(amount, "ether");
+    const from = (await this.web3.eth.getAccountsPromise())[0];
     return this.contract.buyGiftPromise(
       tokenUri,
       this.web3.toHex(transitAddress),
       msgHash,
       {
-        from: this.web3.eth.accounts[0],
+        from,
         value: weiAmount
         //gas: 110000
       }

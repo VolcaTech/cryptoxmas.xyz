@@ -67,7 +67,7 @@ export const setupWeb3ChangeListener = () => {
 
     setInterval(async () => {
       if (connected) {
-        const address = web3.eth.accounts[0];
+        const address = (await web3.eth.getAccountsPromise())[0];
         const { networkName, networkId } = detectNetwork(web3);
 
         if (oldAddress !== address || oldNetworkId !== networkId) {

@@ -21,7 +21,7 @@ const HomeScreenPopUp = ({ handleClick }) => {
         1. Christmas Cards
       </div>
       <div style={{ ...styles.popUpTopText, marginTop: 20 }}>
-        Send crypto Christmas cards to your friends, simply by sharing a link.
+        Send crypto Christmas cards to your friends, simply by sharing a link, like that:
       </div>
       <RetinaImage
         className="img-responsive"

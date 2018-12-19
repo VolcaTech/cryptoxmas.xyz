@@ -57,7 +57,7 @@ export default {
     width: "100%",
     backgroundColor: "#474D5B",
     backgroundImage:
-      "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles_tree.png)",
+      "url(https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/sparkles.png)",
     backgroundPosition: "right top",
     backgroundRepeat: "no-repeat"
     //
@@ -91,7 +91,7 @@ export default {
     textAlign: window.innerWidth > 667 ? "center" : "left"
   },
   greenContainer: {
-      width: Math.min(350, window.innerWidth - 50),
+      width: '100%',
       height: 40,
       textAlign: "center",
       // backgroundColor: "#4CD964",

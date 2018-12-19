@@ -3,7 +3,7 @@ import getWeb3 from "../utils/getWeb3";
 import { getTransactionReceiptMined, detectNetwork } from "../utils";
 
 const Web3Service = () => {
-  let web3;
+  let web3, address;
 
   async function setup() {
     // Get network provider and web3 instance.
@@ -15,7 +15,7 @@ const Web3Service = () => {
     Promise.promisifyAll(web3.eth, { suffix: "Promise" });
     web3.eth.getTransactionReceiptMined = getTransactionReceiptMined;
 
-    const address = web3.eth.accounts[0];
+    address = (await web3.eth.getAccountsPromise())[0];
     const balance = address ? await web3.eth.getBalancePromise(address) : 0;
     const connected = web3.isConnected();
     const { networkName, networkId } = detectNetwork(web3);
@@ -33,7 +33,8 @@ const Web3Service = () => {
   // api
   return {
     getWeb3: () => web3,
-    setup
+    setup,
+    getAddress: address
   };
 };
 

@@ -159,7 +159,7 @@ class NoWalletScreen extends Component {
           Install Metamask{" "}
         </a>
         <div style={{ ...styles.walletSliderTitle, marginTop: 10 }}>
-          For Chrome, Firefox
+          For Chrome, Firefox or Brave
         </div>
       </div>
     );
