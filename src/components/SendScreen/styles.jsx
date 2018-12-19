@@ -12,14 +12,23 @@ export default {
     color: "#4CD964",
     textAlign: "left"
   },
-    subtitle: {
-	color: 'white',
-	fontFamily: "Inter UI Medium",
-	fontSize: 24,
-	marginBottom: 20,
-	lineHeight: 1.24
-    },
-    
+  subtitle: {
+    color: "white",
+    fontFamily: "Inter UI Medium",
+    fontSize: 24,
+    marginBottom: 20,
+    lineHeight: 1.24
+  },
+  description: {
+    width: 300,
+    color: "white",
+    fontFamily: "Inter UI Regular",
+    fontSize: 18,
+    marginBottom: 20,
+    lineHeight: 1.24,
+    overflow: "hidden"
+  },
+
   sendscreenWhiteTitle: {
     marginBottom: 40,
     fontFamily: "Inter UI Medium",
@@ -57,15 +66,26 @@ export default {
     fontSize: 18,
     color: "#4CD964",
     paddingTop: 15,
-      marginBottom: 40,  
+    marginBottom: 40,
     textAlign: "center"
   },
-    tokensLeft: {
-        width: 300,
-        margin: "auto",
-        marginBottom: 20,
-        color: "white",
-        fontSize: 18,
-	fontFamily: "Inter UI Medium",
-    },
+  tokensLeft: {
+    width: 300,
+    margin: "auto",
+    marginBottom: 20,
+    color: "white",
+    fontSize: 18,
+    fontFamily: "Inter UI Medium"
+  },
+  fullDescriptionArrowContainer: {
+    display: "flex",
+    alignItems: "center",
+    color: "white",
+    fontSize: 18
+  },
+  fullDescriptionArrow: {
+    display: "flex",
+    alignItems: "flex-end",
+    marginLeft: 5
+  }
 };

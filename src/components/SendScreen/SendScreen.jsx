@@ -30,7 +30,8 @@ class SendScreen extends Component {
       charityPopupShown: false,
       tokensLeft: 0,
       addFieldsShown: false,
-      totalShown: false
+      totalShown: false,
+      fullDescriptionShown: false
     };
   }
 
@@ -81,9 +82,16 @@ class SendScreen extends Component {
   }
 
   _renderForm() {
+    const description = this.state.card.metadata.description;
     let messageInputHeight = 50;
     let nftPrice = this.state.card.price;
     let claimFee = 0.01;
+    let descriptionHeight = 44;
+    let descriptionWidth = 270;
+    if (this.state.fullDescriptionShown || description.length < 64) {
+        descriptionHeight = "unset";
+        descriptionWidth = 300;
+    }
     if (this.state.cardMessage.length) {
       messageInputHeight = 100;
     }
@@ -93,13 +101,6 @@ class SendScreen extends Component {
     return (
       <div>
         <div style={styles.sendscreenTitleContainer}>
-          {this.state.charityPopupShown ? (
-            <CharityPopUp
-              handleClick={() => this.setState({ charityPopupShown: false })}
-            />
-          ) : (
-            ""
-          )}
           <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
           <div style={styles.subtitle}>
             Send card to your friend &<br /> donate card price to Venezuela
@@ -115,18 +116,21 @@ class SendScreen extends Component {
           url={this.state.card.metadata.image || ""}
           name={this.state.card.metadata.name}
         />
-        <div style={styles.sendscreenGreyText}>
-          All Ether from the sale of this Nifty
-          <br />
-          <div
-            style={{ display: "inline" }}
-            onClick={() => this.setState({ charityPopupShown: true })}
-          >
-            <span className="hover" style={{ textDecoration: "underline" }}>
-              will be sent to charity
-            </span>
-            <QuestionButton />
+        <div onClick={() => this.setState({fullDescriptionShown: true})} style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ ...styles.description, height: descriptionHeight, width: descriptionWidth }}>
+            {description}
           </div>
+          {this.state.fullDescriptionShown || description.length < 64 ? (
+            ""
+          ) : (
+              <div style={styles.fullDescriptionArrowContainer}>
+              <span>... </span>
+            <i
+              className="fa fa-caret-down"
+              style={styles.fullDescriptionArrow}
+            />
+            </div>
+          )}
         </div>
         {this.state.addFieldsShown ? (
           <div>
@@ -217,11 +221,7 @@ class SendScreen extends Component {
             style={{ fontFamily: "Inter UI Bold" }}
           >
             Total price: {utils.formatEther(this.state.amount)} ETH{"  "}
-            <i
-              className={
-                this.state.totalShown ? "" : "fa fa-caret-down"
-              }
-            />
+            <i className={this.state.totalShown ? "" : "fa fa-caret-down"} />
           </span>
           {this.state.totalShown ? (
             <div>

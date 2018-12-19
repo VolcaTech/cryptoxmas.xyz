@@ -12,13 +12,20 @@ class CompletedReceivedScreen extends React.Component {
   state = {
     isFlipped: false,
     charityPopupShown: false,
-    whatsNextPopupShown: false
+    whatsNextPopupShown: false,
+    fullDescriptionShown: false
   };
 
   render() {
     const transfer = this.props.transfer;
     const gift = transfer.gift || {};
-    console.log(gift);
+    const description = gift.card.metadata.description;
+    let descriptionHeight = 44;
+    let descriptionWidth = 270;
+    if (this.state.fullDescriptionShown || description.length < 64) {
+      descriptionHeight = "unset";
+      descriptionWidth = 300;
+    }
     const etherscanLink = getEtherscanLink({
       txHash: transfer.txHash,
       networkId: transfer.networkId
@@ -58,13 +65,31 @@ class CompletedReceivedScreen extends React.Component {
                 />
               </ReactCardFlip>
             </div>
-            {this.state.charityPopupShown ? (
-              <CharityPopUp
-                handleClick={() => this.setState({ charityPopupShown: false })}
-              />
-            ) : (
-              ""
-            )}
+            <div
+              onClick={() => this.setState({ fullDescriptionShown: true })}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div
+                style={{
+                  ...styles.description,
+                  height: descriptionHeight,
+                  width: descriptionWidth
+                }}
+              >
+                {description}
+              </div>
+              {this.state.fullDescriptionShown || description.length < 64 ? (
+                ""
+              ) : (
+                <div style={styles.fullDescriptionArrowContainer}>
+                  <span>... </span>
+                  <i
+                    className="fa fa-caret-down"
+                    style={styles.fullDescriptionArrow}
+                  />
+                </div>
+              )}
+            </div>
             {this.state.whatsNextPopupShown ? (
               <WhatsNextPopUp
                 handleClick={() =>
