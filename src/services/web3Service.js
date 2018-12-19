@@ -14,7 +14,7 @@ const Web3Service = () => {
     }
     Promise.promisifyAll(web3.eth, { suffix: "Promise" });
     web3.eth.getTransactionReceiptMined = getTransactionReceiptMined;
-      
+
     address = (await web3.eth.getAccountsPromise())[0];
     const balance = address ? await web3.eth.getBalancePromise(address) : 0;
     const connected = web3.isConnected();

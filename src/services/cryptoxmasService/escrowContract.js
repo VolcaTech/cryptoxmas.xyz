@@ -3,7 +3,6 @@ import { utils } from "ethers";
 import CryptoxmasEscrow from "../../../cryptoxmas-contracts/build/CryptoxmasEscrow.json";
 import config from "../../../dapp-config.json";
 
-
 class EscrowContractService {
   setup({ web3, network }) {
     this.web3 = web3;
@@ -18,13 +17,13 @@ class EscrowContractService {
 
   async buyGift(tokenUri, transitAddress, amount, msgHash) {
     const weiAmount = this.web3.toWei(amount, "ether");
-    const address = (await this.web3.eth.getAccountsPromise())[0];
+    const from = (await this.web3.eth.getAccountsPromise())[0];
     return this.contract.buyGiftPromise(
       tokenUri,
       this.web3.toHex(transitAddress),
       msgHash,
       {
-        from: this.web3.eth.accounts[0],
+        from,
         value: weiAmount
         //gas: 110000
       }
