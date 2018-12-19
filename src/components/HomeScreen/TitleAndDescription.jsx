@@ -9,7 +9,8 @@ class TitleAndDescription extends Component {
   };
 
   render() {
-    return (
+      return (
+      <div>
       <div style={styles.homescreenTextContainer}>
         {this.state.popUpShown ? (
           <PopUp handleClick={() => this.setState({ popUpShown: false })} />
@@ -44,15 +45,15 @@ class TitleAndDescription extends Component {
             />
           </div>
         </div>
-
+       </div>
         <div style={styles.greenContainer}>
           First, choose a Card{" "}
           <i
             className="fa fa-chevron-down"
             style={{ color: "white", fontSize: 17 }}
           />
-        </div>
-      </div>
+          </div>
+	  </div>
     );
   }
 }

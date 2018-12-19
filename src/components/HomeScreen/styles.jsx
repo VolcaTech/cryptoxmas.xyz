@@ -91,10 +91,10 @@ export default {
     textAlign: window.innerWidth > 667 ? "center" : "left"
   },
   greenContainer: {
-      width: 250,
+      width: '100%',
       height: 40,
       textAlign: "center",
-      backgroundColor: "#4CD964",
+      // backgroundColor: "#4CD964",
       margin: "auto",
       marginBottom: 20,
       borderRadius: 20,
