@@ -38,7 +38,7 @@ const subscribePendingTransferMined = (transfer, nextStatus, txHash) => {
         status: nextStatus,
         isError,
         id: transfer.id,
-        txHash: transfer.txHash
+        txHash: txHash || transfer.txHash
       })
     );
 
@@ -55,25 +55,10 @@ export const subscribePendingTransfers = () => {
     const depositingTransfers = getDepositingTransfers(state);
     const receivingTransfers = getReceivingTransfers(state);
     const cancellingTransfers = getCancellingTransfers(state);
-
-    // get pending depositing transfers from blockchain
-    //if (depositingTransfers.length > 0) {
-    const params = { sender: state.web3Data.address };
-    const buyEvents = await cryptoxmasService.getBuyEvents(params);
-    console.log({ buyEvents });
-    buyEvents.map(buyEvent => {
-      depositingTransfers.map(transfer => {
-        if (transfer.transitAddress === buyEvent.args.transitAddress) {
-          console.log("Updating transfer", { transfer, buyEvent });
-          transfer.txHash = buyEvent.transactionHash;
-        }
-      });
-    });
-    //}
-
+      
     depositingTransfers.map(transfer => {
       dispatch(
-        subscribePendingTransferMined(transfer, "deposited", transfer.txHash)
+        subscribePendingTransferMined(transfer, "deposited")
       );
     });
     receivingTransfers.map(transfer => {
@@ -84,6 +69,36 @@ export const subscribePendingTransfers = () => {
     });
   };
 };
+
+export const fetchBuyEvents = () => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const depositingTransfers = getDepositingTransfers(state);
+
+      // get pending depositing transfers from blockchain   
+      try {
+	  const params = { sender: state.web3Data.address };	  
+      	  const buyEvents = await cryptoxmasService.getBuyEvents(params);
+      	  console.log("got buy events")
+      	  console.log({ buyEvents });
+      	  buyEvents.map(buyEvent => {
+      	      depositingTransfers.map(transfer => {
+      		  if (transfer.transitAddress === buyEvent.args.transitAddress) {
+      		      console.log("Updating transfer", { transfer, buyEvent });
+      		      transfer.txHash = buyEvent.transactionHash;
+		      
+		      dispatch(subscribePendingTransferMined(transfer, "deposited", transfer.txHash));		      
+      		  }
+      	      });
+      	  });
+	  
+      } catch(err) {
+      	  console.log("Error while fetching buy events");
+      	  console.log(err);
+      }
+  };
+};
+
 
 export const buyGift = ({ message, amount, cardId }) => {
   return async (dispatch, getState) => {

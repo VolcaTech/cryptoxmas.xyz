@@ -4,8 +4,9 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { setupWeb3, setupWeb3ChangeListener } from "../actions/web3";
 import {
-  subscribePendingTransfers,
-  fetchClaimEvents
+    subscribePendingTransfers,
+    fetchClaimEvents,
+    fetchBuyEvents
 } from "../actions/transfer";
 
 import reducers from "./reducers";
@@ -29,6 +30,9 @@ persistStore(store, null, async () => {
   // find all pending transfers and update status when they will be mined
   store.dispatch(subscribePendingTransfers());
 
+  // fetch buy events
+  store.dispatch(fetchBuyEvents());
+    
   // fetch withdrawal events
   store.dispatch(fetchClaimEvents());
 
