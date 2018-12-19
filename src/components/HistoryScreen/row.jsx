@@ -1,12 +1,7 @@
 import React from "react";
-import { connect } from 'react-redux';
-//import { cancelTransfer } from '../../actions/transfer';
 import styles from './styles';
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
-import arrowUp from './../../assets/images/up.png';
-import arrowDown from './../../assets/images/down.png';
 import { Row, Col, Button, Grid } from 'react-bootstrap';
-import infoLogo from './../../assets/images/Info.png';
 import mintedTokensJson from "../../../cryptoxmas-contracts/scripts/deployed/mintedTokens.json";
 import { getNetworkNameById } from "../../utils";
 
@@ -38,7 +33,7 @@ const StatusCell = ({ transfer }) => {
     case "sent":
 	return (
 	    <div style={styles.statusCell.container}>
-	      <div style={{...styles.statusCell.statusText, color: '#2bc64f'}}>Claimed</div>
+	      <div style={{...styles.statusCell.statusText, color: '#4CD964'}}>Claimed</div>
 	    </div>
 	);
 	break;
@@ -52,7 +47,7 @@ const StatusCell = ({ transfer }) => {
     case "received":
 	return (
 	    <div style={styles.statusCell.container}>
-	      <div style={{ ...styles.statusCell.statusText, color: '#2bc64f' }}>Received</div>
+	      <div style={{ ...styles.statusCell.statusText, color: '#4CD964' }}>Received</div>
 	    </div>
 	);
 	break;
@@ -113,12 +108,12 @@ const HistoryRow = ({ transfer, address, networkId }) => {
 	<div>
 	  <Row style={{marginBottom: 15}}>
 	    <Col style={styles.colVertAlign} xs={7}>
-	      <div style={styles.amount}><img src={address === transfer.senderAddress ? arrowUp : arrowDown} style={styles.directionIcon}></img>
-	        <div style={styles.transfer}>{cardName}  </div>
+	      <div style={styles.amount}><img src={address === transfer.senderAddress ? "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/arrow_out.png" : "https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/arrow_in.png"} style={styles.directionIcon}></img>
+	        <div style={styles.transfer}>{cardName}</div>
 	      </div>     
 	    </Col>
             <Col style={styles.colVertAlign} xs={5}>
-	      <div style={{ width: 120, display: 'flex', flexDirection: 'row', margin: 'auto', paddingRight: 10 }}>
+	      <div style={{ display: 'flex', flexDirection: 'row', }}>
 		<StatusCell transfer={transfer} />
 		<div style={{ display: 'inline', marginLeft: 'auto' }}>
 		  {link}
