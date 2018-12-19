@@ -29,7 +29,8 @@ class SendScreen extends Component {
       cardMessage: "",
       charityPopupShown: false,
       tokensLeft: 0,
-      addFieldsShown: false
+      addFieldsShown: false,
+      totalShown: false
     };
   }
 
@@ -99,13 +100,13 @@ class SendScreen extends Component {
           ) : (
             ""
           )}
-            <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
-            <div style={styles.subtitle}>Send card to your friend &<br/> donate card price to<br/>charity</div>	    
+          <div style={styles.sendscreenGreenTitle}>Pack your gift</div>
+          <div style={styles.subtitle}>
+            Send card to your friend &<br /> donate card price to Venezuela
+          </div>
         </div>
 
-        <div
-          style={styles.tokensLeft}
-        >
+        <div style={styles.tokensLeft}>
           {this.state.tokensLeft} out of {this.state.card.maxQnty} left
         </div>
         <TokenImage
@@ -181,26 +182,24 @@ class SendScreen extends Component {
             {this.state.fetching ? <ButtonLoader /> : "Buy & Send"}
           </ButtonPrimary>
 
-
-	    <div>
-
-          {this.state.fetching || this.state.errorMessage ? (
-            <Error
-              fetching={this.state.fetching}
-              error={this.state.errorMessage}
-            />
-          ) : null}
-        </div>
-	   <div>
+          <div>
+            {this.state.fetching || this.state.errorMessage ? (
+              <Error
+                fetching={this.state.fetching}
+                error={this.state.errorMessage}
+              />
+            ) : null}
+          </div>
+          <div>
             <div
               onClick={() =>
                 this.setState({ addFieldsShown: !this.state.addFieldsShown })
-	      }
-	      className="hover"
+              }
+              className="hover"
               style={styles.infoTextContainer}
             >
-        Add pesonal message &<br/>
-	ETH for your friend{" "}
+              Add pesonal message &<br />
+              ETH for your friend{" "}
               <i
                 className={
                   this.state.addFieldsShown
@@ -208,26 +207,39 @@ class SendScreen extends Component {
                     : "fa fa-caret-down"
                 }
               />
+            </div>
+          </div>
         </div>
-	    </div>
-	</div>
 
-	    
         <div style={{ ...styles.sendscreenGreyText, color: "white" }}>
-          <span style={{ fontFamily: "Inter UI Bold" }}>
-            Total: {utils.formatEther(this.state.amount)} ETH
+          <span
+            onClick={() => this.setState({ totalShown: true })}
+            style={{ fontFamily: "Inter UI Bold" }}
+          >
+            Total price: {utils.formatEther(this.state.amount)} ETH{"  "}
+            <i
+              className={
+                this.state.totalShown ? "" : "fa fa-caret-down"
+              }
+            />
           </span>
-          {this.state.addedEther ? (
-            <div>Receiver will get: {this.state.addedEther} ETH</div>
+          {this.state.totalShown ? (
+            <div>
+              {this.state.addedEther ? (
+                <div>Receiver will get: {this.state.addedEther} ETH</div>
+              ) : (
+                ""
+              )}
+              <span>
+                Donation: {(nftPrice - 0.01).toFixed(2)} ETH (NFT price minus
+                network fees)
+              </span>
+              <br />
+              <span>Network fee: {claimFee} ETH (for Gas)</span>
+            </div>
           ) : (
-            <br />
+            ""
           )}
-          <span>
-            Donation: {(nftPrice - 0.01).toFixed(2)} ETH (NFT price minus
-            network fees)
-          </span>
-          <br />
-          <span>Claim fee: {claimFee} ETH (for Gas)</span>
         </div>
       </div>
     );
