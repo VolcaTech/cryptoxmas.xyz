@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+const qs = require("querystring");
 import { getAllTransfers } from "../../data/selectors";
 import DepositedScreen from "./DepositedScreen";
 import CompletedReceivedScreen from "./CompletedReceivedScreen";
@@ -20,6 +21,13 @@ export class TransferComponent extends Component {
       return <TxErrorScreen transfer={transfer} />;
     }
 
+      const queryParams = qs.parse(this.props.location.search.substring(1));
+      const displayLink = queryParams.skip === "1";
+      if (transfer.status === "depositing" && displayLink) {
+	  transfer.status = "deposited";
+      }
+      
+      
     switch (transfer.status) {
       case "depositing":
       case "receiving":

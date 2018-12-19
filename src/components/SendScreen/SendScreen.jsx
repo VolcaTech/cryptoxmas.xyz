@@ -198,7 +198,7 @@ class SendScreen extends Component {
               className="hover"
               style={styles.infoTextContainer}
             >
-              Add pesonal message &<br />
+              Add personal message &<br />
               ETH for your friend{" "}
               <i
                 className={

@@ -144,8 +144,7 @@ export default {
     alignItems: "center",
     justifyContent: "center"
   },
-  tokenImage: {
-  },
+  tokenImage: {},
   grinchText: {
     display: "block",
     textAlign: "center",
@@ -153,5 +152,5 @@ export default {
     fontSize: 18,
     color: "#4CD964",
     marginTop: 10
-  },
+  }
 };
