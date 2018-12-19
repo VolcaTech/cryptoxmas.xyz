@@ -4,9 +4,9 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { setupWeb3, setupWeb3ChangeListener } from "../actions/web3";
 import {
-    subscribePendingTransfers,
-    fetchClaimEvents,
-    fetchBuyEvents
+  subscribePendingTransfers,
+  fetchClaimEvents,
+  fetchBuyEvents
 } from "../actions/transfer";
 
 import reducers from "./reducers";
@@ -32,7 +32,7 @@ persistStore(store, null, async () => {
 
   // fetch buy events
   store.dispatch(fetchBuyEvents());
-    
+
   // fetch withdrawal events
   store.dispatch(fetchClaimEvents());
 

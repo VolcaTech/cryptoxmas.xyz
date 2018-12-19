@@ -34,8 +34,8 @@ class EscrowContractService {
     return new Promise((resolve, reject) => {
       //
       const fromBlock = config[this.network].CONTRACT_BLOCK_DEPLOYMENT || 0;
-	const eventsGetter = this.contract.LogBuy(params, { fromBlock });
-	eventsGetter.get((error, response) => {	    
+      const eventsGetter = this.contract.LogBuy(params, { fromBlock });
+      eventsGetter.get((error, response) => {
         if (error) {
           return reject(error);
         }
