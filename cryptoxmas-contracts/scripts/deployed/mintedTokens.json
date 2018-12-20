@@ -1,12 +1,12 @@
 {
     "mainnet": {
-        "0xf0018f6dbf6e399614903047db691a096c3beb60ff0f79d25a4498b68c638051": {
+        "0x22c26a88acfaf18590d0b39c296bc8645405b9a2aab53b6c43db9391bc6e7ddd": {
             "metadata": {
-                "description": "*** SPECIAL OFFER *** Get a famous Griff massage for 30 minutes. Your life forever improved.  ",
+                "description": "*** SPECIAL OFFER *** Get a famous Griff massage for 10 minutes. Your life forever improved.",
                 "image": "https://ipfs.infura.io/ipfs/QmSPW1dzVoKNxjZLJdEod7YTVaE8pJS8YvbhCjsarvaVi7",
                 "name": "Santa Whitehat"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmbEw3faaiJEhHmj6Awrvdy76J6QP9bjhUoR7JDTGpVwwp",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmdijB8MnnaPeS29DCQQHNi8e7UBnH1v7gvHHJ9v2tv3q3",
             "categoryId": 6,
             "price": 0.5,
             "maxQnty": 10,
