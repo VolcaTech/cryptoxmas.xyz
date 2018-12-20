@@ -43,7 +43,11 @@ class HomeScreen extends Component {
               <CardGroup group="imToken" />
               <CardGroup group="GitCoin" />
               <CardGroup group="resurREKT" />	
-              <CardGroup group="Giveth" />	      	      	      	            
+              <CardGroup group="Giveth" />
+	
+              <CardGroup group="Naughty or Nice" />
+              <CardGroup group="Nervos" />
+              <CardGroup group="Gnosis" />	      	      	      	            
             </div>	    
           </div>
         </Row>

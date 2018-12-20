@@ -1,5 +1,31 @@
 {
     "mainnet": {
+        "0xf2eff03fa1cf54d4ae42e4aa858058a308d2d9a52c5877fae2ac7cab23c858cf": {
+            "metadata": {
+                "description": "100% physically accurate by Naughty or Nice. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmUpoCUgmdSD8ddjwnqWkBJzaEML1HPuMd4w6dcbM2XGRb",
+                "name": "Because Physics"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmQxLGZGyhPGBAdDZ7X1c3QNXHuSyNuQuDUb9ZdoWCHWd7",
+            "categoryId": 3,
+            "price": 0.2,
+            "maxQnty": 33,
+            "categoryName": "Scarce",
+            "group": "Naughty or Nice"
+        },
+        "0xd7db15c99956d55fd8e595b88db5667ff34ab8e7d10306f5403044c456de9552": {
+            "metadata": {
+                "description": "With Christmas spirit by Gnosis. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmUqBn7xYvFKU2qLzp5iMCjckjB2wPi3tQ1rGjhcou4a7q",
+                "name": "Dappy Holidays"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmZybvkDVww178vLssXuasXgvku3yX9tzmA7MSvoLARwdK",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Gnosis"
+        },	
         "0xc05dfd31b60594c30e119b2173d9b032174a8d09b97844275d015544f4f7ad15": {
             "metadata": {
                 "description": "Ded Moroz is a fictional character similar to Santa Claus and has its roots in Slavic mythology. The literal translation is «Grandfather Frost». Ded Moroz is accompanied by Snegurochka, his granddaughter and helper.",
