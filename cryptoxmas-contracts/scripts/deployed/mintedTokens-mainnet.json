@@ -585,13 +585,13 @@
             "categoryName": "Special",
             "group": "Raiden"
         },
-        "0xd4c6572b69af795ecfccf7e2a4e46c0b3159881398ce725bd409bcf0fb5fe9d2": {
+        "0x6ceb435989ea1d00d904422e077ff604a814e292254525f88cc5cb144a8da299": {
             "metadata": {
                 "description": "With Christmas spirit by Centrifuge. You supported Venezuelans in need.",
                 "image": "https://ipfs.infura.io/ipfs/Qma6jaYd1Zy143nYRWatmfqaaGnZbQ1jKCQ8py8iE6RXCs",
-                "name": "Centrifuge #2018"
+                "name": "Centrifuge #2019"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmXeWCEKKQAMbZsQngVfRve5PJvcRUwp7fPfbCzuFP1ntJ",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmTeKDPLaVNiz1MSU8jfUyJKXkr8nBrwWLCJPCcDLeTpw3",
             "categoryId": 1,
             "price": 0.05,
             "maxQnty": 100,
@@ -819,52 +819,52 @@
             "categoryName": "Special",
             "group": "resurREKT"
         },
-        "0x434c5a96bbe63cdd699b8a2a0cf1cdc504cbb77d65644e37ca78c9c52b9dc071": {
+        "0x485269870e09ef73c99eea0e4cdd02c54c3a4154edc4024fd2661d93a3c15965": {
             "metadata": {
-                "description": "With Christmas spirit by Raiden. Thank you for supporting Venezuelans in need.",
+                "description": "*** SPECIAL OFFER *** This token qualifies its holder to get one cup with a surprise content.",
                 "image": "https://ipfs.infura.io/ipfs/QmUvaST8eXGTD3hxxUyVzWB6adDxWDXHpF3BA1vBZPthzq",
                 "name": "Unique Raiden Frost"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmQht555RGGF3QU5n1gSscDEZ9uEFhrfPjKeiQoU1gzA1g",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmPHAasWhiM122sC3bXad8Xh2NQjgCNWiMU9U9sK1D8Pt6",
             "categoryId": 6,
             "price": 1,
             "maxQnty": 1,
             "categoryName": "Unique",
             "group": "Raiden"
         },
-        "0x9ef97cd83e8fdaa64a949ca1d9e745f77fab1d32fe10f12ef1d4aa15058386a5": {
+        "0x0faa5d5ceb981fca750b685a69cde6482d07a6c9282fd6101cea69b9544860c1": {
             "metadata": {
-                "description": "With Christmas spirit by Raiden. Thank you for supporting Venezuelans in need.",
+                "description": "*** SPECIAL OFFER *** This token qualifies its holder to get one cup with a surprise content.",
                 "image": "https://ipfs.infura.io/ipfs/QmPLoDGyrdb9PbqXcfFVgXhjmEnfeDZSGeK2drGqFZRQaE",
                 "name": "Unique Raiden Julekugle"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmP7n2ESUeuTec86K69BiM4D7WZm8vyzBWg1b9f5Lo4vzz",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmWPY4H8P8nCKBYkMUzFhvhkn91fxSpAUDtcbC1me4okyv",
             "categoryId": 6,
             "price": 1,
             "maxQnty": 1,
             "categoryName": "Unique",
             "group": "Raiden"
         },
-        "0xb320182054f785d9ef6517550d385ad3b8c0849843fdfebff6de66a87c065a8f": {
+        "0x7087a7c24f7fe207e7c111fd761d626979ffe9482d47804a46d7d8cee1a779bc": {
             "metadata": {
-                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
-                "image": "https://ipfs.infura.io/ipfs/QmSPW1dzVoKNxjZLJdEod7YTVaE8pJS8YvbhCjsarvaVi7",
-                "name": "Santa Whitehat"
+                "description": "*** SPECIAL OFFER *** This token qualifies its holder to get one cup with a surprise content.",
+                "image": "https://ipfs.infura.io/ipfs/Qmakjkww9BGdCUkEmDw4MUVCi93ZPpB8sb5NmsUyBymqWX",
+                "name": "Unique Raiden Lebkuchen"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmXkvXxA3qnH6ma2Z3RMp4imYRnw5uvJF1tRBRdgNxQr1a",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmRzwRr9eM1SrcrYqguhR9xpbBFdVA6RRR5f5ZwpJFKuPa",
             "categoryId": 6,
-            "price": 0.5,
-            "maxQnty": 5,
+            "price": 1,
+            "maxQnty": 1,
             "categoryName": "Unique",
-            "group": "Giveth"
+            "group": "Raiden"
         },
-        "0xade272cb01f6512d7720a05e536b821538a294345b0f7afa1a972a6bbef530d0": {
+        "0x740e173ba31c9c34e762f4afcd7e1475171d9b3398a032dcc0357962d885998f": {
             "metadata": {
-                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
+                "description": "*** SPECIAL OFFER *** Ever been to Sagrada Familia? Come stay at the foot of the cathedral for a weekend at the Giveth Hackerpad in Barcelona. ",
                 "image": "https://ipfs.infura.io/ipfs/QmVKfZfuspjXefaqUY7sknKcYLd4JCdX8Z42VVuTaN5dg9",
                 "name": "Unicornflake"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmRCiy6wkogahkKHRMDZqwSyY7x3E71jTquSDG8dYQanAX",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmPtxqmQZ2X8fmGkopgRoH1MfjPt8XkLY95ZfRvtLJbJTG",
             "categoryId": 6,
             "price": 3,
             "maxQnty": 3,
@@ -884,18 +884,18 @@
             "categoryName": "Rare",
             "group": "Giveth"
         },
-        "0xcd9b7eeddbb25d4a549eb661f6bc5ce91729f934e10bfa5157ee83e75c072fe9": {
+        "0x61fcdfe00d3f7a8e61167ad8588a695bc6705c51b4802a1d4d096f97cf7bad01": {
             "metadata": {
-                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
+                "description": "With Christmas spirit by Loie. Thank you for supporting Venezuelans in need.",
                 "image": "https://ipfs.infura.io/ipfs/QmSzrfs3vyyVe15nTzxYJiNKAUNgjnnR1aWbwYPy8AfYCR",
-                "name": "Don’t do Christmeth"
+                "name": "Dont do Christmeth"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmRaYaVoa7oxjyVqbMdxiiH1MoFgWWYCeuUGcSD9m2jKyx",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmaS3R1zsZGYHkRETMCRBBcTahiwqDGddGeww6QMzqWUYQ",
             "categoryId": 1,
             "price": 0.05,
             "maxQnty": 100,
             "categoryName": "Special",
-            "group": "Giveth"
+            "group": "Naughty or Nice"
         },
         "0xc24dac8ca3cf02c905df7025533d3a2d334abf654091849314d1a96b273c5cb1": {
             "metadata": {
@@ -908,6 +908,305 @@
             "price": 0.2,
             "maxQnty": 33,
             "categoryName": "Scarce",
+            "group": "Giveth"
+        },
+        "0xfda0ca73f776b57b97e4d594b37088a96d03f74cc8d4c79fe2b480a4923304d4": {
+            "metadata": {
+                "description": "With Christmas spirit by Brandon Walsh. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmQqDAe8FewBKwECwiapwDqc9RocN5Exdr99Nt5BGxLzdQ",
+                "name": "Tortellini Vitalik"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmQ1QkPoGtXzceAKtw7UWX67WhHjV81uwqUH9iYMEr8LSa",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Brandon Walsh"
+        },
+        "0x837cc0e96f1542f01cde10e31b3314c6736ddef59cb0c2c2cb5d6f110a97b4e3": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** Come to China and have a hotpot dinner with the Nervos team!",
+                "image": "https://ipfs.infura.io/ipfs/QmREwKWKaM9HMYwhPfjLNeFuTwgWQAMWtffz45MdyWLwm9",
+                "name": "Nervos Glitter Ball"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/Qmbkx98ZN64hyZ2gnKN3QWSWXSf3rq3n39Cbsip2348jyK",
+            "categoryId": 6,
+            "price": 1,
+            "maxQnty": 3,
+            "categoryName": "Unique",
+            "group": "Nervos"
+        },
+        "0xecba6954bfca88d6c6c67cd8506571ca187b9d42f2653dbf64b53e34c868ccd6": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmdKjTjSVtxsUJ6JiotUwASDmyXw8nxdVQyQi9GrFndDpD",
+                "name": "Nervos Deer"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmfAWZwsQYHHm4YpaZBh6ZJCx5G6qEWRWZUkGjeD8L7pjR",
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100,
+            "categoryName": "Special",
+            "group": "Nervos"
+        },
+        "0x929c3bdbbc93e62f5e72a170030fe68c13389151a069cda8b696db6835bfacaa": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmXiH7BhrVfxv7tdha4AAzqfvtKEGRowL9riqaf9SmBvTH",
+                "name": "Nervos Team"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmYhg4hzCnwk9KxZkHRr68Lorr5NDN5Wo8Mhkof1QtRYaL",
+            "categoryId": 3,
+            "price": 0.2,
+            "maxQnty": 33,
+            "categoryName": "Scarce",
+            "group": "Nervos"
+        },
+        "0xad59c4966cb7bcd0947f4fe325ea43979fdef8455b9674f32ab35ba20cc5f901": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmSNtExtHvunKB2MovpKYVgonwcWyNDtPNx7dK5y77CVgy",
+                "name": "Nervos Cottages"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmYyN1rBjcbm78pjJVPM9WNGHxmXiaRU57G3ZfVfedu1KT",
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100,
+            "categoryName": "Special",
+            "group": "Nervos"
+        },
+        "0x936f970f2c6ece40e1664f52f86523fcbd8e311bbacd363c23f01a3164c00c01": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** Come to China and have a hotpot dinner with the Nervos team!",
+                "image": "https://ipfs.infura.io/ipfs/QmUwRLSNCoTWp573dnZY9GQRYVMTnT87zCFhh6XmvEa1rH",
+                "name": "Nervos Santa #1"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmU2b3UnrfjqTSZRCyaVqSsbV2uwJd3duxRe3zBdXbvzpN",
+            "categoryId": 6,
+            "price": 2,
+            "maxQnty": 3,
+            "categoryName": "Unique",
+            "group": "Nervos"
+        },
+        "0xd573af98422f990ecaf5802db4e7983781a26c74dcaf726241c9b7f02cd8f0a4": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmRtjPyETfqdY72c8VWqjYjunwpHfS4ZF7CDk6ynRWc6tk",
+                "name": "Nervos Santa #2"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmUEJqEgSFvRPyovgWKjR78o1kdCTJ7pdDmwYWSAZauW5A",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Nervos"
+        },
+        "0xc8df20170c9131c52355d343cd6fa8de5338eed59be32d6f207cfacac77ee6df": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmUFupLW6SfdWy4UwCxwmDbjse7nz65FvUKbZq3N6m1dp6",
+                "name": "Nervos Santa #3"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmbXj4fJD3fD6gN4S8X6GeJwFxefBGQqkGHafPgKbq2YhG",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Nervos"
+        },
+        "0x768711067d95d5fb8bf5cf969445bbeef6efa3809967cf1ece4dfa18a4f1391c": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmUzJGYFnCZASoAzJhxCDpQrABNdexJCNb59AsRW6ixDMm",
+                "name": "Southern Santa"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmddpPqkzJPXqMCX8cyPhqZTy5R6dBVnveFsSppmk7oN3P",
+            "categoryId": 4,
+            "price": 0.5,
+            "maxQnty": 20,
+            "categoryName": "Limited",
+            "group": "Nervos"
+        },
+        "0x9d3c0457ed00a951643d6637f4c63d6c4d34c5f7f4f5f50dbecb3dc093ab32ee": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmZBv2otQgNDQvYg43PxSUvwd4qMornqvmY14y76ozaYxz",
+                "name": "Leisure Santa"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmPNxWqgLVRw7TK1EGCXPGHptuqbwGHn83oJza9Y9bqsmP",
+            "categoryId": 5,
+            "price": 1,
+            "maxQnty": 10,
+            "categoryName": "Epic",
+            "group": "Nervos"
+        },
+        "0x3822156f3cad24e302705eb0b6d0edd6ec5448b552c56c5326086d77912eb777": {
+            "metadata": {
+                "description": "With Christmas spirit by Nervos. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmXckSgMZZicFJBDZ2vQDz3PGHae3oJcCEn6L2hVgnz5fi",
+                "name": "Ski Santa"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmZjXjMnwVqHhEFEFGrkkb8LXkK2VKCkGv6exLCfW36hNU",
+            "categoryId": 4,
+            "price": 0.5,
+            "maxQnty": 20,
+            "categoryName": "Limited",
+            "group": "Nervos"
+        },
+        "0x52a8e64303ef57a33d1b6bdbae1ea1d2bc1ce650af6230a1da4f2bfda2ac401a": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** Come to China and have a hotpot dinner with the Nervos team!",
+                "image": "https://ipfs.infura.io/ipfs/QmZPCAWCzuYGYUJdXKTHDEbNNoDyWb733j5w8bAh4GKDCC",
+                "name": "New Year Santa"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmNNcUAnw4z9xtqL1KFmcj4pHc5sf8x77ahVJZJVSaiyYm",
+            "categoryId": 6,
+            "price": 3,
+            "maxQnty": 3,
+            "categoryName": "Unique",
+            "group": "Nervos"
+        },
+        "0xb087ce371b232375775967b4af3cba84c2b085397661519266423b3f1d1d3d50": {
+            "metadata": {
+                "description": "With Christmas spirit by Naughty or Nice. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmP2Fzu9NwPbJaAAdCUnFYfGPvqPERjrNLjLpSibEMMRYb",
+                "name": "Chrome Booty"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmZaPgeQPLtNdfnYSXJeKEfD7LC7y3hPbs65guYWTCf5qn",
+            "categoryId": 4,
+            "price": 0.5,
+            "maxQnty": 20,
+            "categoryName": "Limited",
+            "group": "Naughty or Nice"
+        },
+        "0xc9edeebc4d0503b0f179ad84bd7de62d0e2aed690f3816a0dae992aa81d7edb8": {
+            "metadata": {
+                "description": "With Christmas spirit by Naughty or Nice. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmbX7URi4MMBCP3YdcuRmjxgFR5LzbbKjFRJGGY6REVF7f",
+                "name": "Holy Titties"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmXAYck4DtRanXnffcNPka5zBYX6EhgeyPwuAVrYBwHdb1",
+            "categoryId": 5,
+            "price": 1,
+            "maxQnty": 10,
+            "categoryName": "Epic",
+            "group": "Naughty or Nice"
+        },
+        "0x29204769294037a79f9d25284a333f94208a07f26b86aafc596a5d86e621e1c8": {
+            "metadata": {
+                "description": "With Christmas spirit by Naughty or Nice. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmWgywNQFCaPWNzGf2Pim4Aio4YwWt9hLzwyEx3nXqnYof",
+                "name": "Gold Finger"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmX6t8HggjAggxNCdEwfsvEm4BudRwK1zKZtfz1QeRJtvy",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Naughty or Nice"
+        },
+        "0x3d5be8773727c04d93fb53984334b20409d8857e2a20887f64fbe738c3b843da": {
+            "metadata": {
+                "description": "100% physically accurate by Naughty or Nice. Thank you for supporting Venezuelans in need.",
+                "image": "http://ipfs.infura.io/ipfs/QmUpoCUgmdSD8ddjwnqWkBJzaEML1HPuMd4w6dcbM2XGRb",
+                "name": "Because Physics"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmcAH7x5P78TKeZVcixgSw1UpiQQyXbC9KZhCNv3fBUNkb",
+            "categoryId": 3,
+            "price": 0.2,
+            "maxQnty": 33,
+            "categoryName": "Scarce",
+            "group": "Naughty or Nice"
+        },
+        "0x03f981c501aee8937830bb2a9a5f83d2e5e7a36d6aa27e0d4d5f0e882be923ac": {
+            "metadata": {
+                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmTLbmBrh4Vuw5Dh3rcFKGVeH7G5rpeVzefrFjFgcHrB25",
+                "name": "Quattro Alberi"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmWZTSCKE6V3Ay5jnoP3883xo8WLaddbUq8W4zScWnhEiW",
+            "categoryId": 1,
+            "price": 0.05,
+            "maxQnty": 100,
+            "categoryName": "Special",
+            "group": "Giveth"
+        },
+        "0xfa8e5fcc33c7e7715d057c2db47d592b3ef10010a68d9ba9262b2701382c664e": {
+            "metadata": {
+                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/QmRP61ZjVWmnNfSYxQ6k32ff1xysZoUygp6gqL2xWe9Zid",
+                "name": "Ether Lanterns"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmcKdEA5oksAaEYyoVevFbXMAt1GHBtq8jHFTDRCpPySWr",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Giveth"
+        },
+        "0xbc4681d2167a58cd167b4e0e742ffce8830d3f9f71c6ae6c4cd34f6b01d9575e": {
+            "metadata": {
+                "description": "May all your needs be granted ;)",
+                "image": "https://ipfs.infura.io/ipfs/QmeCTUtS3qth7AF7uvfBRxLqqj8NznFJys8aphXxXQQcdw",
+                "name": "Maslow’s Xmas"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmTfTew5kiE4AcPF2kpAEkU72tRRnaWYtpXU7SLYKCdrRC",
+            "categoryId": 3,
+            "price": 0.2,
+            "maxQnty": 33,
+            "categoryName": "Scarce",
+            "group": "Giveth"
+        },
+        "0x7957f8e67cd4d9634888bacbd216527e1e80b6fe934e9710364fe61036ebe53d": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** This card allows its holder entry to DappCon 2019.",
+                "image": "https://ipfs.infura.io/ipfs/QmfLsqQ5UKsa6hs6C4MDpuBFAnS5XRrg2eL3vuK8MQbiEp",
+                "name": "DappCon 2019"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmR9GR1QiXETfpRr4EyiUWyAJAysRUW7FuCqDHuMVfn35H",
+            "categoryId": 6,
+            "price": 1.7,
+            "maxQnty": 2,
+            "categoryName": "Unique",
+            "group": "Gnosis"
+        },
+        "0x89d896aa99a171b09e25a1a708bba81b4d1301942020ba397a6d1b7b3fb5d2e3": {
+            "metadata": {
+                "description": "With Christmas spirit by Gnosis. Thank you for supporting Venezuelans in need.",
+                "image": "http://ipfs.infura.io/ipfs/QmUqBn7xYvFKU2qLzp5iMCjckjB2wPi3tQ1rGjhcou4a7q",
+                "name": "Dappy Holidays"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmTei2MsXXpkFhAqRSrkKSou578N5JVP3b4NxTW2ffhvEy",
+            "categoryId": 2,
+            "price": 0.1,
+            "maxQnty": 50,
+            "categoryName": "Rare",
+            "group": "Gnosis"
+        },
+        "0x7d54375f531a8906f3ef808b22ff362569707321429ed05389e7482365a08a2a": {
+            "metadata": {
+                "description": "With Christmas spirit by Giveth. Thank you for supporting Venezuelans in need.",
+                "image": "https://ipfs.infura.io/ipfs/Qme4M9yffexqrBi7uCePfRynU7DbQFXnmgqv4PndGQ4xu7",
+                "name": "REMRXSYMA"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmfRdcvEmwFegxKmiKrY1BzaGbBqumtjZmPXS6yRDTBx9u",
+            "categoryId": 4,
+            "price": 0.5,
+            "maxQnty": 20,
+            "categoryName": "Limited",
+            "group": "Giveth"
+        },
+        "0x2604a772f4a3407f1b7c87d27e1853b106c5c0099a9be19aa2808ff127931dbe": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** Get a famous Griff massage for 30 minutes. Your life forever improved.",
+                "image": "https://ipfs.infura.io/ipfs/QmSPW1dzVoKNxjZLJdEod7YTVaE8pJS8YvbhCjsarvaVi7",
+                "name": "Santa Whitehat"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmPYLq7Y5mwouQpSpQvFiM65qhBDSvNXEDhyVkJfopybDD",
+            "categoryId": 6,
+            "price": 2,
+            "maxQnty": 50,
+            "categoryName": "Unique",
             "group": "Giveth"
         }
     }
