@@ -28,6 +28,10 @@ class CryptoxmasService {
 
   getCard(cardId) {
     const card = mintedTokensJson[this.network][cardId];
+    if (!card) {
+	window.location.replace('/');
+    }
+      
     const category = getCategoryNameById(card.categoryId);
     return { ...card, cardId, category };
   }

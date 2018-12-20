@@ -1,5 +1,18 @@
 {
     "mainnet": {
+        "0xf0018f6dbf6e399614903047db691a096c3beb60ff0f79d25a4498b68c638051": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** Get a famous Griff massage for 30 minutes. Your life forever improved.  ",
+                "image": "https://ipfs.infura.io/ipfs/QmSPW1dzVoKNxjZLJdEod7YTVaE8pJS8YvbhCjsarvaVi7",
+                "name": "Santa Whitehat"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmbEw3faaiJEhHmj6Awrvdy76J6QP9bjhUoR7JDTGpVwwp",
+            "categoryId": 6,
+            "price": 0.5,
+            "maxQnty": 10,
+            "categoryName": "Unique",
+            "group": "Giveth"
+        },	
         "0xf2eff03fa1cf54d4ae42e4aa858058a308d2d9a52c5877fae2ac7cab23c858cf": {
             "metadata": {
                 "description": "100% physically accurate by Naughty or Nice. Thank you for supporting Venezuelans in need.",
@@ -1194,19 +1207,6 @@
             "price": 0.5,
             "maxQnty": 20,
             "categoryName": "Limited",
-            "group": "Giveth"
-        },
-        "0x2604a772f4a3407f1b7c87d27e1853b106c5c0099a9be19aa2808ff127931dbe": {
-            "metadata": {
-                "description": "*** SPECIAL OFFER *** Get a famous Griff massage for 30 minutes. Your life forever improved.",
-                "image": "https://ipfs.infura.io/ipfs/QmSPW1dzVoKNxjZLJdEod7YTVaE8pJS8YvbhCjsarvaVi7",
-                "name": "Santa Whitehat"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmPYLq7Y5mwouQpSpQvFiM65qhBDSvNXEDhyVkJfopybDD",
-            "categoryId": 6,
-            "price": 2,
-            "maxQnty": 50,
-            "categoryName": "Unique",
             "group": "Giveth"
         }
     }
