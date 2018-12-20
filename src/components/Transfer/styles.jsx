@@ -46,5 +46,25 @@ export default {
     marginLeft: 20,
     marginTop: 3,
     width: 22.5
+  },
+  description: {
+    width: 300,
+    color: "white",
+    fontFamily: "Inter UI Regular",
+    fontSize: 18,
+    marginBottom: 20,
+    lineHeight: 1.24,
+    overflow: "hidden"
+  },
+  fullDescriptionArrowContainer: {
+    display: "flex",
+    alignItems: "center",
+    color: "white",
+    fontSize: 18
+  },
+  fullDescriptionArrow: {
+    display: "flex",
+    alignItems: "flex-end",
+    marginLeft: 5
   }
 };

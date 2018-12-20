@@ -3,7 +3,8 @@ import styles from "./styles";
 
 const Card = ({ card }) => {
   const { cardId, metadata, price } = card;
-  const rarity = card.categoryName;
+    const rarity = card.categoryName;
+    const badgeColor = rarity === 'Unique' ?  { backgroundColor: "#8B8B8B", color: "#fff" } : { backgroundColor: "#fff", color: "#8B8B8B" };
   return (
     <a
       style={{ display: "block" }}
@@ -17,7 +18,7 @@ const Card = ({ card }) => {
         }}
       >
         <div style={styles.nftPriceContainer}>
-          {rarity ? <div style={styles.nftRarity}>{rarity}</div> : null}
+          {rarity ? <div style={{...styles.nftRarity, ...badgeColor}}>{rarity}</div> : null}
           <span style={styles.nftPrice}>{price} ETH</span>
         </div>
         <img style={styles.nftImage} src={metadata.image} />
