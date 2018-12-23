@@ -6,8 +6,9 @@
 	"CONTRACT_BLOCK_DEPLOYMENT": 6869533
     },    
     "ropsten": {
-        "ESCROW_CONTRACT": "0xb6623F9d7CF3b04A34C757aebf549500b65977e4",
+        "ESCROW_CONTRACT": "0xDC4326A30bD9684241BB24F04d2608c4F67c964F",
         "NFT_ADDRESS": "0x86dDDCe7311120bEf05f34C8C05B169276ed89a6",
+        "DAI_ADDRESS": "0xad6d458402f60fd3bd25163575031acdce07538d",
         "JSON_RPC_URL": "https://ropsten.infura.io"
     },    
     "rinkeby": {

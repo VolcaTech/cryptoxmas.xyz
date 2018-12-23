@@ -3,6 +3,7 @@ pragma solidity ^0.4.25;
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'openzeppelin-solidity/contracts/lifecycle/Pausable.sol';
+import 'openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 import './NFT.sol';
 
 
@@ -30,6 +31,8 @@ contract CryptoxmasEscrow is Pausable, Ownable {
     uint256 tokenId;
     Statuses status;
     string msgHash; // IFPS message hash
+    address erc20Address; // Address of erc20 token for receiver, can be 0x00...
+    uint256 erc20Value; // Wei value of erc20 token for receiver, can be 0
   }
 
   // Mappings of transitAddress => Gift Struct
@@ -57,7 +60,9 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 	       string tokenUri,
 	       uint tokenId,
 	       uint claimEth,
-	       uint nftPrice
+	       uint nftPrice,
+         address erc20Address,
+         uint erc20Value
 	       );
 
   event LogClaim(
@@ -65,7 +70,9 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 		 address indexed sender,
 		 uint tokenId,
 		 address receiver,
-		 uint claimEth
+		 uint claimEth,
+     address erc20Address,
+     uint erc20Value
 		 );  
 
   event LogCancel(
@@ -182,13 +189,16 @@ contract CryptoxmasEscrow is Pausable, Ownable {
    *   - 0.01 ETH goes to ephemeral account, so it can pay gas fee for claim transaction. 
    *   - token price (minus ephemeral account fee) goes to the Giveth Campaign as a donation.  
    *   - Eth above token price is kept in the escrow, waiting for receiver to claim. 
+   * Recieved erc-20 tokens are kept in the escrow, waiting for receiver to claim. 
    *
    * @param _tokenUri string token URI of the category
    * @param _transitAddress address transit address assigned to gift
    * @param _msgHash string IPFS hash, where gift message stored at 
+   * @param _erc20Address address of erc-20 token. 0x00... if none
+   * @param _erc20Value value in wei of erc-20 token to send. 0 if none
    * @return True if success.
    */    
-  function buyGift(string _tokenUri, address _transitAddress, string _msgHash)
+  function buyGift(string _tokenUri, address _transitAddress, string _msgHash, address _erc20Address, uint256 _erc20Value)
           payable public whenNotPaused returns (bool) {
     
     require(canBuyGift(_tokenUri, _transitAddress, msg.value));
@@ -213,7 +223,9 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 				  claimEth,
 				  tokenId,
 				  Statuses.Deposited,
-				  _msgHash
+				  _msgHash,
+          _erc20Address,
+          _erc20Value
 				  );
 
 
@@ -228,6 +240,12 @@ contract CryptoxmasEscrow is Pausable, Ownable {
       // revert if there was problem with sending ether to GivethBridge
       require(donationSuccess == true);
     }
+
+    if (_erc20Address != address(0)) {
+      ERC20 token = ERC20(_erc20Address);
+      require(_erc20Value != 0);
+      require(token.transferFrom(msg.sender, this, _erc20Value));
+    }
     
     // log buy event
     emit LogBuy(
@@ -236,7 +254,10 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 		_tokenUri,
 		tokenId,
 		claimEth,
-		tokenPrice);
+		tokenPrice,
+    _erc20Address,
+    _erc20Value
+    );
     return true;
   }
 
@@ -272,7 +293,9 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 	     uint claimEth,   // eth for receiver
 	     uint nftPrice,   // token price 	     
 	     Statuses status, // gift status (deposited, claimed, cancelled) 								 	     
-	     string msgHash   // IPFS hash, where gift message stored at 
+	     string msgHash,   // IPFS hash, where gift message stored at,
+       address erc20Address, // address of erc-20 token
+       uint256 erc20Value // value in wei of erc-20 tokens
     ) {
     Gift memory gift = gifts[_transitAddress];
     tokenUri =  nft.tokenURI(gift.tokenId);
@@ -284,12 +307,14 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 	    gift.claimEth,
 	    category.price,	    
 	    gift.status,
-	    gift.msgHash
+	    gift.msgHash,
+      gift.erc20Address,
+      gift.erc20Value
 	    );
   }
   
   /**
-   * @dev Cancel gift and get sent ether back. Only gift buyer can
+   * @dev Cancel gift and get sent ether + erc-20 back. Only gift buyer can
    * cancel.
    * 
    * @param _transitAddress transit address assigned to gift
@@ -314,6 +339,12 @@ contract CryptoxmasEscrow is Pausable, Ownable {
 
     // send nft to buyer
     nft.transferFrom(address(this), msg.sender, gift.tokenId);
+
+    // transfer any erc-20 tokens to buyer
+    if (gift.erc20Address != address(0)) {
+      ERC20 token = ERC20(gift.erc20Address);
+      token.transfer(msg.sender, gift.erc20Value);
+    }
 
     // log cancel event
     emit LogCancel(_transitAddress, msg.sender, gift.tokenId);
@@ -349,9 +380,22 @@ contract CryptoxmasEscrow is Pausable, Ownable {
       _receiver.transfer(gift.claimEth);
     }
 
+    // transfer any erc-20 tokens to receiver's address
+    if (gift.erc20Address != address(0)) {
+      ERC20 token = ERC20(gift.erc20Address);
+      token.transfer(_receiver, gift.erc20Value);
+    }
+
     // log claim event
-    emit LogClaim(_transitAddress, gift.sender, gift.tokenId, _receiver, gift.claimEth);
-    
+    emit LogClaim(
+    _transitAddress, 
+    gift.sender,
+    gift.tokenId,
+    _receiver,
+    gift.claimEth,
+    gift.erc20Address,
+    gift.erc20Value
+    );
     return true;
   }
 
