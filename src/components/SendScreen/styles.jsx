@@ -20,13 +20,12 @@ export default {
     lineHeight: 1.24
   },
   description: {
-    width: 300,
-    color: "white",
-    fontFamily: "Inter UI Regular",
-    fontSize: 18,
-    marginBottom: 20,
-    lineHeight: 1.24,
-    overflow: "hidden"
+      width: 300,
+      color: "white",
+      fontFamily: "Inter UI Regular",
+      fontSize: 18,
+      marginBottom: 20,
+      lineHeight: 1.24,
   },
 
   sendscreenWhiteTitle: {
