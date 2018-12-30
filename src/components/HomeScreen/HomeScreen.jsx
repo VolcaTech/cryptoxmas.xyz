@@ -48,7 +48,8 @@ class HomeScreen extends Component {
               <CardGroup group="Naughty or Nice" />
               <CardGroup group="Nervos" />
               <CardGroup group="Decentraland" />
-              <CardGroup group="Ramp" />	      	      	      	            	      
+              <CardGroup group="Ramp" />
+              <CardGroup group="Aragon" />	      	      	      	            	      	      
             </div>	    
           </div>
         </Row>

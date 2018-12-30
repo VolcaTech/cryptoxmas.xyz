@@ -1,95 +1,17 @@
 {
     "mainnet": {
-        "0x76eb7cb8d45b91cc2604221fdb785e845fc6214db5d5533f12bcbc666409e8bf": {
+        "0xc0a2ab07b49999ed97774c772206ccfa6889f64ef4d5acd0a30a90b6d0c82b49": {
             "metadata": {
-                "description": "With Christmas spirit by Decentraland. Thank you for supporting Venezuelans in need.",
-                "image": "https://ipfs.infura.io/ipfs/QmWwJ5jRfjKYe8hhHZ5YeQkkxUKewWgPTg9GAPFM7nr3q7",
-                "name": "Santa Hat"
+                "description": "*** SPECIAL OFFER *** One of these NFTs = 1 free entry to AraCon. (Details at https://forum.aragon.org/c/community.) We wish you a very happy holidays from the Aragon community!",
+                "image": "https://ipfs.infura.io/ipfs/Qmbtv6RRWjnhyqjJSfEM9RWWdaqZgdmLxzQoYCCseCdaLL",
+                "name": "Happy Holidays from Aragon"
             },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmYufdr7fDDzqpRvUUg4oVqf7PwfrSovkGuq8aLpsnQCuK",
-            "categoryId": 4,
-            "price": 0.5,
-            "maxQnty": 20,
-            "categoryName": "Limited",
-            "group": "Decentraland"
-        },
-        "0x4d2d5dcd427a8c8ad2974300a2e51cb2b8959fdaf2aad9326313f5fc06237e7d": {
-            "metadata": {
-                "description": "With Christmas spirit by Decentraland. Thank you for supporting Venezuelans in need.",
-                "image": "https://ipfs.infura.io/ipfs/QmZevdCYoXntPAgGRNqCNYMyhFMfcpmot5sspR6NbkrxAS",
-                "name": "Elf Hat"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/Qma67K55RhpzaSAVdGqf5wBeiy1gL7fh7Tf1UBwSrpQXce",
-            "categoryId": 2,
-            "price": 0.1,
-            "maxQnty": 50,
-            "categoryName": "Rare",
-            "group": "Decentraland"
-        },
-        "0x7104c1548c88259a8592274dd45902748d86524f7f0045b003eb243f58c173ec": {
-            "metadata": {
-                "description": "With Christmas spirit by Decentraland. Thank you for supporting Venezuelans in need.",
-                "image": "https://ipfs.infura.io/ipfs/QmPZcBmoFK9KEmJ7GUWby8KzESKonj8wjfaoZtJiT3y1m1",
-                "name": "Merry Xmas"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmYGftgQ645PTso657sTLVdHQiSWJyfRBjicPXvKhpBPJL",
-            "categoryId": 1,
-            "price": 0.05,
-            "maxQnty": 100,
-            "categoryName": "Special",
-            "group": "Decentraland"
-        },
-        "0x3ab4bf879d7694c6be3dde3550a8e65df3119e07b7e40e650bcd409e64f01aa8": {
-            "metadata": {
-                "description": "With Christmas spirit by Decentraland. Thank you for supporting Venezuelans in need.",
-                "image": "https://ipfs.infura.io/ipfs/QmYoxxcTKaF6dU15YKt9FcZAjctxvffn5eYc61DQQorb4S",
-                "name": "Poly Xmas"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/Qmc69uyp5zoxxkHpbqne6HDha9iyXASZpTGYZmGSXzzVcr",
-            "categoryId": 3,
-            "price": 0.2,
-            "maxQnty": 33,
-            "categoryName": "Scarce",
-            "group": "Decentraland"
-        },
-        "0x614c18d996bcd45b8ba2ca09840f842db45b067b24db4827f922993d4a24a9a4": {
-            "metadata": {
-                "description": "Have your video featured in Giveth's Wall of Fame.",
-                "image": "https://ipfs.infura.io/ipfs/QmbbZ2X1JPL69oQNrwfuN5WKsWKyr42ym5DymLNwoTDBEj",
-                "name": "Merry Cryptmas"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmUFiYcbggrSii1vSe9kbHdrAkirZsrYmEehv6o4frNdPJ",
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmNhBfHAuvw7NG9nnYW1KCopkqCNgUKwAmomKuGqae9EpR",
             "categoryId": 6,
-            "price": 10,
-            "maxQnty": 5,
-            "categoryName": "Unique",
-            "group": "Giveth"
-        },
-        "0x4074b18a40489ebecd179b218674c08ea65b2206734f7d933be2b12172ff84ae": {
-            "metadata": {
-                "description": "'A good conscience is a continual Christmas.' -Benjamin Franklin",
-                "image": "https://ipfs.infura.io/ipfs/QmZQ9Gu9194Z5AhYDNK5GZjfUibGhHcMp8bHFGPaeYCPwt",
-                "name": "Xmas Crypto Tree"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmTMXqkBcf2WkvHkafZXxN8qZhzXNPVj3burPt2SCsjWM9",
-            "categoryId": 5,
-            "price": 1,
+            "price": 1.2,
             "maxQnty": 10,
-            "categoryName": "Epic",
-            "group": "Giveth"
-        },
-        "0x3d383350718aeb60006029e034a9bf22698e8f4302d27e172cce351ba4f494da": {
-            "metadata": {
-                "description": "These Holidays P2P means person to person",
-                "image": "https://ipfs.infura.io/ipfs/QmYRaXk8PY6SvE6UHHMtj2p7BxdvibF9PjgB8AkoNX68ni",
-                "name": "Love from Ramp"
-            },
-            "tokenUri": "https://ipfs.infura.io/ipfs/QmQMoqB6jCov9h2rr3HY4c66YTBPiXGmVCs4sgEf6FZzU5",
-            "categoryId": 1,
-            "price": 0.05,
-            "maxQnty": 100,
-            "categoryName": "Special",
-            "group": "Ramp"
+            "categoryName": "Unique",
+            "group": "Aragon"
         }
     }
 }

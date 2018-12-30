@@ -1,5 +1,18 @@
 {
     "mainnet": {
+        "0xc0a2ab07b49999ed97774c772206ccfa6889f64ef4d5acd0a30a90b6d0c82b49": {
+            "metadata": {
+                "description": "*** SPECIAL OFFER *** One of these NFTs = 1 free entry to AraCon. (Details at https://forum.aragon.org/c/community.) We wish you a very happy holidays from the Aragon community!",
+                "image": "https://ipfs.infura.io/ipfs/Qmbtv6RRWjnhyqjJSfEM9RWWdaqZgdmLxzQoYCCseCdaLL",
+                "name": "Happy Holidays from Aragon"
+            },
+            "tokenUri": "https://ipfs.infura.io/ipfs/QmNhBfHAuvw7NG9nnYW1KCopkqCNgUKwAmomKuGqae9EpR",
+            "categoryId": 6,
+            "price": 1.2,
+            "maxQnty": 10,
+            "categoryName": "Unique",
+            "group": "Aragon"
+        },	
 	        "0x76eb7cb8d45b91cc2604221fdb785e845fc6214db5d5533f12bcbc666409e8bf": {
             "metadata": {
                 "description": "With Christmas spirit by Decentraland. Thank you for supporting Venezuelans in need.",
